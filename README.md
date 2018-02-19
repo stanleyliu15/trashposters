@@ -1,8 +1,13 @@
-# csc648-teamNN
+# csc648-team05
 
-- TODO
+SuperHeroesInTraining
 
-- Change the repo name to csc648-teamNN , where NN is your team number
+Frontend:
+Stanley - Frontend Lead
+James - Team Lead
+Tumar - Frontend
 
-- add ALL your team members to your team's repo.
-
+Backend: 
+Danielle - Backend Lead
+Alex - Backend
+Jianhao - Backend
