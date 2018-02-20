@@ -2,12 +2,12 @@
 
 SuperHeroesInTraining
 
-Frontend:
-Stanley - Frontend Lead
-James - Team Lead
-Tumar - Frontend
+Frontend:  
+Stanley - Frontend Lead  
+James - Team Lead  
+Tumar - Frontend  
 
-Backend: 
-Danielle - Backend Lead
-Alex - Backend
-Jianhao - Backend
+Backend:  
+Danielle - Backend Lead  
+Alex - Backend  
+Jianhao - Backend  
