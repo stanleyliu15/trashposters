@@ -1,0 +1,24 @@
+o Server Host: Amazon Web Services
+o Instance size: t2.micro, 1 virtual CPU, 0.5GB memory
+o Operating System: 64bit Amazon Linux 2017.09 v2.6.4
+o Database: MySQL 5.6.37
+o Webserver: Apache 2.4.29
+o Server-Side language: Python 3.6
+
+o  Web Framework: Django 2.0.2
+o  IDE: PyCharm, Sublime Text, Netbeans
+o  Web Analytics: Google Analytics
+
+Might need Google Domains for website registration, and AWS Route53 for routing to AWS instances. 
+
+
+Member's Familiarity with Server-Side Language on a scale of 1 to 5,
+with 5 being very familiar and 1 being never used it.
+James: 5
+Danielle: 3
+Jianhao: 1
+Alex: 1
+Stanley: 1
+Tumar: 2
+
+Best, Team05
