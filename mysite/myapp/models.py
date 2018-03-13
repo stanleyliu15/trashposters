@@ -12,7 +12,7 @@ models.ForeignKey(to, onDelete, options)    FOREIGN KEY
 models.IntegerField()                       integer NOT NULL
 """
 
-"""
+"""o
 Users:
     user_id - INT, Primary Key, Auto Increment
     username - VARCHAR(255)
@@ -34,6 +34,9 @@ class Users(models.Model):
     user_type = models.CharField(max_length=255)
     strikes = models.IntegerField()
 
+    def __str__(self):
+        return self.username
+
 
 """
 User_data
@@ -45,10 +48,13 @@ User_data
 
 
 class UserData(models.Model):
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE())
+    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     biography = models.CharField(max_length=400)
+
+    def __str__(self):
+        return self.first_name + self.last_name
 
 
 """
@@ -65,13 +71,15 @@ Posts:
 
 class Posts(models.Model):
     post_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE())
+    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     location = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     date = models.DateTimeField()
     comments = models.CharField(max_length=255)
     reports = models.CharField(max_length=255)
 
+    def __str__(self):
+        return str(self.post_id)
 
 """
 Locations: 
@@ -84,6 +92,9 @@ class Locations(models.Model):
     location_id = models.AutoField(primary_key=True)
     location_name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.location_name
+
 
 """
 Messages:
@@ -95,7 +106,10 @@ Messages:
 
 
 class Messages(models.Model):
-    user_id1 = models.ForeignKey(Users)
-    user_id2 = models.ForeignKey(Users)
+    user_id1 = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="user_userid1")
+    user_id2 = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="user_userid2")
     messages = models.CharField(max_length=400)
     dates = models.DateTimeField()
+
+    def __str__(self):
+        return self.messages
