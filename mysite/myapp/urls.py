@@ -1,14 +1,20 @@
 from django.urls import path
+from django.conf.urls import url
 
 from . import views
 
 urlpatterns = [
-	path('', views.index, name='index'),
-	path('about', views.about, name='about'),
-	path('about/alex', views.aboutAlex, name='aboutAlex'),
-	path('about/danielle', views.aboutDanielle, name='aboutDanielle'),
-	path('about/james', views.aboutJames, name='aboutJames'),
-	path('about/jzhong', views.aboutJzhong, name='aboutJzhong'),
-	path('about/stanley', views.aboutStanley, name='aboutStanley'),
-	path('about/tumar', views.aboutTumar, name='aboutTumar'),
+    path('', views.index, name='index'),
+    path('about', views.about, name='about'),
+    path('about/alex', views.aboutAlex, name='aboutAlex'),
+    path('about/danielle', views.aboutDanielle, name='aboutDanielle'),
+    path('about/james', views.aboutJames, name='aboutJames'),
+    path('about/jzhong', views.aboutJzhong, name='aboutJzhong'),
+    path('about/stanley', views.aboutStanley, name='aboutStanley'),
+    path('about/tumar', views.aboutTumar, name='aboutTumar'),
+
+    # /posts/
+    url(r'^post/$', views.post_list, name='post_list'),
+    # /posts/<number>
+    url('post/' + r'^(?P<post_id>[0-9]+)/$', views.post_detail, name='post_detail')
 ]

@@ -12,7 +12,7 @@ models.ForeignKey(to, onDelete, options)    FOREIGN KEY
 models.IntegerField()                       integer NOT NULL
 """
 
-"""o
+"""
 Users:
     user_id - INT, Primary Key, Auto Increment
     username - VARCHAR(255)
@@ -72,6 +72,7 @@ Posts:
 class Posts(models.Model):
     post_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     date = models.DateTimeField()
