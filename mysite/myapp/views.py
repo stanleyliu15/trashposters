@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.template import loader
+from django.http import Http404
 
 from .models import Posts
 from django.http import HttpResponse
@@ -8,22 +8,18 @@ from django.http import HttpResponse
 # Lists all of the posts
 def post_list(request):
     all_posts = Posts.objects.all()
-    template = loader.get_template('myapp/post_list.html')
     context = {'all_posts': all_posts}
-    return HttpResponse(template.render(context, request))
+    return render(request, 'myapp/post_list.html', context)
 
 
 # Lists details about the post when the user clicks on it.
 def post_detail(request, post_id):
-    post = Posts.objects.get(pk=post_id)
-    url = '/posts/'
-    html = '<h2> Details for: ' + str(post.title) + '</h2>'
-    html += '<br> ' \
-            'Posted by:  ' + str(post.user_id) + '<br><br>' \
-            'Description: ' + post.description + '<br>' \
-            + 'Location: ' + post.location\
-            + '<br> <a href=' + url + '> Go back </a>'
-    return HttpResponse(html)
+    try:
+        post = Posts.objects.get(pk=post_id)
+    except Posts.DoesNotExist:
+        raise Http404("Oopsie post does not exist uwu X3 X3!!!!")
+    context = {'post': post}
+    return render(request, 'myapp/post_detail.html', context)
 
 # Create your views here.
 def index(request):

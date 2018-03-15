@@ -1,0 +1,14 @@
+<h2> Post Detail </h2>
+    <ul>
+        <h1>{{ post.title }}</h1>
+        <h3>Posted by {{ post.user_id }}</h3>
+        <div>
+            <br>
+            {{  post.description }}
+            <br> <br>
+            <li> {{ post.location }}</li>
+            <li> {{ post.date}} </li>
+        </div>
+        <br>
+        <a href='/posts/'> Go back </a>
+    </ul>
