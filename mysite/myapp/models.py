@@ -76,11 +76,16 @@ class Posts(models.Model):
     location = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     date = models.DateTimeField()
-    comments = models.CharField(max_length=255)
     reports = models.CharField(max_length=255)
 
     def __str__(self):
         return str(self.post_id)
+
+
+class Comments(models.Model):
+    post_id = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    comment_body = models.CharField(max_length=255)
+    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
 
 """
 Locations: 

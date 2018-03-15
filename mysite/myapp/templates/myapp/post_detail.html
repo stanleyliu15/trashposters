@@ -10,5 +10,14 @@
             <li> {{ post.date}} </li>
         </div>
         <br>
+        <div>
+            {% if comment_list %}
+                {% for comment in comment_list %}
+                    <li> {{ comment.comment_body }} - {{ comment.user_id }}</li>
+                {% endfor %}
+            {% else %}
+                <h4> No comments yet :( </h4>
+            {% endif %}
+        </div>
         <a href='/posts/'> Go back </a>
     </ul>

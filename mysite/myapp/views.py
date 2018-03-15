@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import Http404
 
 from .models import Posts
+from .models import Comments
 
 four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
                        "A wittle fucko boingo! The code monkeys at our " \
@@ -21,7 +22,9 @@ def post_detail(request, post_id):
         post = Posts.objects.get(pk=post_id)
     except Posts.DoesNotExist:
         raise Http404(four_oh_four_message)
-    context = {'post': post}
+    comment_list = Comments.objects.filter(post_id=post_id)
+    context = {'post': post,
+               'comment_list': comment_list}
     return render(request, 'myapp/post_detail.html', context)
 
 # Create your views here.
