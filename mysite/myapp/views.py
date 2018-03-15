@@ -3,19 +3,25 @@ from .models import Posts
 from django.http import HttpResponse
 
 
-# Called when user goes to post/<number>
+# Lists all of the posts
 def post_list(request):
     all_posts = Posts.objects.all()
     html = "<h2> Posts so far </h2>"
     for post in all_posts:
-        url = '/post/' + str(post.post_id) + '/'
+        url = '/posts/' + str(post.post_id) + '/'
         html += '<a href=' + url + '> ' + post.title + '</a><br>'
     return HttpResponse(html)
 
 
+# Lists details about the post when the user clicks on it.
 def post_detail(request, post_id):
-    post = Posts.objects.get()
-    html = '<h2> Details for: ' + str(post_id) + '</h2>'
+    post = Posts.objects.get(pk=post_id)
+    url = '/posts/'
+    html = '<h2> Details for: ' + str(post.title) + '</h2>'
+    html += '<br> ' \
+            'Description: ' + post.description + '<br>'\
+            + 'Location: ' + post.location\
+            + '<br> <a href=' + url + '> Go back </a>'
     return HttpResponse(html)
 
 # Create your views here.
