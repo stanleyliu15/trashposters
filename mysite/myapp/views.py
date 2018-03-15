@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.http import Http404
 
 from .models import Posts
-from django.http import HttpResponse
+
+four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
+                       "A wittle fucko boingo! The code monkeys at our " \
+                       "headquarters are working VEWY HAWD to fix this!"
 
 
 # Lists all of the posts
@@ -17,7 +20,7 @@ def post_detail(request, post_id):
     try:
         post = Posts.objects.get(pk=post_id)
     except Posts.DoesNotExist:
-        raise Http404("Oopsie post does not exist uwu X3 X3!!!!")
+        raise Http404(four_oh_four_message)
     context = {'post': post}
     return render(request, 'myapp/post_detail.html', context)
 
