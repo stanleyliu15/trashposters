@@ -4,6 +4,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    # TODO: Replace the about pages with a regular expression so it's like the posts urls.
     path('', views.index, name='index'),
     path('about', views.about, name='about'),
     path('about/alex', views.aboutAlex, name='aboutAlex'),
