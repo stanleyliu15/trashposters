@@ -27,14 +27,23 @@ def post_detail(request, post_id):
                'comment_list': comment_list}
     return render(request, 'myapp/post_detail.html', context)
 
+def search_empty(request):
+    print("Search empty")
+    all_posts = Posts.objects.all()
+    context={
+    'all_posts': all_posts,
+    'keyword': ''
+    }
+    return render(request, 'search.html', context)
+
 def search(request, keyword):
     print("Keyword: "+keyword)
     #sql_statement = "SELECT * FROM myapp_posts WHERE description LIKE '%%%s%%'"
     #print("sql: "+sql_statement)
     #all_posts = Posts.objects.raw(sql_statement, [keyword])
-    all_posts = Posts.objects.all()
     all_posts = Posts.objects.filter(description__contains=keyword)
-    context = {'all_posts': all_posts}
+    context = {'all_posts': all_posts,
+		'keyword': keyword}
     return render(request, 'search.html', context)
 
 # Create your views here.

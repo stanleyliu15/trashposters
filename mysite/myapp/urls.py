@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from django.conf.urls import url
 
 
@@ -21,5 +21,7 @@ urlpatterns = [
     # /posts/<number>
     url(r'posts/(?P<post_id>[0-9]+)/$', views.post_detail, name='post_detail'),
 
-    url(r'search/keyword=(?P<keyword>[a-zA-Z0-9]+)/$', views.search, name='search'),
+    #path('search/keyword=<keyword>', views.search, name='search'),
+    url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search, name='search'),
+    url('search', views.search_empty, name='search2'),
 ]

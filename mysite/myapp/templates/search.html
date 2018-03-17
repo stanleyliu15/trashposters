@@ -3,9 +3,22 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<script type="text/javascript">
+			function search(){
+				var text_field = document.getElementById("keyword_input");
+				window.location.replace("/search/keyword="+text_field.value+"/");
+			}
+		</script>
 	</head>
 
 	<body>
+		<span>Keyword: </span>
+		{% if keyword != "" %}
+			<input type="text" id="keyword_input" value="{{ keyword }}"  placeholder="Ex: water" />
+		{% else %}
+			<input type="text" id="keyword_input" placeholder="Ex: water" /> 
+		{% endif %}
+		<input type="button" value="Search" id="search_submit" onclick=search() /> 
 		<h2> Results </h2>
 		{% if all_posts %}
 		    <ul>
