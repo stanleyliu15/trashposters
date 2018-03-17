@@ -39,6 +39,11 @@ $ yum -y install python36u-pip
 $ /usr/bin/pip-3.4 install django=2.0.2
 or 
 $ pip install django=2.0.2
+$ django-admin --version
+	This should print out 2.0.2 if the successful
+$ apt-get update
+$ yum install mysql
+$ pip3 install mysqlclient
 
 
 
@@ -120,6 +125,28 @@ then django will load the "about-pages/parker.html" file for the user.
 
 
 	
+	
+---- Install Django local environment ----
+Ubuntu: 
+https://www.howtoforge.com/tutorial/how-to-install-django-on-ubuntu/
+$ sudo su
+$ update-alternatives --remove python /usr/bin/python2
+	This removes python2 as the default python
+$ update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+	This sets python3 as the default python
+$ apt-get install python3-pip
+$ pip3 install --upgrade pip
+$ pip3 install django==2.0.2
+$ django-admin --version
+	This should print out 2.0.2 if the successful
+$ apt-get update
+$ apt-get install libmysqlclient-dev
+$ pip3 install mysqlclient
+$ 
+	
+Mac: 
+
+Windows: 
 	
 	
 	
