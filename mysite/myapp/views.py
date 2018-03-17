@@ -27,6 +27,12 @@ def post_detail(request, post_id):
                'comment_list': comment_list}
     return render(request, 'myapp/post_detail.html', context)
 
+def search(request, text_to_search):
+    print("Text_to_search: "+text_to_search)
+    all_posts = Posts.objects.all()
+    context = {'all_posts': all_posts}
+    return render(request, 'search.html', context)
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html', context={})
