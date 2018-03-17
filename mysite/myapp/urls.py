@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^posts/$', views.post_list, name='post_list'),
 
     # /posts/<number>
-    url(r'posts/(?P<post_id>[0-9]+)/$', views.post_detail, name='post_detail')
+    url(r'posts/(?P<post_id>[0-9]+)/$', views.post_detail, name='post_detail'),
 
-    path(r'search/keyword=(?P<keyword>[a-zA-Z0-9]+)/$', views.search, name='search'),
+    url(r'search/keyword=(?P<keyword>[a-zA-Z0-9]+)/$', views.search, name='search'),
 ]
