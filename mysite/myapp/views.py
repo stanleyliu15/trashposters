@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.http import Http404
+from django.http import HttpResponse
 
 from .models import Posts
 from .models import Comments
+
+from .forms import UserForm
+from django.contrib.auth import authenticate, login
 
 four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
                        "A wittle fucko boingo! The code monkeys at our " \
@@ -27,24 +31,45 @@ def post_detail(request, post_id):
                'comment_list': comment_list}
     return render(request, 'myapp/post_detail.html', context)
 
+
 def search_empty(request):
     print("Search empty")
     all_posts = Posts.objects.all()
-    context={
-    'all_posts': all_posts,
-    'keyword': ''
-    }
+    context = {'all_posts': all_posts,
+               'keyword': ''}
     return render(request, 'search.html', context)
 
+
+# sql_statement = "SELECT * FROM myapp_posts WHERE description LIKE '%%%s%%'"
+# print("sql: "+sql_statement)
+# all_posts = Posts.objects.raw(sql_statement, [keyword])
 def search(request, keyword):
-    print("Keyword: "+keyword)
-    #sql_statement = "SELECT * FROM myapp_posts WHERE description LIKE '%%%s%%'"
-    #print("sql: "+sql_statement)
-    #all_posts = Posts.objects.raw(sql_statement, [keyword])
+    print("Keyword: " + keyword)
     all_posts = Posts.objects.filter(description__contains=keyword)
     context = {'all_posts': all_posts,
-		'keyword': keyword}
+               'keyword': keyword}
     return render(request, 'search.html', context)
+
+
+def register(request):
+    template_name = 'register.html'
+    form = UserForm(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=False)
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user.set_password(password)
+        user.save()
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                # TODO: Create registration successful page with redirect or show user is now logged in.
+                return HttpResponse('Login successful.')
+    context = {
+        "form": form,
+    }
+    return render(request, template_name, context)
 
 # Create your views here.
 def index(request):
@@ -57,6 +82,7 @@ def index2(request):
 
 def about(request):
     return render(request, 'about.html', context={})
+
 
 # Going to replace all of these with a regular expression to reduce the amount of methods in views.py - Danielle
 def aboutAlex(request):
