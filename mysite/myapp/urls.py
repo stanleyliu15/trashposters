@@ -27,7 +27,7 @@ urlpatterns = [
     # /login
     url(r'^login/$', views.login_user, name='login'),
 
-    #path('search/keyword=<keyword>', views.search, name='search'),
+    # path('search/keyword=<keyword>', views.search, name='search'),
     url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search, name='search'),
-    url('search', views.search_empty, name='search2'),
+    url(r'^search/$', views.search_empty, name='search_empty'),
 ]

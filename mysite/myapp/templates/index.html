@@ -2,26 +2,24 @@
 
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+      <title>Super Heroes In Training</title>
+      <meta charset="utf-8">
+      <meta name="author" content="SuperHeroesInTraining">
+      <meta name="description" content="Software Engineering Project">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-  <title>Super Heroes In Training</title>
-  <meta charset="utf-8">
-  <meta name="author" content="SuperHeroesInTraining">
-  <meta name="description" content="Software Engineering Project">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-
-<body>
-  <div style="padding:50px;">
-      <h1>Super Heroes In Training</h1>
-      <a href="about">About Page</a> <br>
-      <a href="search">Search</a> <br>
-      <a href={% url 'register' %}>Register</a>
-      <a href={% url 'login' %}>Login</a>
-  </div>
-</body>
-
+    <body>
+      <div style="padding:50px;">
+          <h1>Super Heroes In Training</h1>
+          <a href={% url 'about' %}>About Page</a> <br>
+          <a href={% url 'search_empty' %}>Search</a> <br>
+          <a href={% url 'register' %}>Register</a> <br>
+          <a href={% url 'login' %}>Login</a>
+      </div>
+    </body>
 </html>

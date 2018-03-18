@@ -34,7 +34,6 @@ def post_detail(request, post_id):
 
 
 def search_empty(request):
-    print("Search empty")
     all_posts = Posts.objects.all()
     context = {'all_posts': all_posts,
                'keyword': ''}
@@ -52,6 +51,7 @@ def search(request, keyword):
     return render(request, 'search.html', context)
 
 
+# Adds a user to the admin.auth.users table. Displays an error message if the username is already taken.
 def register(request):
     template_name = 'register.html'
     form = UserForm(request.POST or None)
@@ -73,6 +73,7 @@ def register(request):
     return render(request, template_name, context)
 
 
+# Logs in an existing user by validating their username and password.
 def login_user(request):
     form = LoginForm(request.POST or None)
     if request.method == "POST":
@@ -93,6 +94,9 @@ def login_user(request):
     return render(request, 'login.html', context)
 
 
+# Logs a user out.
+# TODO: Implement a link to log the user out.
+# TODO: Implement user only functionality first before doing the above.
 def logout_user(request):
     logout(request)
     return render(request, 'login.html')
@@ -111,7 +115,7 @@ def about(request):
     return render(request, 'about.html', context={})
 
 
-# Going to replace all of these with a regular expression to reduce the amount of methods in views.py - Danielle
+# TODO Replace all of these with a regular expression to reduce the amount of methods in views.py - Danielle
 def aboutAlex(request):
     return render(request, 'about-pages/alex.html', context={})
 
