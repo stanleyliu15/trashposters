@@ -5,10 +5,7 @@
     {% endif %}
     <form class="form-horizonal" role="form" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <label>Username: </label>
-        <input name="username" type="text"> <br>
-        <label>Password: </label>
-        <input name="password" type="password"> <br>
+        {% include 'myapp/form_template.html' %}
         <div class="form-group">
             <button type="submit"> Log in!  </button>
         </div>

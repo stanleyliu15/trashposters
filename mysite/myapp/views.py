@@ -6,7 +6,8 @@ from .models import Posts
 from .models import Comments
 
 from .forms import UserForm
-from django.contrib.auth import authenticate, login
+from .forms import LoginForm
+from django.contrib.auth import authenticate, login, logout
 
 four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
                        "A wittle fucko boingo! The code monkeys at our " \
@@ -73,6 +74,7 @@ def register(request):
 
 
 def login_user(request):
+    form = LoginForm(request.POST or None)
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -85,23 +87,16 @@ def login_user(request):
                 return render(request, 'login.html', {'error_message': 'You have been banned.'})
         else:
             return render(request, 'login.html', {'error_message': 'Invalid login'})
-    return render(request, 'login.html')
+    context = {
+         "form": form,
+    }
+    return render(request, 'login.html', context)
 
 
 def logout_user(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponse("You have been logged in as: " + username)
-            else:
-                return render(request, 'login.html', {'error_message': 'You have been banned.'})
-        else:
-            return render(request, 'login.html', {'error_message': 'Invalid login'})
+    logout(request)
     return render(request, 'login.html')
+
 
 # Create your views here.
 def index(request):
