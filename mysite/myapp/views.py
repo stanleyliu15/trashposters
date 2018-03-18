@@ -71,6 +71,38 @@ def register(request):
     }
     return render(request, template_name, context)
 
+
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponse("You have been logged in as: " + username)
+            else:
+                return render(request, 'login.html', {'error_message': 'You have been banned.'})
+        else:
+            return render(request, 'login.html', {'error_message': 'Invalid login'})
+    return render(request, 'login.html')
+
+
+def logout_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponse("You have been logged in as: " + username)
+            else:
+                return render(request, 'login.html', {'error_message': 'You have been banned.'})
+        else:
+            return render(request, 'login.html', {'error_message': 'Invalid login'})
+    return render(request, 'login.html')
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html', context={})

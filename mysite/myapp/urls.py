@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 from django.conf.urls import url
 
 
@@ -23,6 +23,9 @@ urlpatterns = [
 
     # /register
     url(r'^register/$', views.register, name='register'),
+
+    # /login
+    url(r'^login/$', views.login_user, name='login'),
 
     #path('search/keyword=<keyword>', views.search, name='search'),
     url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search, name='search'),
