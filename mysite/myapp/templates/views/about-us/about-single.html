@@ -1,0 +1,41 @@
+{% extends 'layouts/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}
+<title>{{ team_member.name }}</title>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/about/about-single.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="card-wrap">
+    <div class="card-content-side">
+      <div class="image-wrap">
+        <img class="card-img rounded-circle" src="https://picsum.photos/360/360" alt="portrait">
+      </div>
+      <div class="socials mt-4 text-center">
+        <ul class="list-inline list-unstyled">
+          <h4>Connect.</h4>
+          {% for social in team_member.socials %}
+          <li class="list-inline-item p-2 mr-1">
+            <a class="h4" href="{{ social.link }}">
+              <i class="fa fa-{{ social.name }}"></i>
+            </a>
+          </li>
+          {% empty %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="card-content">
+      <h1 class="card-title">{{ team_member.name }}</h1>
+      <h4 class="card-subtitle">{{ team_member.role }}</h4>
+      <p class="card-text mt-4">{{ team_member.bio }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
