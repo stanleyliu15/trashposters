@@ -1,8 +1,12 @@
+{% load staticfiles %}
+
 <h2> Post Detail </h2>
     <ul>
         <h1>{{ post.title }}</h1>
         <h3>Posted by {{ post.user_id }}</h3>
-        <div>
+        
+	<img style="width:300px;" src={% static image %} />
+	<div>
             <br>
             {{  post.description }}
             <br> <br>

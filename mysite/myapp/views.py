@@ -20,10 +20,14 @@ def post_list(request):
 def post_detail(request, post_id):
     try:
         post = Posts.objects.get(pk=post_id)
+
+        image = "/images/"+str(post.post_id)+"/1.jpg"
+
     except Posts.DoesNotExist:
         raise Http404(four_oh_four_message)
     comment_list = Comments.objects.filter(post_id=post_id)
     context = {'post': post,
+		'image': image,
                'comment_list': comment_list}
     return render(request, 'myapp/post_detail.html', context)
 
@@ -42,7 +46,14 @@ def search(request, keyword):
     #print("sql: "+sql_statement)
     #all_posts = Posts.objects.raw(sql_statement, [keyword])
     all_posts = Posts.objects.filter(description__contains=keyword)
+
+    #iterates through posts to get the images
+    images = []
+    for x in range(0, len(all_posts)):
+        images.append("./images/"+all_posts[x].post_id+"/1.jpg")
+
     context = {'all_posts': all_posts,
+               'images': images,
 		'keyword': keyword}
     return render(request, 'search.html', context)
 
