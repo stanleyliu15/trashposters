@@ -23,8 +23,9 @@
 		{% if all_posts %}
 		    <ul>
 		        {% for post in all_posts %}
-		        <li><a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a> </li>
-		            by: {{ post.user_id }}
+		        <li>
+			    <a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a> </li> 
+			    by: {{ post.user_id }}
 		            <br><br>
 		        {% endfor %}
 		    </ul>
