@@ -10,3 +10,11 @@
 {% else %}
     <h3> No posts to display. :( </h3>
 {% endif %}
+
+    {% if user.is_authenticated %}
+        <h3> <a href={% url 'post-add' %}> Make a new post  </a></h3>
+    {% else %}
+        <h3>
+            <a href={% url 'register' %}>Register to post</a>
+        </h3>
+    {% endif %}

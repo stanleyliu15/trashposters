@@ -1,3 +1,12 @@
+    {% if user.is_authenticated %}
+        <h3> Viewing post as {{ request.user.username }}</h3>
+    <a href = {% url 'logout' %}>                       Log out. </a>
+    {% else %}
+        <h3>
+            <a href={% url 'register' %}>Register today!</a>
+        </h3>
+    {% endif %}
+
 <h2> Post Detail </h2>
     <ul>
         <h1>{{ post.title }}</h1>

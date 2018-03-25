@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django import forms
 
+from .models import Posts
+
 
 class UserForm(forms.ModelForm):
     # Changes it from plain text to hashing
@@ -22,3 +24,9 @@ class LoginForm(forms.ModelForm):
         model = User
         # What fields do we want to appear on the form?
         fields = ['username', 'password']
+
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Posts
+        fields = ['title', 'location', 'description']

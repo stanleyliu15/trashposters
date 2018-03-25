@@ -1,7 +1,6 @@
 from django.urls import path
 from django.conf.urls import url
 
-
 from . import views
 
 urlpatterns = [
@@ -21,11 +20,17 @@ urlpatterns = [
     # /posts/<number>
     url(r'posts/(?P<post_id>[0-9]+)/$', views.post_detail, name='post_detail'),
 
+    # /posts/add/
+    url(r'posts/add/$', views.create_post, name='post-add'),
+
     # /register
     url(r'^register/$', views.register, name='register'),
 
     # /login
     url(r'^login/$', views.login_user, name='login'),
+
+    # /logout
+    url(r'logout/$', views.logout_user, name='logout'),
 
     # path('search/keyword=<keyword>', views.search, name='search'),
     url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search, name='search'),

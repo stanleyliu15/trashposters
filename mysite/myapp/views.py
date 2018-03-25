@@ -1,17 +1,43 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.http import Http404
 from django.http import HttpResponse
 
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
 from .models import Posts
 from .models import Comments
+from .models import Users
 
 from .forms import UserForm
 from .forms import LoginForm
+from .forms import PostForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
                        "A wittle fucko boingo! The code monkeys at our " \
                        "headquarters are working VEWY HAWD to fix this!"
+
+
+def create_post(request):
+    form = PostForm(request.POST or None)
+    if request.user.is_authenticated:
+        if form.is_valid():
+            post = form.save(commit=False)
+            this_username = request.user
+            user = User.objects.get(username=this_username)
+            post.user_id = user
+            post.save()
+            context = {'post': post}
+            return render(request, 'myapp/post_detail.html', context)
+    else:
+        return render(request, 'myapp/login.html')
+    context = {
+        "form": form,
+    }
+    return render(request, 'myapp/posts_form.html', context)
+
 
 
 # Lists all of the posts
@@ -83,7 +109,7 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponse("You have been logged in as: " + username)
+                return redirect(index)
             else:
                 return render(request, 'login.html', {'error_message': 'You have been banned.'})
         else:
@@ -95,11 +121,9 @@ def login_user(request):
 
 
 # Logs a user out.
-# TODO: Implement a link to log the user out.
-# TODO: Implement user only functionality first before doing the above.
 def logout_user(request):
     logout(request)
-    return render(request, 'login.html')
+    return redirect(index)
 
 
 # Create your views here.
