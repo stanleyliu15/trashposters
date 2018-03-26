@@ -39,10 +39,10 @@ def create_post(request):
     return render(request, 'myapp/posts_form.html', context)
 
 
-
 # Lists all of the posts
 def post_list(request):
     all_posts = Posts.objects.all()
+    all_posts.reverse()
     context = {'all_posts': all_posts}
     return render(request, 'myapp/post_list.html', context)
 

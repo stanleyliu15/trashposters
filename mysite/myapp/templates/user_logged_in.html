@@ -1,5 +1,0 @@
-{% if user.is_authenticated %}
-    <h3> Welcome {{ request.user.username }}</h3>
-{% else %}
-    <h3><a href={% url 'register' %}>Register today!</a></h3>
-{% endif %}

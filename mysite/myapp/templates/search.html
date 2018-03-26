@@ -9,13 +9,6 @@
             window.location.replace("/search/keyword=" + text_field.value + "/");
         }
     </script>
-    {% if user.is_authenticated %}
-        <h3> Welcome {{ request.user.username }}</h3>
-    {% else %}
-        <h3>
-            <a href={% url 'register' %}>Register today!</a>
-        </h3>
-    {% endif %}
 </head>
 
 <body>
@@ -39,4 +32,5 @@
     <h3> No posts to display. :( </h3>
 {% endif %}
 </body>
+{% include 'myapp/user_logged_in.html' %}
 </html>
