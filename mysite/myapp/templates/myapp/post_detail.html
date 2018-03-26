@@ -1,33 +1,29 @@
-    {% if user.is_authenticated %}
-        <h3> Viewing post as {{ request.user.username }}</h3>
-    <a href = {% url 'logout' %}>                       Log out. </a>
-    {% else %}
-        <h3>
-            <a href={% url 'register' %}>Register today!</a>
-        </h3>
-    {% endif %}
+{% extends 'myapp/base.html' %}
+{% include 'user_logged_in.html' %}
 
-<h2> Post Detail </h2>
-    <ul>
-        <h1>{{ post.title }}</h1>
-        <h3>Posted by {{ post.user_id }}</h3>
-        <div>
-            <br>
-            {{  post.description }}
-            <br> <br>
-            <li> {{ post.location }}</li>
-            <li> {{ post.date}} </li>
-        </div>
+{% block title %}
+{{ post.title }}
+Posted by {{ post.user_id }}
+{% endblock %}
+
+{% block content %}
+    <div>
         <br>
-        <div>
-            {% if comment_list %}
-                {% for comment in comment_list %}
-                    <li> {{ comment.comment_body }} - {{ comment.user_id }}</li>
-                {% endfor %}
-            {% else %}
-                <h4> No comments yet :( </h4>
-            {% endif %}
-        </div>
-        <br>
-        <a href= {% url 'post_list' %}> Go back </a>
-    </ul>
+        {{ post.description }}
+        <br> <br>
+        <li> {{ post.location }}</li>
+        <li> {{ post.date}}</li>
+    </div>
+    <br>
+    <div>
+        {% for comment in comment_list %}
+        <li> {{ comment.comment_body }} - {{ comment.user_id }}</li>
+        {% empty %}
+        <h4> No comments yet :( </h4>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <a href= {% url 'post_list' %}> Go back </a>
+{% endblock %}
