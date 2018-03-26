@@ -17,17 +17,15 @@
     <div>
         {% for comment in comment_list %}
             <li> {{ comment.comment_body }} - {{ comment.user_id }}</li>
-            {% include 'myapp/comments_form.html' %}
             {% empty %}
             <h4> No comments yet :( </h4>
-            {% if user.is_authenticated %}
-                <h4> {{ request.user.username }}, why don't you post the first comment? </h4>
-                {% include 'myapp/comments_form.html' %}
-            {% else %}
-                <br>
-                <a href={% url 'register' %}>Register</a> or <a href={% url 'login' %}>log in</a> to comment.
-            {% endif %}
         {% endfor %}
+    <br>
+        {% if user.is_authenticated %}
+            {% include 'myapp/comments_form.html' %}
+        {% else %}
+            <a href={% url 'register' %}>Register</a> or <a href={% url 'login' %}>log in</a> to comment.
+        {% endif %}
     </div>
 {% endblock %}
 
