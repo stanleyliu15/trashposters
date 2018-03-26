@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django import forms
 
 from .models import Posts
+from .models import Comments
 
 
 class UserForm(forms.ModelForm):
@@ -30,3 +31,9 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Posts
         fields = ['title', 'location', 'description']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        fields = ['comment_body']

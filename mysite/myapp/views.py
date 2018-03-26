@@ -12,6 +12,8 @@ from .models import Users
 from .forms import UserForm
 from .forms import LoginForm
 from .forms import PostForm
+from .forms import CommentForm
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
@@ -39,6 +41,25 @@ def create_post(request):
     return render(request, 'myapp/posts_form.html', context)
 
 
+def create_comment(request):
+    form = CommentForm(request.POST or None)
+    if request.user.is_authenticated:
+        if form.is_valid():
+            post = form.save(commit=False)
+            this_username = request.user
+            user = User.objects.get(username=this_username)
+            post.user_id = user
+            post.save()
+            context = {'post': post}
+            return render(request, 'myapp/post_detail.html', context)
+    else:
+        return render(request, 'myapp/login.html')
+    context = {
+        "form": form,
+    }
+    return render(request, 'myapp/post_detail.html', context)
+
+
 # Lists all of the posts
 def post_list(request):
     all_posts = Posts.objects.all()
@@ -49,13 +70,15 @@ def post_list(request):
 
 # Lists details about the post when the user clicks on it.
 def post_detail(request, post_id):
+    form = CommentForm(request.POST or None)
     try:
         post = Posts.objects.get(pk=post_id)
     except Posts.DoesNotExist:
         raise Http404(four_oh_four_message)
     comment_list = Comments.objects.filter(post_id=post_id)
     context = {'post': post,
-               'comment_list': comment_list}
+               'comment_list': comment_list,
+               'form': form}
     return render(request, 'myapp/post_detail.html', context)
 
 

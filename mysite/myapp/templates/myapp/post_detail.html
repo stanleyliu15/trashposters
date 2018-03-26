@@ -1,8 +1,8 @@
 {% extends 'myapp/base.html' %}
 
 {% block title %}
-{{ post.title }}
-Posted by {{ post.user_id }}
+    {{ post.title }}
+    Posted by {{ post.user_id }}
 {% endblock %}
 
 {% block content %}
@@ -11,14 +11,22 @@ Posted by {{ post.user_id }}
         {{ post.description }}
         <br> <br>
         <li> {{ post.location }}</li>
-        <li> {{ post.date}}</li>
+        <li> {{ post.date }}</li>
     </div>
     <br>
     <div>
         {% for comment in comment_list %}
-        <li> {{ comment.comment_body }} - {{ comment.user_id }}</li>
-        {% empty %}
-        <h4> No comments yet :( </h4>
+            <li> {{ comment.comment_body }} - {{ comment.user_id }}</li>
+            {% include 'myapp/comments_form.html' %}
+            {% empty %}
+            <h4> No comments yet :( </h4>
+            {% if user.is_authenticated %}
+                <h4> {{ request.user.username }}, why don't you post the first comment? </h4>
+                {% include 'myapp/comments_form.html' %}
+            {% else %}
+                <br>
+                <a href={% url 'register' %}>Register</a> or <a href={% url 'login' %}>log in</a> to comment.
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

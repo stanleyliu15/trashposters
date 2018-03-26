@@ -1,3 +1,9 @@
+
+{% block title %}
+    <h2> New post </h2>
+{% endblock %}
+
+{% block content %}
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% include 'myapp/form_template.html' %}
@@ -5,3 +11,8 @@
         <button type="submit"> Submit </button>
     </div>
 </form>
+{% endblock %}
+
+{% block footer %}
+    <a href= {% url 'post_list' %}> Go back </a>
+{% endblock %}

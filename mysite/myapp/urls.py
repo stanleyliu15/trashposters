@@ -23,6 +23,9 @@ urlpatterns = [
     # /posts/add/
     url(r'posts/add/$', views.create_post, name='post-add'),
 
+    # /posts/<number>/<comment_id>
+    url(r'posts/(?P<post_id>[0-9]+)/$', views.create_comment, name='comment-add'),
+
     # /register
     url(r'^register/$', views.register, name='register'),
 

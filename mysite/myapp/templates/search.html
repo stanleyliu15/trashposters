@@ -1,4 +1,6 @@
+{% extends 'myapp/base.html' %}
 {% load staticfiles %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,27 +12,42 @@
         }
     </script>
 </head>
+{% block title %}
+    <h2> Search posts by keyword</h2>
+{% endblock %}
+
 
 <body>
-<span>Keyword: </span>
-{% if keyword != "" %}
-    <input type="text" id="keyword_input" value="{{ keyword }}" placeholder="Ex: water"/>
-{% else %}
-    <input type="text" id="keyword_input" placeholder="Ex: water"/>
-{% endif %}
-<input type="button" value="Search" id="search_submit" onclick=search()/>
-<h2> Results </h2>
-{% if all_posts %}
-    <ul>
-        {% for post in all_posts %}
-            <li><a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a></li>
-            by: {{ post.user_id }}
-            <br><br>
-        {% endfor %}
-    </ul>
-{% else %}
-    <h3> No posts to display. :( </h3>
-{% endif %}
-</body>
-{% include 'myapp/user_logged_in.html' %}
+{% block content %}
+    <span>Keyword: </span>
+    {% if keyword != "" %}
+        <input type="text" id="keyword_input" value="{{ keyword }}" placeholder="Ex: water"/>
+    {% else %}
+        <input type="text" id="keyword_input" placeholder="Ex: water"/>
+    {% endif %}
+    <input type="button" value="Search" id="search_submit" onclick=search()/>
+    <h2> Results </h2>
+    {% if all_posts %}
+        <ul>
+            {% for post in all_posts %}
+                <li><a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a></li>
+                by: {{ post.user_id }}
+                <br><br>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3> No posts to display. :( </h3>
+    {% endif %}
+    </body>
+{% endblock %}
+
+{% block footer %}
+    {% if user.is_authenticated %}
+        <h3><a href={% url 'post-add' %}> Make a new post </a></h3>
+    {% else %}
+        <h3>
+            <a href={% url 'register' %}>Register to post</a>
+        </h3>
+    {% endif %}
+{% endblock %}
 </html>
