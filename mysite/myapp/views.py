@@ -73,10 +73,12 @@ def post_detail(request, post_id):
     form = CommentForm(request.POST or None)
     try:
         post = Posts.objects.get(pk=post_id)
+        image = "/images/" + str(post.post_id) + "/1.jpg"
     except Posts.DoesNotExist:
         raise Http404(four_oh_four_message)
     comment_list = Comments.objects.filter(post_id=post_id)
     context = {'post': post,
+               'image': image,
                'comment_list': comment_list,
                'form': form}
     return render(request, 'myapp/post_detail.html', context)
@@ -122,6 +124,7 @@ def register(request):
     return render(request, template_name, context)
 
 
+# INITIALIZE ALL VALUES
 # Logs in an existing user by validating their username and password.
 def login_user(request):
     form = LoginForm(request.POST or None)

@@ -1,4 +1,5 @@
 {% extends 'myapp/base.html' %}
+{% load staticfiles %}
 
 {% block title %}
     {{ post.title }}
@@ -7,6 +8,12 @@
 
 {% block content %}
     <div>
+    {% if image %}
+        <img style="width:300px;"
+             src={% static image %} />
+        {% else %}
+        <h2> No image to display. :(</h2>
+        {% endif %}
         <br>
         {{ post.description }}
         <br> <br>
