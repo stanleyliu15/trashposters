@@ -3,11 +3,8 @@ from django.shortcuts import redirect
 from django.http import Http404
 from django.http import HttpResponse
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-
 from .models import Posts
 from .models import Comments
-from .models import Users
 
 from .forms import UserForm
 from .forms import LoginForm
@@ -23,6 +20,12 @@ four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
 
 
 def create_post(request):
+    """
+    Creates a new post and writes it to the database if the request is HTTP Get.
+    If the user is not logged it, will redirect the user to the login page.
+    @:param     An http request.
+    @:return    Renders a new page with the post detail information and the primary key as part of the url.
+    """
     form = PostForm(request.POST or None)
     if request.user.is_authenticated:
         if form.is_valid():
@@ -42,6 +45,11 @@ def create_post(request):
 
 
 def create_comment(request):
+    """
+    Creates a new comment writes it to the database if the comment form is valid.
+    @:param     An http request.
+    @:return    Renders the post_detail page on the current post id with the new comment
+    """
     form = CommentForm(request.POST or None)
     if request.user.is_authenticated:
         if form.is_valid():
@@ -60,16 +68,26 @@ def create_comment(request):
     return render(request, 'myapp/post_detail.html', context)
 
 
-# Lists all of the posts
 def post_list(request):
+    """
+    Retrieves all of the Post objects from the database and lists them.
+    @:param     An http request.
+    @:return    Renders a page with all of the posts listed.
+    """
     all_posts = Posts.objects.all()
     all_posts.reverse()
     context = {'all_posts': all_posts}
     return render(request, 'myapp/post_list.html', context)
 
 
-# Lists details about the post when the user clicks on it.
 def post_detail(request, post_id):
+    """
+    Renders a page with the post details corresponding to the given id. If the
+    id does not match any posts within the database, will display a 404 instead.
+    @:param     An http request.
+    @:return    Renders a page with the post details.
+    @:except    Http404 if the post id given does not correspond with any existing posts.
+    """
     form = CommentForm(request.POST or None)
     try:
         post = Posts.objects.get(pk=post_id)
@@ -85,25 +103,36 @@ def post_detail(request, post_id):
 
 
 def search_empty(request):
+    """
+    Handles an empty search bar.
+    @:param     An http request.
+    @:return    Renders a page with all posts listed.
+    """
     all_posts = Posts.objects.all()
     context = {'all_posts': all_posts,
                'keyword': ''}
     return render(request, 'search.html', context)
 
 
-# sql_statement = "SELECT * FROM myapp_posts WHERE description LIKE '%%%s%%'"
-# print("sql: "+sql_statement)
-# all_posts = Posts.objects.raw(sql_statement, [keyword])
 def search(request, keyword):
-    print("Keyword: " + keyword)
+    """
+    Searches the description of posts to find matching posts containing the keyword.
+    @:param     An http request with a keyword.
+    @:return    Renders a page with all matching posts listed.
+    """
     all_posts = Posts.objects.filter(description__contains=keyword)
     context = {'all_posts': all_posts,
                'keyword': keyword}
     return render(request, 'search.html', context)
 
 
-# Adds a user to the admin.auth.users table. Displays an error message if the username is already taken.
 def register(request):
+    """
+    Registers a user to the website if a valid form is given and filled in.
+    This registration adds a user to django.contrib.auth.models.User.
+    @:param     An http request.
+    @:return    A login success page with the user now logged in to the website.
+    """
     template_name = 'register.html'
     form = UserForm(request.POST or None)
     if form.is_valid():
@@ -124,9 +153,13 @@ def register(request):
     return render(request, template_name, context)
 
 
-# INITIALIZE ALL VALUES
-# Logs in an existing user by validating their username and password.
 def login_user(request):
+    """
+    Logs the user in if valid credentials are given. Utilizes django.contrib.auth.authenticate in order
+    to validate username and password.
+    @:param     An http request
+    @:return    A login success page with the user now logged in to the website.
+    """
     form = LoginForm(request.POST or None)
     if request.method == "POST":
         username = request.POST['username']
@@ -146,8 +179,12 @@ def login_user(request):
     return render(request, 'login.html', context)
 
 
-# Logs a user out.
 def logout_user(request):
+    """
+    Logs the user out if they are logged in. Utilizes django.contrib.auth.logout
+    @:param     An http request
+    @:return    The index page of the website.
+    """
     logout(request)
     return redirect(index)
 
