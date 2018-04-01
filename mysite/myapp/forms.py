@@ -28,9 +28,11 @@ class LoginForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    file = forms.FileField()
+
     class Meta:
         model = Posts
-        fields = ['title', 'location', 'description']
+        fields = ['title', 'location', 'hazard_type', 'description']
 
 
 class CommentForm(forms.ModelForm):

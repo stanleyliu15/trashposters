@@ -14,71 +14,54 @@ models.ForeignKey(to, onDelete, options)    FOREIGN KEY
 models.IntegerField()                       integer NOT NULL
 """
 
-"""
-Users:
-    user_id - INT, Primary Key, Auto Increment
-    username - VARCHAR(255)
-    email - VARCHAR(255)
-    password - VARCHAR(255)
-    type - VARCHAR(255)
-    strikes - INT
-By default, there will be a field called "id" which will auto increment
-You can define any field as auto increment using AutoField field.
-Type is a reserved word in Python. Changes to user_type.
-"""
+# TODO Extend the Users class from django.contrib.auth.models instead.
+# Deleted the last one since it wasn't even being used in the current state of the website.
 
 
-class Users(models.Model):
-    user_id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    user_type = models.CharField(max_length=255)
-    strikes = models.IntegerField()
+class HazardType(models.Model):
+    """
+    Locations:
+        category_id - INT, Primary Key
+        category - VARCHAR(255)
+    """
+    hazard_id = models.AutoField(primary_key=True)
+    hazard_name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.username
-
-
-"""
-User_data
-    user_id - INT, Primary Key
-    first_name - VARCHAR(255)
-    last_name - VARCHAR(255)
-    biography - TEXT
-"""
+        return self.hazard_name
 
 
 class UserData(models.Model):
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    """
+    User_data
+        user_id - INT, Primary Key
+        biography - TEXT
+    """
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     biography = models.CharField(max_length=400)
-
-    def __str__(self):
-        return self.first_name + self.last_name
-
-
-"""
-Posts: 
-    post_id - INT, Primary Key, Auto Increment
-    user_id - INT
-    location - VARCHAR(255)
-    description - TEXT
-    date - DATE
-    comments - TEXT
-    reports - TEXT
-"""
+    location = models.CharField(max_length=255)
 
 
 class Posts(models.Model):
+    """
+    Posts:
+        post_id - INT, Primary Key, Auto Increment
+        user_id - INT, FOREIGN KEY
+        location - VARCHAR(255), FOREIGN KEY
+        hazard_type = VARCHAR(255), FOREIGN KEY
+
+        title = VARCHAR(255)
+        description - VARCHAR(400)
+        date - DATE
+    """
     post_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    hazard_type = models.ForeignKey(HazardType, on_delete=None)
+
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=400)
     date = models.DateTimeField(auto_now_add=True)
-    reports = models.CharField(max_length=255)
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.pk})
@@ -88,39 +71,37 @@ class Posts(models.Model):
 
 
 class Comments(models.Model):
+    """
+    Comments:
+        comment_id - INT, Primary Key, Auto Increment
+        user_id - INT, FOREIGN KEY
+        post_id = INT, FOREIGN KEY
+
+        comment_body - VARCHAR(255)
+    """
+    comment_id = models.AutoField(primary_key=True)
     post_id = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
     comment_body = models.CharField(max_length=255)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
-
-"""
-Locations: 
-    location_id - INT, Primary Key
-    location_name - VARCHAR(255)
-"""
 
 
-class Locations(models.Model):
-    location_id = models.AutoField(primary_key=True)
-    location_name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.location_name
-
-
-"""
-Messages:
-    user_id1 - INT
-    user_id2 - INT
-    messages - TEXT
-    Dates - DATETIME
-"""
-
-
-class Messages(models.Model):
-    user_id1 = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="user_userid1")
-    user_id2 = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="user_userid2")
+class Message(models.Model):
+    """
+    Messages:
+        user_id1 - INT
+        user_id2 - INT
+        messages - TEXT
+        Dates - DATETIME
+    """
+    user_id1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_userid1")
+    user_id2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_userid2")
     messages = models.CharField(max_length=400)
     dates = models.DateTimeField()
 
     def __str__(self):
         return self.messages
+
+
+class DummyTable(models.Model):
+    name = models.CharField(default="Water makes the frogs turn gay.", max_length=255)
