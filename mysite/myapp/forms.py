@@ -28,7 +28,7 @@ class LoginForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    file = forms.FileField()
+    image = forms.FileField(label="Select an image to upload.", help_text="Maximum file size is 2 megabytes")
 
     class Meta:
         model = Posts

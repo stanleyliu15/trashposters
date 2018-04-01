@@ -8,9 +8,9 @@
 
 {% block content %}
     <div>
-    {% if image %}
+    {% if post.image %}
         <img style="width:300px;"
-             src={% static image %} />
+             src= {{ post.image }} />
         {% else %}
         <h2> No image to display. :(</h2>
         {% endif %}

@@ -33,13 +33,14 @@ def create_post(request):
     @:param     An http request.
     @:return    Renders a new page with the post detail information and the primary key as part of the url.
     """
-    form = PostForm(request.POST or None)
+    form = PostForm(request.POST, request.FILES or None)
     if request.user.is_authenticated:
         if form.is_valid():
             post = form.save(commit=False)
             this_username = request.user
             user = User.objects.get(username=this_username)
             post.user_id = user
+            post.image = form.cleaned_data['image']
             post.save()
             context = {'post': post}
             return render(request, 'myapp/post_detail.html', context)
