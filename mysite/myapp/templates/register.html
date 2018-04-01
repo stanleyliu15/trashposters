@@ -1,4 +1,9 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}
 <h2> Register for an account here!</h2>
+{% endblock %}
+{% block content%}
 <div>
     {% if error_message %}
         <h2> {{error_message}} </h2>
@@ -11,3 +16,7 @@
         </div>
     </form>
 </div>
+    <a href= {% url 'index' %}> Go back </a>
+{% endblock %}
+{% block footer %}
+{% endblock %}
