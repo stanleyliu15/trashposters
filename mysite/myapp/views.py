@@ -14,9 +14,16 @@ from .forms import CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
+import os, json
+
 four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
                        "A wittle fucko boingo! The code monkeys at our " \
                        "headquarters are working VEWY HAWD to fix this!"
+
+
+# WELCOME TO OUR SITE YOU ENVIRONMENT LOVER
+def index(request):
+    return render(request, 'index.html', context={})
 
 
 def create_post(request):
@@ -189,39 +196,15 @@ def logout_user(request):
     return redirect(index)
 
 
-# Create your views here.
-def index(request):
-    return render(request, 'index.html', context={})
+# About pages index
+def about_us(request):
+    with open(os.getcwd() + '/myapp/static/data/about-us-list.json', 'r') as json_file:
+        data = json.load(json_file)
+    return render(request, 'about-pages/index.html', context={"team_members": data})
 
 
-def index2(request):
-    return render(request, 'index2.html', context={})
-
-
-def about(request):
-    return render(request, 'about.html', context={})
-
-
-# TODO Replace all of these with a regular expression to reduce the amount of methods in views.py - Danielle
-def aboutAlex(request):
-    return render(request, 'about-pages/alex.html', context={})
-
-
-def aboutDanielle(request):
-    return render(request, 'about-pages/danielle.html', context={})
-
-
-def aboutJames(request):
-    return render(request, 'about-pages/james.html', context={})
-
-
-def aboutJzhong(request):
-    return render(request, 'about-pages/jzhong.html', context={})
-
-
-def aboutStanley(request):
-    return render(request, 'about-pages/stanley.html', context={})
-
-
-def aboutTumar(request):
-    return render(request, 'about-pages/tumar.html', context={})
+# About pages individual page for each team member
+def about_us_single(request, team_member):
+    with open(os.getcwd() + '/myapp/static/data/about-us-list.json', 'r') as json_file:
+        data = json.load(json_file)[team_member];
+    return render(request, 'about-pages/about-single.html', context={"team_member": data})

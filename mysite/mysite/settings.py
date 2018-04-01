@@ -55,7 +55,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['mysite/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,6 +67,10 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates/'),
+)
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
@@ -123,4 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+PROJECT_ROOT = 'mysite'
+
 LOGOUT_REDIRECT_URL = 'index'
+

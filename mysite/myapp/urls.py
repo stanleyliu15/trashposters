@@ -4,15 +4,14 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    # TODO: Replace the about pages with a regular expression so it's like the posts urls.
-    path('', views.index, name='index'),
-    path('about', views.about, name='about'),
-    path('about/alex', views.aboutAlex, name='aboutAlex'),
-    path('about/danielle', views.aboutDanielle, name='aboutDanielle'),
-    path('about/james', views.aboutJames, name='aboutJames'),
-    path('about/jzhong', views.aboutJzhong, name='aboutJzhong'),
-    path('about/stanley', views.aboutStanley, name='aboutStanley'),
-    path('about/tumar', views.aboutTumar, name='aboutTumar'),
+
+    # Welcome page
+    url(r'^$', views.index, name='index'),
+
+    # about-us
+    path('about-us', views.about_us, name='about'),
+
+    path('about-us/<team_member>', views.about_us_single, name="about_us_single"),
 
     # /posts/
     url(r'^posts/$', views.post_list, name='post_list'),
@@ -37,5 +36,6 @@ urlpatterns = [
 
     # path('search/keyword=<keyword>', views.search, name='search'),
     url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search, name='search'),
+
     url(r'^search/$', views.search_empty, name='search_empty'),
 ]
