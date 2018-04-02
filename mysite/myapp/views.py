@@ -5,6 +5,7 @@ from django.http import HttpResponse
 
 from .models import Posts
 from .models import Comments
+from .models import UserData
 
 from .forms import UserForm
 from .forms import LoginForm
@@ -108,6 +109,22 @@ def post_detail(request, post_id):
                'comment_list': comment_list,
                'form': form}
     return render(request, 'myapp/post_detail.html', context)
+
+
+def profile_detail(request, user_id):
+    """
+    Renders a page with the post details corresponding to the given id. If the
+    id does not match any posts within the database, will display a 404 instead.
+    @:param     An http request.
+    @:return    Renders a page with the post details.
+    @:except    Http404 if the post id given does not correspond with any existing posts.
+    """
+    try:
+        userdata = UserData.objects.get(username__username__exact=user_id)
+    except User.DoesNotExist:
+        raise Http404(four_oh_four_message)
+    context = {'userdata': userdata}
+    return render(request, 'myapp/profile_detail.html', context)
 
 
 def search_empty(request):

@@ -38,9 +38,16 @@ class UserData(models.Model):
         user_id - INT, Primary Key
         biography - TEXT
     """
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
     biography = models.CharField(max_length=400)
     location = models.CharField(max_length=255)
+    avatar = models.ImageField(upload_to='profile_pictures', null=True)
+
+    def get_absolute_url(self):
+        return reverse('profile_detail', kwargs={'pk': self.pk})
+
+    def __str__(self):
+        return str(self.username) + "'s profile"
 
 
 class Posts(models.Model):

@@ -19,6 +19,9 @@ urlpatterns = [
     # /posts/<number>
     url(r'posts/(?P<post_id>[0-9]+)/$', views.post_detail, name='post_detail'),
 
+    # /profile/<number>
+    url(r'profile/(?P<user_id>[A-Za-z]+)/$', views.profile_detail, name='profile_detail'),
+
     # /posts/add/
     url(r'posts/add/$', views.create_post, name='post-add'),
 
