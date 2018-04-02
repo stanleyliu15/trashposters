@@ -7,13 +7,10 @@ from . import views
 urlpatterns = [
     # TODO: Replace the about pages with a regular expression so it's like the posts urls.
     path('', views.index, name='index'),
-    path('about', views.about, name='about'),
-    path('about/alex', views.aboutAlex, name='aboutAlex'),
-    path('about/danielle', views.aboutDanielle, name='aboutDanielle'),
-    path('about/james', views.aboutJames, name='aboutJames'),
-    path('about/jzhong', views.aboutJzhong, name='aboutJzhong'),
-    path('about/stanley', views.aboutStanley, name='aboutStanley'),
-    path('about/tumar', views.aboutTumar, name='aboutTumar'),
+
+    # about us
+    path('about-us', views.aboutUs, name='aboutUs'),
+    path('about-us/<team_member>', views.aboutUsSingle, name="aboutUsSingle"),
 
     # /posts/
     url(r'^posts/$', views.post_list, name='post_list'),

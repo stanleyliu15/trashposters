@@ -4,6 +4,10 @@ from django.http import Http404
 from .models import Posts
 from .models import Comments
 
+from pprint import pprint
+import os
+import json
+
 four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
                        "A wittle fucko boingo! The code monkeys at our " \
                        "headquarters are working VEWY HAWD to fix this!"
@@ -58,37 +62,16 @@ def search(request, keyword):
     return render(request, 'search.html', context)
 
 # Create your views here.
-def index(request):
-    return render(request, 'index.html', context={})
-
-
-def index2(request):
-    return render(request, 'index2.html', context={})
-
-
-def about(request):
-    return render(request, 'about.html', context={})
-
 # Going to replace all of these with a regular expression to reduce the amount of methods in views.py - Danielle
-def aboutAlex(request):
-    return render(request, 'about-pages/alex.html', context={})
+def index(request):
+		return render(request, 'views/home/index.html')
 
+def aboutUs(request):
+		with open(os.getcwd() + '/myapp/static/data/about-us-list.json', 'r') as json_file:
+  			data = json.load(json_file)
+		return render(request, 'views/about-us/index.html', context={"team_members": data})
 
-def aboutDanielle(request):
-    return render(request, 'about-pages/danielle.html', context={})
-
-
-def aboutJames(request):
-    return render(request, 'about-pages/james.html', context={})
-
-
-def aboutJzhong(request):
-    return render(request, 'about-pages/jzhong.html', context={})
-
-
-def aboutStanley(request):
-    return render(request, 'about-pages/stanley.html', context={})
-
-
-def aboutTumar(request):
-    return render(request, 'about-pages/tumar.html', context={})
+def aboutUsSingle(request, team_member):
+		with open(os.getcwd() + '/myapp/static/data/about-us-list.json', 'r') as json_file:
+  			data = json.load(json_file)[team_member];
+		return render(request, 'views/about-us/about-single.html', context={"team_member": data})
