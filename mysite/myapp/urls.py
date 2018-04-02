@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'logout/$', views.logout_user, name='logout'),
 
     # path('search/keyword=<keyword>', views.search, name='search'),
-    url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search, name='search'),
+    url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search_by_keyword, name='search'),
 
     url(r'^search/$', views.search_empty, name='search_empty'),
 ]

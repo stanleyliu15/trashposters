@@ -139,7 +139,7 @@ def search_empty(request):
     return render(request, 'search.html', context)
 
 
-def search(request, keyword):
+def search_by_keyword(request, keyword):
     """
     Searches the description of posts to find matching posts containing the keyword.
     @:param     An http request with a keyword.
@@ -148,6 +148,42 @@ def search(request, keyword):
     all_posts = Posts.objects.filter(description__contains=keyword)
     context = {'all_posts': all_posts,
                'keyword': keyword}
+    return render(request, 'search.html', context)
+
+
+def search_by_user(request, username):
+    """
+    Searches the description of posts to find matching posts made by the requested user
+    @:param     An http request with a username
+    @:return    Renders a page with all matching posts listed.
+    """
+    all_posts = Posts.objects.filter(user_id__username__exact=username)
+    context = {'all_posts': all_posts,
+               'username': username}
+    return render(request, 'search.html', context)
+
+
+def search_by_hazard_type(request, hazard_type):
+    """
+    Searches the description of posts to find matching posts of the given hazard Type
+    @:param     An http request with a hazard type
+    @:return    Renders a page with all matching posts listed.
+    """
+    all_posts = Posts.objects.filter(hazard_type__hazard_name__exact=hazard_type)
+    context = {'all_posts': all_posts,
+               'hazard_type': hazard_type}
+    return render(request, 'search.html', context)
+
+
+def search_by_location(request, location):
+    """
+    Searches the description of posts to find locations containing the given query
+    @:param     An http request with a hazard type
+    @:return    Renders a page with all matching posts listed.
+    """
+    all_posts = Posts.objects.filter(location__contains=location)
+    context = {'all_posts': all_posts,
+               'location': location}
     return render(request, 'search.html', context)
 
 
