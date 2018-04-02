@@ -3,7 +3,7 @@
 
 {% block title %}
     {{ post.title }}
-    Posted by {{ post.user_id }}
+    Posted by {{ post.user_id }}<a href= {% url 'profile_detail' %}> Go back </a>{{ post.user_id }}
 {% endblock %}
 
 {% block content %}

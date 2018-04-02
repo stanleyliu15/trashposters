@@ -36,11 +36,14 @@ class UserData(models.Model):
     """
     User_data
         user_id - INT, Primary Key
-        biography - TEXT
+        username = ForeignKey
+        biography - VarChar
+        location = VarChar
+        avatar = VarChar
     """
     username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
-    biography = models.CharField(max_length=400)
-    location = models.CharField(max_length=255)
+    biography = models.CharField(max_length=400, null=True)
+    location = models.CharField(max_length=255, null=True)
     avatar = models.ImageField(upload_to='profile_pictures', null=True)
 
     def get_absolute_url(self):

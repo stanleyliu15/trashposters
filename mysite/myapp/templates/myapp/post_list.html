@@ -6,8 +6,9 @@
 
 {% block content %}
     {% for post in all_posts %}
-        <li><a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a></li>
-        by: {{ post.user_id }}
+        <li>
+            <a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a></li>
+            <a href={% url 'profile_detail' post.user_id %}> by: {{ post.user_id }} </a>
         <br><br>
         </ul>
         {% empty %}
