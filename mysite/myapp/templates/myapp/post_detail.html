@@ -10,7 +10,7 @@
     <div>
     {% if post.image %}
         <img style="width:300px;"
-             src= {{ post.image }} />
+             src= {{ post.image.url }} />
         {% else %}
         <h2> No image to display. :(</h2>
         {% endif %}

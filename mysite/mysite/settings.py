@@ -127,8 +127,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Note: This method of serving static files is only for development.
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'myapp/media')
 
 PROJECT_ROOT = 'mysite'
 
