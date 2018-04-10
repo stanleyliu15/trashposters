@@ -27,6 +27,18 @@ class LoginForm(forms.ModelForm):
         fields = ['username', 'password']
 
 
+class SearchForm(forms.Form):
+    select_choices = (
+        ('keyword', 'Keyword'),
+        ('zipcode', 'Zip Code'),
+    )
+
+    selection = forms.ChoiceField(widget=forms.Select, choices=select_choices)
+
+    value = forms.CharField(label='', max_length=50,
+                             widget=forms.TextInput(attrs={'placeholder': 'Ex: Lake'}))
+
+
 class PostForm(forms.ModelForm):
     image = forms.FileField(label="Select an image to upload.", help_text="Maximum file size is 2 megabytes")
 

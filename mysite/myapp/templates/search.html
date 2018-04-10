@@ -5,12 +5,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+{% block javascript %}
     <script type="text/javascript">
         function search() {
             var text_field = document.getElementById("keyword_input");
             window.location.replace("/search/keyword=" + text_field.value + "/");
         }
     </script>
+{% endblock %}
 </head>
 {% block title %}
     <h2> Search posts by keyword</h2>
@@ -20,12 +22,22 @@
 <body>
 {% block content %}
     <span>Keyword: </span>
+
+	<form action="/search/" method="GET">
+	    
+	    {{ form }}
+	    <input type="submit" value="Submit" />
+
+	</form>
+
+
     {% if keyword != "" %}
-        <input type="text" id="keyword_input" value="{{ keyword }}" placeholder="Ex: water"/>
+        <!--<input type="text" id="keyword_input" value="{{ keyword }}" placeholder="Ex: water"/>-->
     {% else %}
-        <input type="text" id="keyword_input" placeholder="Ex: water"/>
+        <!--<input type="text" id="keyword_input" placeholder="Ex: water"/>-->
     {% endif %}
-    <input type="button" value="Search" id="search_submit" onclick=search()/>
+
+    <!--<input type="button" value="Search" id="search_submit" onclick="search()"/>-->
     <h2> Results </h2>
     {% if all_posts %}
         <ul>
