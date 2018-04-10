@@ -8,10 +8,14 @@ urlpatterns = [
     # Welcome page
     url(r'^$', views.index, name='index'),
 
-    # about-us
+    # about-us/
     path('about-us', views.about_us, name='about'),
 
+    # about-us/<team_member>
     path('about-us/<team_member>', views.about_us_single, name="about_us_single"),
+
+    # /profile/<number>
+    url(r'profile/(?P<user_id>[A-Za-z0-9]+)/$', views.profile_detail, name='profile_detail'),
 
     # /posts/
     url(r'^posts/$', views.post_list, name='post_list'),
@@ -19,8 +23,8 @@ urlpatterns = [
     # /posts/<number>
     url(r'posts/(?P<post_id>[0-9]+)/$', views.post_detail, name='post_detail'),
 
-    # /profile/<number>
-    url(r'profile/(?P<user_id>[A-Za-z0-9]+)/$', views.profile_detail, name='profile_detail'),
+    # /posts/<number>/add_comment
+    url(r'posts/(?P<post_id>[0-9]+)/add_comment$', views.create_comment, name='post_comment'),
 
     # /posts/add/
     url(r'posts/add/$', views.create_post, name='post-add'),
@@ -40,5 +44,6 @@ urlpatterns = [
     # path('search/keyword=<keyword>', views.search, name='search'),
     url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search_by_keyword, name='search'),
 
+    # Empty search
     url(r'^search/$', views.search_empty, name='search_empty'),
 ]

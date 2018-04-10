@@ -15,6 +15,8 @@ from .forms import CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
+from geopy.geocoders import Nominatim
+
 import os, json
 
 four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
@@ -53,7 +55,7 @@ def create_post(request):
     return render(request, 'myapp/posts_form.html', context)
 
 
-def create_comment(request):
+def create_comment(request, post):
     """
     Creates a new comment writes it to the database if the comment form is valid.
     @:param     An http request.
@@ -62,7 +64,7 @@ def create_comment(request):
     form = CommentForm(request.POST or None)
     if request.user.is_authenticated:
         if form.is_valid():
-            post = form.save(commit=False)
+            comment = form.save(commit=False)
             this_username = request.user
             user = User.objects.get(username=this_username)
             post.user_id = user
@@ -88,7 +90,6 @@ def post_list(request):
     context = {'all_posts': all_posts}
     return render(request, 'myapp/post_list.html', context)
 
-
 def post_detail(request, post_id):
     """
     Renders a page with the post details corresponding to the given id. If the
@@ -104,10 +105,17 @@ def post_detail(request, post_id):
     except Posts.DoesNotExist:
         raise Http404(four_oh_four_message)
     comment_list = Comments.objects.filter(post_id=post_id)
+    address = post.location
+    geolocation = Nominatim()
+    location = geolocation.geocode(address)
+    latitude = location.latitude
+    longitude = location.longitude
     context = {'post': post,
                'image': image,
                'comment_list': comment_list,
-               'form': form}
+               'form': form,
+               'latitude': latitude,
+               'longitude': longitude}
     return render(request, 'myapp/post_detail.html', context)
 
 

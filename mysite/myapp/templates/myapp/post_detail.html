@@ -1,9 +1,9 @@
-{% extends 'layouts/base.html' %}
+{% extends 'myapp/post_detail_base.html' %}
 {% load staticfiles %}
 
 {% block title %}
     {{ post.title }}
-    Posted by {{ post.user_id }}<a href= {% url 'profile_detail' %}> Go back </a>{{ post.user_id }}
+    Posted by  <a href={% url 'profile_detail' post.user_id %}> {{ post.user_id }} </a>
 {% endblock %}
 
 {% block content %}
@@ -29,7 +29,7 @@
         {% endfor %}
     <br>
         {% if user.is_authenticated %}
-            {% include 'myapp/comments_form.html' %}
+            {% include 'myapp/comments_form.html'%}
         {% else %}
             <a href={% url 'register' %}>Register</a> or <a href={% url 'login' %}>log in</a> to comment.
         {% endif %}

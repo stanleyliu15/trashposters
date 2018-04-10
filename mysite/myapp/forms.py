@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from django import forms
-
 from .models import Posts
 from .models import Comments
+from .validators import validate_image_file
 
 
 class UserForm(forms.ModelForm):
@@ -20,7 +20,6 @@ class LoginForm(forms.ModelForm):
     # Changes it from plain text to hashing
     password = forms.CharField(widget=forms.PasswordInput)
 
-    # Meta Information about your class.
     class Meta:
         model = User
         # What fields do we want to appear on the form?
@@ -28,7 +27,7 @@ class LoginForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    image = forms.FileField(label="Select an image to upload.", help_text="Maximum file size is 2 megabytes")
+    image = forms.FileField(label="Select an image to upload.", help_text="Maximum file size is 2 megabytes", validators=[validate_image_file])
 
     class Meta:
         model = Posts
@@ -39,3 +38,9 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ['comment_body']
+
+
+class SearchForm(forms.ModelForm):
+
+    class Meta:
+        fields = ['title', 'location', 'hazard_type', 'description', 'user_id']

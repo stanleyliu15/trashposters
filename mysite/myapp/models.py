@@ -32,6 +32,11 @@ class HazardType(models.Model):
         return self.hazard_name
 
 
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.username.id, filename)
+
+
 class UserData(models.Model):
     """
     User_data
@@ -44,13 +49,18 @@ class UserData(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
     biography = models.CharField(max_length=400, null=True)
     location = models.CharField(max_length=255, null=True)
-    avatar = models.ImageField(upload_to='profile_pictures', null=True)
+    avatar = models.ImageField(upload_to=user_directory_path, null=True)
 
     def get_absolute_url(self):
         return reverse('profile_detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return str(self.username) + "'s profile"
+
+
+def post_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.user_id.id, filename)
 
 
 class Posts(models.Model):
@@ -73,7 +83,7 @@ class Posts(models.Model):
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=400)
     date = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='posts/%Y/%m/%d', null=True)
+    image = models.ImageField(upload_to=post_directory_path, null=True)
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.pk})
