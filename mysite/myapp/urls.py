@@ -45,5 +45,7 @@ urlpatterns = [
     url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search_by_keyword, name='search'),
 
     # Empty search
-    url(r'^search/$', views.search_empty, name='search_empty'),
+    url(r'^search/$', views.search, name='search_empty'),
+
+    url('search/', views.search, name='get_search'),
 ]

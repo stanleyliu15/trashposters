@@ -11,6 +11,7 @@ from .forms import UserForm
 from .forms import LoginForm
 from .forms import PostForm
 from .forms import CommentForm
+from .forms import SearchForm
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -135,6 +136,25 @@ def profile_detail(request, user_id):
     return render(request, 'myapp/profile_detail.html', context)
 
 
+def search(request):
+    form = SearchForm(request.GET)
+    context = {'form': form}
+    if request.method == 'GET':
+        if form.is_valid():
+            selection = request.GET.get('selection')
+            value = request.GET.get('value')
+            if selection == 'keyword':
+                all_posts = Posts.objects.filter(title__icontains=value)
+                context['all_posts'] = all_posts
+            if selection == 'zipcode':
+                all_posts = Posts.objects.filter(zipcode__icontains=value)
+                context['all_posts'] = all_posts
+        else:
+             all_posts = Posts.objects.all()
+             context['all_posts'] = all_posts
+    return render(request, 'search.html', context)
+
+
 def search_empty(request):
     """
     Handles an empty search bar.
@@ -142,7 +162,9 @@ def search_empty(request):
     @:return    Renders a page with all posts listed.
     """
     all_posts = Posts.objects.all()
+    form = SearchForm(request.GET)
     context = {'all_posts': all_posts,
+               'form': form,
                'keyword': ''}
     return render(request, 'search.html', context)
 
