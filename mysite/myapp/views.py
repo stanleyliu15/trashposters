@@ -91,6 +91,7 @@ def post_list(request):
     context = {'all_posts': all_posts}
     return render(request, 'myapp/post_list.html', context)
 
+
 def post_detail(request, post_id):
     """
     Renders a page with the post details corresponding to the given id. If the
@@ -111,13 +112,18 @@ def post_detail(request, post_id):
     location = geolocation.geocode(address)
     latitude = location.latitude
     longitude = location.longitude
+    username = request.user
+    user_data = UserData.objects.get(username__username__exact=username)
+    print("USER AVATAR LOCATED AT : " + str(user_data.avatar.url))
+    print("USER DATA: " + str(user_data))
     context = {'post': post,
                'image': image,
                'comment_list': comment_list,
                'form': form,
                'latitude': latitude,
-               'longitude': longitude}
-    return render(request, 'myapp/post_detail.html', context)
+               'longitude': longitude,
+               'user_data': user_data}
+    return render(request, 'views/post/post_detail.html', context)
 
 
 def profile_detail(request, user_id):

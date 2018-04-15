@@ -9,7 +9,13 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 
     # about-us/
-    path('about-us', views.about_us, name='about'),
+    path('about-us', views.about_us, name='about_us'),
+
+    # contact/
+    path('contact', views.about_us, name='contact'),
+
+    # terms_of_service/
+    path('terms-of-service', views.about_us, name='terms_of_service'),
 
     # about-us/<team_member>
     path('about-us/<team_member>', views.about_us_single, name="about_us_single"),
@@ -27,13 +33,19 @@ urlpatterns = [
     url(r'posts/(?P<post_id>[0-9]+)/add_comment$', views.create_comment, name='post_comment'),
 
     # /posts/add/
-    url(r'posts/add/$', views.create_post, name='post-add'),
+    url(r'posts/add/$', views.create_post, name='create_post'),
 
     # /posts/<number>/<comment_id>
     url(r'posts/(?P<post_id>[0-9]+)/$', views.create_comment, name='comment-add'),
 
     # /register
     url(r'^register/$', views.register, name='register'),
+
+    # /dashboard
+    url(r'^dashboard/$', views.register, name='dashboard_city_official'),
+
+    # /settings
+    url(r'^settings/$', views.register, name='settings'),
 
     # /login
     url(r'^login/$', views.login_user, name='login'),
