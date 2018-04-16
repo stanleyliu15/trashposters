@@ -65,9 +65,31 @@
       </form>
     </div>
   </div>
+
+  <!-- Experimental -->
+  <div class="mt-5">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="location-addon">
+          <i class="fa fa-location-arrow"></i>
+        </span>
+      </div>
+      <input type="text" class="form-control controls" id="pac-input" placeholder="Search by location" aria-label="Map Search" aria-describedby="location-addon">
+    </div>
+    {% comment %} <input id="pac-input" class="controls w-100 my-2" type="text" placeholder="Search Box"> {% endcomment %}
+    <div style="height: 600px !important;" id="map"></div>
+  </div>
+  <!-- */Experimental -->
+
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script src="{% static 'js/utils/resize_select.js' %}"></script>
+
+<!-- Experimental -->
+<script src="{% static 'js/test.js' %}"></script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpPu_PCNNnsx6YYmltRVR0D0VsvVRr4OM&libraries=places&callback=initMap">
+</script>
 {% endblock %}

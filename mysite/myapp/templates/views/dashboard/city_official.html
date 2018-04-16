@@ -1,10 +1,7 @@
 <!--
-  * Table Based View
-  * with sidebar navigation
-
   * List / View Users (P1),
   * List / View Posts (P1),
-  * Set Status of Post (P1)
+  * Set Status of Post (P1),
   * Delete Posts (P1)
 -->
 {% extends 'layouts/base.html' %}
@@ -26,10 +23,10 @@
     <div class="col-md-8 mx-auto mt-5">
       <ul class="nav justify-content-center border-bottom">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Users</a>
+          <a class="nav-link text-success" href="#">Posts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Posts</a>
+          <a class="nav-link text-success" href="#">Users</a>
         </li>
       </ul>
     </div>
@@ -38,9 +35,8 @@
   <div class="row">
     <div class="col">
       {% include 'views/dashboard/sample_post_table.html' %}
-      {% include 'views/dashboard/same_user_table.html' %}
+      {% include 'views/dashboard/sample_user_table.html' %}
     </div>
   </div>
-  <!-- /#dashboard-content -->
 </div>
 {% endblock %}

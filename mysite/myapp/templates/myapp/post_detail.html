@@ -1,41 +1,28 @@
-{% extends 'myapp/post_detail_base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-    {{ post.title }}
-    Posted by  <a href={% url 'profile_detail' post.user_id %}> {{ post.user_id }} </a>
-{% endblock %}
+<h2> Post Detail </h2>
+    <ul>
+        <h1>{{ post.title }}</h1>
+        <h3>Posted by {{ post.user_id }}</h3>
 
-{% block content %}
-    <div>
-    {% if post.image %}
-        <img style="width:300px;"
-             src= {{ post.image.url }} />
-        {% else %}
-        <h2> No image to display. :(</h2>
-        {% endif %}
+	<img style="width:300px;" src={% static image %} />
+	<div>
+            <br>
+            {{  post.description }}
+            <br> <br>
+            <li> {{ post.location }}</li>
+            <li> {{ post.date}} </li>
+        </div>
         <br>
-        {{ post.description }}
-        <br> <br>
-        <li> {{ post.location }}</li>
-        <li> {{ post.date }}</li>
-    </div>
-    <br>
-    <div>
-        {% for comment in comment_list %}
-            <li> {{ comment.comment_body }} - {{ comment.user_id }}</li>
-            {% empty %}
-            <h4> No comments yet :( </h4>
-        {% endfor %}
-    <br>
-        {% if user.is_authenticated %}
-            {% include 'myapp/comments_form.html'%}
-        {% else %}
-            <a href={% url 'register' %}>Register</a> or <a href={% url 'login' %}>log in</a> to comment.
-        {% endif %}
-    </div>
-{% endblock %}
-
-{% block footer %}
-    <a href= {% url 'post_list' %}> Go back </a>
-{% endblock %}
+        <div>
+            {% if comment_list %}
+                {% for comment in comment_list %}
+                    <li> {{ comment.comment_body }} - {{ comment.user_id }}</li>
+                {% endfor %}
+            {% else %}
+                <h4> No comments yet :( </h4>
+            {% endif %}
+        </div>
+        <br>
+        <a href= {% url 'post_list' %}> Go back </a>
+    </ul>

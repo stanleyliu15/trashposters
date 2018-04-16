@@ -1,65 +1,36 @@
-{% extends 'layouts/base.html' %}
 {% load staticfiles %}
-
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-{% block javascript %}
-    <script type="text/javascript">
-        function search() {
-            var text_field = document.getElementById("keyword_input");
-            window.location.replace("/search/keyword=" + text_field.value + "/");
-        }
-    </script>
-{% endblock %}
-</head>
-{% block title %}
-    <h2> Search posts by keyword</h2>
-{% endblock %}
+	<head>
+		<script type="text/javascript">
+			function search(){
+				var text_field = document.getElementById("keyword_input");
+				window.location.replace("/search/keyword="+text_field.value+"/");
+			}
+		</script>
+	</head>
 
-
-<body>
-{% block content %}
-    <span>Keyword: </span>
-
-	<form action="/search/" method="GET">
-	    
-	    {{ form }}
-	    <input type="submit" value="Submit" />
-
-	</form>
-
-
-    {% if keyword != "" %}
-        <!--<input type="text" id="keyword_input" value="{{ keyword }}" placeholder="Ex: water"/>-->
-    {% else %}
-        <!--<input type="text" id="keyword_input" placeholder="Ex: water"/>-->
-    {% endif %}
-
-    <!--<input type="button" value="Search" id="search_submit" onclick="search()"/>-->
-    <h2> Results </h2>
-    {% if all_posts %}
-        <ul>
-            {% for post in all_posts %}
-                <li><a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a></li>
-                by: {{ post.user_id }}
-                <br><br>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h3> No posts to display. :( </h3>
-    {% endif %}
-    </body>
-{% endblock %}
-
-{% block footer %}
-    {% if user.is_authenticated %}
-        <h3><a href={% url 'post-add' %}> Make a new post </a></h3>
-    {% else %}
-        <h3>
-            <a href={% url 'register' %}>Register to post</a>
-        </h3>
-    {% endif %}
-{% endblock %}
+	<body>
+		<span>Keyword: </span>
+		{% if keyword != "" %}
+			<input type="text" id="keyword_input" value="{{ keyword }}"  placeholder="Ex: water" />
+		{% else %}
+			<input type="text" id="keyword_input" placeholder="Ex: water" />
+		{% endif %}
+		<input type="button" value="Search" id="search_submit" onclick=search() />
+		<h2> Results </h2>
+		{% if all_posts %}
+		    <ul>
+		        {% for post in all_posts %}
+		        <li>
+			    <a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a> </li>
+			    by: {{ post.user_id }}
+		            <br><br>
+		        {% endfor %}
+		    </ul>
+		{% else %}
+		    <h3> No posts to display. :( </h3>
+		{% endif %}
+	</body>
 </html>

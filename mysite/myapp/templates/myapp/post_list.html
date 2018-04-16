@@ -1,27 +1,12 @@
-{% extends 'layouts/base.html' %}
-
-{% block title %}
-    <h2> Posts </h2>
-{% endblock %}
-
-{% block content %}
-    {% for post in all_posts %}
-        <li>
-            <a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a></li>
-            <a href={% url 'profile_detail' post.user_id %}> by: {{ post.user_id }} </a>
-        <br><br>
-        </ul>
-        {% empty %}
-        <h3> No posts to display. :( </h3>
-    {% endfor %}
-{% endblock %}
-
-{% block footer %}
-    {% if user.is_authenticated %}
-        <h3><a href={% url 'post-add' %}> Make a new post </a></h3>
-    {% else %}
-        <h3>
-            <a href={% url 'register' %}>Register to post</a>
-        </h3>
-    {% endif %}
-{% endblock %}
+<h2> Posts </h2>
+{% if all_posts %}
+    <ul>
+        {% for post in all_posts %}
+        <li><a href={% url 'post_detail' post.post_id %}> {{ post.title }} </a> </li>
+            by: {{ post.user_id }}
+            <br><br>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3> No posts to display. :( </h3>
+{% endif %}

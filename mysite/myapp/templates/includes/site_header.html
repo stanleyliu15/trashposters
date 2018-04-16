@@ -1,3 +1,4 @@
+
 {% load staticfiles %}
 
 <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -21,7 +22,7 @@
       <li class="m-2 d-block d-sm-none text-success">
         <h6>View and Report Environment Issues.</h6>
       </li>
-      {# if user.is_authenticated  #}
+      {% if user.is_authenticated  %}
         <li class="nav-item m-2">
           <a class="bold border nav-link rounded text-dark" href={% url 'create_post' %}>Report a issue <i class="fa fa-edit"></i></a>
         </li>
@@ -29,23 +30,23 @@
           <div class="dropdown">
             <button class="btn dropdown-toggle bg-light w-100" type="button" id="dropdown-menu-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img class="rounded-circle" src="https://picsum.photos/30/30" width="30" height="30" alt="avatar">
-              <span class="align-middle">Stanley</span> {# {{ request.user.username }} #}
+              <span class="align-middle"> {{ request.user.username }} </span>
             </button>
             <div class="dropdown-menu text-center" aria-labelledby="dropdown-menu-button">
               <a class="dropdown-item nav-link text-dark" href={% url 'dashboard_city_official' %}>Dashboard</a>
               <a class="dropdown-item nav-link text-dark" href={% url 'settings' %}>Settings</a>
-              <a class="dropdown-item nav-link text-dark" href="logout">Logout</a>
+              <a class="dropdown-item nav-link text-dark" href={% url 'logout' %}>Logout</a>
             </div>
           </div>
         </li>
-        {# else #}
+        {% else %}
         <li class="nav-item m-2">
-          <a class="nav-link rounded text-dark px-md-4" href="login">Login</a>
+          <a class="nav-link rounded text-dark px-md-4" href={% url 'login' %}>Login</a>
         </li>
         <li class="nav-item border border-secondary rounded h-100 m-2">
-          <a class="nav-link text-dark" href="register">Register</a>
+          <a class="nav-link text-dark" href={% url 'register' %}>Register</a>
         </li>
-      {# endif #}
+      {% endif %}
     </ul>
   </div>
 </nav>

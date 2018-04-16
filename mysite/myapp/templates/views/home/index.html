@@ -2,84 +2,87 @@
 {% load staticfiles %}
 
 {% block title %}
-    <title>Home</title>
+  <title>Brand</title>
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'css/home/index.css' %}">
+  <link rel="stylesheet" href="{% static 'css/home/index.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <!-- Search -->
-        <div class="row">
-            <div class="col mt-4">
-                <form id="search-form">
-                    <div class="form-group mb-0">
-                        <label for="query">Search Environmental Issues</label>
-                        <div class="input-group">
-                            <!-- Filter Menu -->
-                            <span class="input-group-prepend">
-              <select class="custom-select resize-select h-100 py-0" id="filter-post-menu">
+<div class="container">
+  <!-- Search -->
+  <div class="row">
+    <div class="col mt-5">
+      <form id="search-form">
+        <div class="form-group mb-0">
+          <label for="query">Search Environmental Issues</label>
+          <div class="input-group search-bar-container">
+            <!-- Filter by Post Menu -->
+            <span class="input-group-prepend">
+              <!-- Hidden on xs devices -->
+              <select class="custom-select resize-select bg-light d-none d-sm-block h-100 py-0" id="filter-post-select-menu" autocomplete="off">
                 <option value="all">All</option>
                 <option value="description">Description</option>
-                <option value="hazard">Hazard</option>
                 <option value="location">Location</option>
                 <option value="user">User</option>
               </select>
             </span>
-                            <!-- Search Bar -->
-                            <input class="form-control form-control-lg" id="query" type="text" aria-label="Search"
-                                   aria-describedby="search-addon">
-                            <!-- Search Icon -->
-                            <span class="input-group-append">
-              <button class="btn btn-outline-secondary border" type="button">
-                <i class="fa fa-search"></i>
+            <!-- Search Bar -->
+            <input class="form-control form-control-lg" id="query" autocomplete="off" type="text" aria-label="Search" aria-describedby="search-addon">
+            <!-- Search Icon -->
+            <span class="input-group-append">
+              <button class="btn btn-outline-success border" type="submit">
+                <i class="fa fa-search" id="search-addon"></i>
               </button>
             </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
+          </div>
         </div>
-
-        <!-- Create Post | Register to Post -->
-        <div class="row">
-            <div class="col">
-                {% if user.is_authenticated %}
-                    <a href="post-add">Create Post</a>
-                {% else %}
-                    <a href="register">Register to Post</a>
-                {% endif %}
+        <!-- Search Optimization by Hazard Type -->
+        <div class="form-group">
+          <div class="dropdown select-dropdown mt-2">
+            <button class="btn dropdown-toggle" type="button" id="hazard-filter-dropdown-menu-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              All Hazard Types
+            </button>
+            <div class="dropdown-menu" aria-labelledby="hazard-filter-dropdown-menu-button">
+              <div class="dropdown-item selected">All Hazard Types</div>
+              <div class="dropdown-item">Fire</div>
+              <div class="dropdown-item">Lead</div>
+              <div class="dropdown-item">Poison</div>
+              <div class="dropdown-item">Air</div>
+              <div class="dropdown-item">Water</div>
+              <div class="dropdown-item">Smoke</div>
             </div>
+          </div>
         </div>
-
-        <!-- Feed -->
-        <div class="row">
-            <div class="col">
-                <div id="posts">
-                    <!-- Sample Post -->
-                    <div class="card">
-                        <div class="card-header">
-                            <img class="rounded-circle" src="https://picsum.photos/960/960" height="40"
-                                 alt="user-profile-picture">
-                            <span class="ml-2">Sample Title</span>
-                        </div>
-                        <img class="card-img-top" src="https://picsum.photos/960/480" height="200" alt="post-image">
-                        <div class="card-body">
-                            <p class="card-text">Sample Author</p>
-                            <span class="card-text">Hazard <i class="fa fa-map-marker"></i> Location</span>
-                        </div>
-                    </div>
-                    <!-- Close Sample Post -->
-                </div>
-            </div>
-        </div>
+      </form>
     </div>
+  </div>
 
-    {% include "views/partials/resize_select.html" %}
+  <!-- Tab Bar Navigation -->
+  <div class="row">
+    <div class="col mt-5">
+      {% include 'views/partials/tabNav.html' %}
+    </div>
+  </div>
+
+  <!-- Latest Reports Feed 30-50 Results Per Page -->
+  <div class="row">
+    <div class="col-md-10 my-5">
+      <div id="posts">
+        <!-- Section Title -->
+        <h3 class="">Latest Environmental Reports</h3>
+        {# for post in posts #}
+          {% include 'views/post/post_view.html' %}
+        {# endfor #}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'js/utils/resize_select.js' %}"></script>
+  <script src="{% static 'js/utils/resize_select.js' %}"></script>
+  <script src="{% static 'js/searchBar.js' %}"></script>
+  <script src="{% static 'js/tabNav.js' %}"></script>
 {% endblock %}
