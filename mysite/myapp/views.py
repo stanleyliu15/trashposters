@@ -190,9 +190,9 @@ def search_by_description(request, description):
     @:param     An http request with a keyword.
     @:return    Renders a page with all matching posts listed.
     """
-    all_posts = Posts.objects.filter(description__icontains=keyword)
+    all_posts = Posts.objects.filter(description__icontains=description)
     context = {'all_posts': all_posts,
-               'keyword': keyword}
+               'keyword': description}
     return render(request, 'search.html', context)
 
 
@@ -202,9 +202,10 @@ def search_by_user(request, username):
     @:param     An http request with a username
     @:return    Renders a page with all matching posts listed.
     """
-    all_posts = Posts.objects.filter(user_id__username__exact=username)
+    #all_posts = Posts.objects.filter(user_id__username__exact=username)
+    all_posts = Posts.objects.filter(user_id__username__icontains=username)
     context = {'all_posts': all_posts,
-               'username': username}
+               'keyword': username}
     return render(request, 'search.html', context)
 
 
@@ -216,7 +217,7 @@ def search_by_hazard_type(request, hazard_type):
     """
     all_posts = Posts.objects.filter(hazard_type__hazard_name__exact=hazard_type)
     context = {'all_posts': all_posts,
-               'hazard_type': hazard_type}
+               'keyword': hazard_type}
     return render(request, 'search.html', context)
 
 
@@ -226,9 +227,9 @@ def search_by_location(request, location):
     @:param     An http request with a hazard type
     @:return    Renders a page with all matching posts listed.
     """
-    all_posts = Posts.objects.filter(location__contains=location)
+    all_posts = Posts.objects.filter(location__icontains=location)
     context = {'all_posts': all_posts,
-               'location': location}
+               'keyword': location}
     return render(request, 'search.html', context)
 
 

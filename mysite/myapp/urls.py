@@ -59,4 +59,7 @@ urlpatterns = [
     # Searches by different aspects of a post
     url(r'^search/title=(?P<title>[A-Za-z0-9]+)/$', views.search_by_title, name='search_title'),
     url(r'^search/description=(?P<description>[A-Za-z0-9]+)/$', views.search_by_description, name='search_description'),
+    url(r'^search/hazard_type=(?P<hazard_type>[A-Za-z0-9]+)/$', views.search_by_hazard_type, name='search_hazard_type'),
+    url(r'^search/location=(?P<location>[A-Za-z0-9]+)/$', views.search_by_location, name='search_location'),
+    url(r'^search/user=(?P<username>[A-Za-z0-9]+)/$', views.search_by_user, name='search_user'),
 ]

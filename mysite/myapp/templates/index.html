@@ -14,33 +14,33 @@
         <!-- Search -->
         <div class="row">
             <div class="col mt-4">
-                <form id="search-form">
-                    <div class="form-group mb-0">
-                        <label for="query">Search Environmental Issues</label>
-                        <div class="input-group">
-                            <!-- Filter Menu -->
-                            <span class="input-group-prepend">
-              <select class="custom-select resize-select h-100 py-0" id="filter-post-menu">
-                <option value="all">All</option>
-		<option value="title">Title</option>
-                <option value="description">Description</option>
-                <option value="hazard">Hazard</option>
-                <option value="location">Location</option>
-                <option value="user">User</option>
-              </select>
-            </span>
-                            <!-- Search Bar -->
-                            <input class="form-control form-control-lg" id="query" type="text" aria-label="Search"
-                                   aria-describedby="search-addon">
-                            <!-- Search Icon -->
-                            <span class="input-group-append">
-              <button class="btn btn-outline-secondary border" type="button" onClick="search()">
-                <i class="fa fa-search"></i>
-              </button>
-            </span>
-                        </div>
-                    </div>
-                </form>
+		        <div id="search_div">
+		            <div class="form-group mb-0">
+		                <label for="query">Search Environmental Issues</label>
+		                <div class="input-group">
+		                    <!-- Filter Menu -->
+		                    <span class="input-group-prepend">
+				      <select class="custom-select resize-select h-100 py-0" id="filter-post-menu">
+					<option value="all">All</option>
+					<option value="title">Title</option>
+					<option value="description">Description</option>
+					<option value="hazard">Hazard</option>
+					<option value="location">Location</option>
+					<option value="user">User</option>
+				      </select>
+				    </span>
+		                    <!-- Search Bar -->
+		                    <input class="form-control form-control-lg" id="query" type="text" aria-label="Search"
+		                           aria-describedby="search-addon">
+		                    <!-- Search Icon -->
+		                    <span class="input-group-append">
+				      <button class="btn btn-outline-secondary border" type="button" onClick="search()">
+					<i class="fa fa-search"></i>
+				      </button>
+				    </span>
+		                </div>
+		            </div>
+		        </div>
             </div>
         </div>
 
@@ -82,10 +82,17 @@
 {% block scripts %}
     <script src="{% static 'js/utils/resize_select.js' %}"></script>
 	<script type="text/javascript">
+
+		//submits search when enter is pressed
+		$('#query').keypress(function(e){
+			if(e.which == 13)
+				search();
+		});
+
 		function search(){
 			var selection = $('#filter-post-menu').find(':selected').text().toLowerCase();
 			var query = $('#query').val();
-			window.location.replace("./search/"+selection+"="+query);
+			window.location.href = "./search/"+selection+"="+query;
 
 		}
 	</script>
