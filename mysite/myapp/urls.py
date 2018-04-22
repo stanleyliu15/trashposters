@@ -53,11 +53,10 @@ urlpatterns = [
     # /logout
     url(r'logout/$', views.logout_user, name='logout'),
 
-    # path('search/keyword=<keyword>', views.search, name='search'),
-    url(r'search/keyword=(?P<keyword>[\w|\W]+)/$', views.search_by_keyword, name='search'),
-
     # Empty search
     url(r'^search/$', views.search, name='search_empty'),
 
-    url('search/', views.search, name='get_search'),
+    # Searches by different aspects of a post
+    url(r'^search/title=(?P<title>[A-Za-z0-9]+)/$', views.search_by_title, name='search_title'),
+    url(r'^search/description=(?P<description>[A-Za-z0-9]+)/$', views.search_by_description, name='search_description'),
 ]

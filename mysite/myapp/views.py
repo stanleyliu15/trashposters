@@ -143,9 +143,9 @@ def search(request):
     context = {'form': form}
     if request.method == 'GET':
         if form.is_valid():
-            selection = request.GET.get('selection')
-            value = request.GET.get('value')
-            if selection == 'keyword':
+            selection = request.GET.get('filter-post-menu')
+            value = request.GET.get('query')
+            if selection == 'title':
                 all_posts = Posts.objects.filter(title__icontains=value)
                 context['all_posts'] = all_posts
             if selection == 'zipcode':
@@ -171,13 +171,26 @@ def search_empty(request):
     return render(request, 'search.html', context)
 
 
-def search_by_keyword(request, keyword):
+
+def search_by_title(request, title):
+    """
+    Searches the title of posts to find matching posts containing the title keyword.
+    @:param     An http request with a title keyword.
+    @:return    Renders a page with all matching posts listed.
+    """
+    all_posts = Posts.objects.filter(title__icontains=title)
+    context = {'all_posts': all_posts,
+               'keyword': title}
+    return render(request, 'search.html', context)
+
+
+def search_by_description(request, description):
     """
     Searches the description of posts to find matching posts containing the keyword.
     @:param     An http request with a keyword.
     @:return    Renders a page with all matching posts listed.
     """
-    all_posts = Posts.objects.filter(description__contains=keyword)
+    all_posts = Posts.objects.filter(description__icontains=keyword)
     context = {'all_posts': all_posts,
                'keyword': keyword}
     return render(request, 'search.html', context)

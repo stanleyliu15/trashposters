@@ -1,6 +1,5 @@
 {% extends 'layouts/base.html' %}
 {% load staticfiles %}
-
 {% block title %}
     <title>Home</title>
 {% endblock %}
@@ -8,6 +7,7 @@
 {% block styles %}
     <link rel="stylesheet" href="{% static 'css/home/index.css' %}">
 {% endblock %}
+
 
 {% block content %}
     <div class="container">
@@ -22,6 +22,7 @@
                             <span class="input-group-prepend">
               <select class="custom-select resize-select h-100 py-0" id="filter-post-menu">
                 <option value="all">All</option>
+		<option value="title">Title</option>
                 <option value="description">Description</option>
                 <option value="hazard">Hazard</option>
                 <option value="location">Location</option>
@@ -33,7 +34,7 @@
                                    aria-describedby="search-addon">
                             <!-- Search Icon -->
                             <span class="input-group-append">
-              <button class="btn btn-outline-secondary border" type="button">
+              <button class="btn btn-outline-secondary border" type="button" onClick="search()">
                 <i class="fa fa-search"></i>
               </button>
             </span>
@@ -80,4 +81,13 @@
 
 {% block scripts %}
     <script src="{% static 'js/utils/resize_select.js' %}"></script>
+	<script type="text/javascript">
+		function search(){
+			var selection = $('#filter-post-menu').find(':selected').text().toLowerCase();
+			var query = $('#query').val();
+			window.location.replace("./search/"+selection+"="+query);
+
+		}
+	</script>
+
 {% endblock %}
