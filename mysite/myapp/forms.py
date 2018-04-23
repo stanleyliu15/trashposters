@@ -33,6 +33,8 @@ class SearchForm(forms.Form):
     select_choices = (
         ('keyword', 'Keyword'),
         ('zipcode', 'Zip Code'),
+        ('username', 'Username'),
+        ('location', "Location")
     )
     selection = forms.ChoiceField(widget=forms.Select, choices=select_choices)
     value = forms.CharField(label='', max_length=50, widget=forms.TextInput(attrs={'placeholder': 'Ex: Lake'}))

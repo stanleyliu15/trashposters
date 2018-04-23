@@ -25,8 +25,12 @@ import os, json
 four_oh_four_message = "This page cannot be found."
 
 
-# WELCOME TO OUR SITE YOU ENVIRONMENT LOVER
 def index(request):
+    """
+    Loads the welcome page for the website.
+    :param request:
+    :return: The index.html page.
+    """
     return render(request, 'index.html', context={})
 
 
@@ -310,15 +314,24 @@ def logout_user(request):
     return redirect(index)
 
 
-# About pages index
 def about_us(request):
+    """
+    Loads the index page for the about-us section of the website.
+    :param request:
+    :return: The about-us page rendered as html.
+    """
     with open(os.getcwd() + '/myapp/static/data/about-us-list.json', 'r') as json_file:
         data = json.load(json_file)
     return render(request, 'about-pages/index.html', context={"team_members": data})
 
 
-# About pages individual page for each team member
 def about_us_single(request, team_member):
+    """
+    Returns an individual about page for a team member.
+    :param request:     An HTML request
+    :param team_member: The team member the user would like to see information about
+    :return:            An HTML page rendered with that team member's information.
+    """
     with open(os.getcwd() + '/myapp/static/data/about-us-list.json', 'r') as json_file:
         data = json.load(json_file)[team_member];
     return render(request, 'about-pages/about-single.html', context={"team_member": data})

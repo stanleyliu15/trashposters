@@ -65,7 +65,7 @@ def post_directory_path(instance, filename):
 
 class Posts(models.Model):
     """
-    Posts:
+    SQL Table for posts:
         post_id - INT, Primary Key, Auto Increment
         user_id - INT, FOREIGN KEY
         location - VARCHAR(255), FOREIGN KEY
@@ -86,8 +86,64 @@ class Posts(models.Model):
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.pk})
 
+    @staticmethod
+    def search_by_username(username):
+        """
+        Given a query, returns a set of matching posts.
+        :param username: The username of the poster in string form
+        :return: A list of posts that meet the given criteria.
+        """
+        matching_posts = Posts.objects.filter(user_id__username__icontains=username)
+        return matching_posts
+
+    @staticmethod
+    def search_by_location(location):
+        """
+        Given a query, returns a set of matching posts.
+        :param location: The location of the post in string form.
+        :return: A list of posts that meet the given criteria.
+        """
+        matching_posts = Posts.objects.filter(location__icontains=location)
+        return matching_posts
+
+    @staticmethod
+    def search_by_title(title):
+        """
+        Given a query, returns a set of matching posts.
+        :param title: The title of the post in string form
+        :return: A list of posts that meet the given criteria.
+        """
+        matching_posts = Posts.objects.filter(title__icontains=title)
+        return matching_posts
+
+    @staticmethod
+    def search_by_hazard_type(hazard_type):
+        """
+        Given a query, returns a set of matching posts.
+        :param hazard_type: The type of hazard to look for.
+        :return: A list of posts that meet the given criteria.
+        """
+        matching_posts = Posts.objects.filter(hazard_type__hazard_name__exact=hazard_type)
+        return matching_posts
+
+    @staticmethod
+    def search_by_description(query):
+        """
+        Given a query, returns a set of matching posts.
+        :param query: A string to search the post body for.
+        :return: A list of posts that meet the given criteria.
+        """
+        matching_posts = Posts.objects.filter(description__icontains=query)
+        return matching_posts
+
     def __str__(self):
-        return str(self.post_id)
+        """
+        Returns the string representation of a post for easy reading in the shell.
+        :return: The string representation of the current post.
+        """
+        return "Title: " + str(self.title) + \
+               "\tPost ID: " + str(self.post_id) + \
+               "\tposted by: " + str(self.user_id)
 
 
 class PostImageCollection(models.Model):
