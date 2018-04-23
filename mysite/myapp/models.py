@@ -15,13 +15,12 @@ models.ForeignKey(to, onDelete, options)    FOREIGN KEY
 models.IntegerField()                       integer NOT NULL
 """
 
-# TODO Extend the Users class from django.contrib.auth.models instead.
-# Deleted the last one since it wasn't even being used in the current state of the website.
-
+# Possible status choices for a post.
 STATUS_CHOICE = (
     ('In progress', 'In progress'),
     ('Being taken care of', 'Being taken care of'),
     ('Hazard eliminated', 'Hazard eliminated'))
+
 
 class HazardType(models.Model):
     """
@@ -33,11 +32,20 @@ class HazardType(models.Model):
     hazard_name = models.CharField(max_length=255)
 
     def __str__(self):
+        """
+        Returns the string representation of this class.
+        :return: a string representation of this class.
+        """
         return self.hazard_name
 
 
 def user_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    """
+    file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    :param instance:
+    :param filename:
+    :return: None
+    """
     return 'user_{0}/{1}'.format(instance.username.id, filename)
 
 
@@ -63,12 +71,22 @@ class UserData(models.Model):
 
 
 def post_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    """
+    file will be uploaded to MEDIA_ROOT/post_<post_id>/<filename>
+    :param instance:
+    :param filename:
+    :return:
+    """
     return 'post_{0}/{1}'.format(instance.post_id, filename)
 
 
 def post_preview_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    """
+    file will be uploaded to MEDIA_ROOT/post_<id>/preview/s<filename>
+    :param instance:
+    :param filename:
+    :return:
+    """
     return 'post_{0}/preview/{1}'.format(instance.post_id, filename)
 
 
@@ -95,6 +113,10 @@ class Posts(models.Model):
     preview_image = models.ImageField(upload_to=post_preview_directory_path, null=True)
 
     def get_absolute_url(self):
+        """
+        Given a post id, returns a post_detail page with that id.
+        :return:    A post detail page.
+        """
         return reverse('post_detail', kwargs={'pk': self.pk})
 
     @staticmethod
@@ -156,6 +178,9 @@ class Posts(models.Model):
 
 
 class PostImageCollection(models.Model):
+    """
+    Table to separate images from the post for database table decoupling.
+    """
     post_image_collection_id = models.AutoField(primary_key=True)
     post_id = models.ForeignKey(Posts, on_delete=models.CASCADE)
     image1 = models.ImageField(upload_to=post_directory_path, null=True)
@@ -197,8 +222,8 @@ class Message(models.Model):
     dates = models.DateTimeField()
 
     def __str__(self):
+        """
+        Returns the string representation of this class.
+        :return: a string representation of this class.
+        """
         return self.messages
-
-
-class DummyTable(models.Model):
-    name = models.CharField(default="Water makes the frogs turn gay.", max_length=255)
