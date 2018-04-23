@@ -54,5 +54,5 @@ urlpatterns = [
     url(r'logout/$', views.logout_user, name='logout'),
 
     # /search/
-    url(r'^search/$', views.search, name='search_empty'),
+    url(r'^search/$', views.search, name='search'),
 ]

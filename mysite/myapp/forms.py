@@ -24,18 +24,17 @@ class UserForm(forms.ModelForm):
         fields = ['username', 'email', 'password']
 
 
-class LoginForm(forms.ModelForm):
+class LoginForm(forms.Form):
     """
     Form to log in users to the website.
     Passwords are turned into starts with the PasswordInput widget.
     Username and password are required.
     This form is based off of the django.contrib.auth.models.User model.
     """
+    username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
-        model = User
-        # What fields do we want to appear on the form?
         fields = ['username', 'password']
 
 

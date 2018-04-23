@@ -31,10 +31,13 @@ def index(request):
     :param request:
     :return: The index.html page.
     """
+    form = SearchForm()
     if request.method == "GET":
         form = SearchForm(request.GET)
-    else:
-        form = SearchForm()
+        if not form.is_valid():
+            form = SearchForm()
+        else:
+            return redirect('search')
     context = {
         'form': form
     }
@@ -167,7 +170,7 @@ def profile_detail(request, user_id):
 
 
 def search(request):
-    form = SearchForm(request.GET)
+    form = SearchForm(request.GET or None)
     results = None
     error_message = None
     if request.method == 'GET':
@@ -235,19 +238,21 @@ def login_user(request):
     @:param     An http request
     @:return    A login success page with the user now logged in to the website.
     """
-    form = LoginForm(request.POST or None)
+    form = LoginForm()
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect(index)
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect(index)
+                else:
+                    return render(request, 'login.html', {'error_message': 'You have been banned.'})
             else:
-                return render(request, 'login.html', {'error_message': 'You have been banned.'})
-        else:
-            return render(request, 'login.html', {'error_message': 'Invalid login'})
+                return render(request, 'login.html', {'form': form, 'error_message': 'Invalid login'})
     context = {
          "form": form,
     }

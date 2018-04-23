@@ -8,7 +8,7 @@
     {% if error_message %}
         <h2> {{error_message}} </h2>
     {% endif %}
-    <form class="form-horizonal" role="form" action="" method="post" enctype="multipart/form-data">
+    <form class="form-horizonal" role="form" action="" method="post">
         {% csrf_token %}
         {% include 'myapp/form_template.html' %}
         <div class="form-group">
