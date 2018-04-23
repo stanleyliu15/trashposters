@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from .models import Posts
 from .models import Comments
 from .models import UserData
+from .models import PostImageCollection
 
 from .forms import UserForm
 from .forms import LoginForm
@@ -57,7 +58,7 @@ def create_post(request):
             images.save()
             context = {'post': post,
                        'images': images}
-            return render(request, 'views/post/post_detail.html', context)
+            return redirect('post_detail', post_id=post.post_id)
     else:
         return render(request, 'myapp/login.html')
     context = {
@@ -123,12 +124,15 @@ def post_detail(request, post_id):
     location = geolocation.geocode(address)
     latitude = location.latitude
     longitude = location.longitude
+    image_collection = PostImageCollection.objects.get(post_id=post_id)
+    post_images = [image_collection.image1, image_collection.image2, image_collection.image3, image_collection.image4]
     context = {'post': post,
                'image': image,
                'comment_list': comment_list,
                'form': form,
                'latitude': latitude,
                'longitude': longitude,
+               'post_images': post_images
               }
     return render(request, 'views/post/post_detail.html', context)
 
