@@ -31,7 +31,14 @@ def index(request):
     :param request:
     :return: The index.html page.
     """
-    return render(request, 'index.html', context={})
+    if request.method == "GET":
+        form = SearchForm(request.GET)
+    else:
+        form = SearchForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'index.html', context)
 
 
 def create_post(request):
@@ -60,6 +67,8 @@ def create_post(request):
             images = image_form.save(commit=False)
             images.post_id = post
             images.save()
+            post.preview_image = images.image1
+            post.save()
             context = {'post': post,
                        'images': images}
             return redirect('post_detail', post_id=post.post_id)
@@ -159,20 +168,36 @@ def profile_detail(request, user_id):
 
 def search(request):
     form = SearchForm(request.GET)
-    context = {'form': form}
+    results = None
+    error_message = None
     if request.method == 'GET':
         if form.is_valid():
-            selection = request.GET.get('filter-post-menu')
-            value = request.GET.get('query')
-            if selection == 'title':
-                all_posts = Posts.objects.filter(title__icontains=value)
-                context['all_posts'] = all_posts
-            if selection == 'zipcode':
-                all_posts = Posts.objects.filter(zipcode__icontains=value)
-                context['all_posts'] = all_posts
-        else:
-             all_posts = Posts.objects.all()
-             context['all_posts'] = all_posts
+            selection = form.cleaned_data['selection']
+            query = form.cleaned_data['value']
+            if selection == "username":
+                results = Posts.search_by_username(query)
+            elif selection == "location":
+                results = Posts.search_by_location(query)
+            elif selection == "title":
+                results = Posts.search_by_title(query)
+            elif selection == "hazard_type":
+                results = Posts.search_by_hazard_type(query)
+            elif selection == "description":
+                results = Posts.search_by_description(query)
+            else:
+                results = Posts.objects.all()
+        # Case: Nothing comes up in the search.
+        if results is None:
+            results = Posts.objects.all()
+            error_message = "Sorry, we were unable to find anything matching your query. " \
+                            "How about you check out these other posts instead?"
+    # Ordering results by date ascending date.
+    results = results.order_by('-date')
+    context = {
+        'form': form,
+        'posts': results,
+        'error_message': error_message
+    }
     return render(request, 'search.html', context)
 
 

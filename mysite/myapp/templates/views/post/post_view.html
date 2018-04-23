@@ -1,14 +1,18 @@
 <!-- Sample Post -->
 <div class="card mt-4">
-  <div class="card-header">
-    <img class="rounded-circle" src="https://picsum.photos/960/960" height="40" alt="user-profile-picture">
-    <a class="nav-link d-inline text-success" href={% url 'post-detail-ui' %}>Sample Title</a>
-    <h6 class="d-inline">__STATUS__</h6>
-  </div>
-  <img class="card-img-top" src="https://picsum.photos/960/480" height="200" alt="post-image">
-  <div class="card-body">
-    <p class="card-text">Sample Author</p>
-    <span class="card-text">Hazard <i class="fa fa-map-marker"></i> Location</span>
-  </div>
+    <div class="card-header">
+        <img class="rounded-circle" src="https://picsum.photos/960/960" height="40" alt="user-profile-picture">
+        <h6 class="d-inline">{{ post.status }}, posted by {{ post.user_id }} on {{ post.date }}</h6>
+    </div>
+    {% if post.preview_image %}
+        <img class="card-img-top" src={{ post.preview_image.url }} height="200" alt="post-image">
+    {% else %}
+        <h2> no image to display :( </h2>
+    {% endif %}
+    <div class="card-body">
+        <p class="card-text">{{ post.title }}</p>
+        <p class="card-text">{{ post.description }}</p>
+        <span class="card-text">{{ post.hazard_type }} <i class="fa fa-map-marker"></i> {{ post.location }}</span>
+    </div>
 </div>
 <!-- Close Sample Post -->

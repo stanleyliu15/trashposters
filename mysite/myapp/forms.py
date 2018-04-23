@@ -31,10 +31,11 @@ class LoginForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     select_choices = (
-        ('keyword', 'Keyword'),
-        ('zipcode', 'Zip Code'),
+        ('description', 'Description'),
         ('username', 'Username'),
-        ('location', "Location")
+        ('location', 'Location'),
+        ('title', "Title"),
+        ('hazard_type', "Hazard Type")
     )
     selection = forms.ChoiceField(widget=forms.Select, choices=select_choices)
     value = forms.CharField(label='', max_length=50, widget=forms.TextInput(attrs={'placeholder': 'Ex: Lake'}))

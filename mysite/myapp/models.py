@@ -18,6 +18,10 @@ models.IntegerField()                       integer NOT NULL
 # TODO Extend the Users class from django.contrib.auth.models instead.
 # Deleted the last one since it wasn't even being used in the current state of the website.
 
+STATUS_CHOICE = (
+    ('In progress', 'In progress'),
+    ('Being taken care of', 'Being taken care of'),
+    ('Hazard eliminated', 'Hazard eliminated'))
 
 class HazardType(models.Model):
     """
@@ -63,6 +67,11 @@ def post_directory_path(instance, filename):
     return 'post_{0}/{1}'.format(instance.post_id, filename)
 
 
+def post_preview_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'post_{0}/preview/{1}'.format(instance.post_id, filename)
+
+
 class Posts(models.Model):
     """
     SQL Table for posts:
@@ -82,6 +91,8 @@ class Posts(models.Model):
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=400)
     date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=30, choices=STATUS_CHOICE, default="In progress")
+    preview_image = models.ImageField(upload_to=post_preview_directory_path, null=True)
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.pk})
@@ -141,9 +152,7 @@ class Posts(models.Model):
         Returns the string representation of a post for easy reading in the shell.
         :return: The string representation of the current post.
         """
-        return "Title: " + str(self.title) + \
-               "\tPost ID: " + str(self.post_id) + \
-               "\tposted by: " + str(self.user_id)
+        return str(self.post_id)
 
 
 class PostImageCollection(models.Model):
