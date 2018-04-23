@@ -10,3 +10,13 @@ def validate_image_file(value):
     valid_extensions = ['.jpg', '.png', '.jpeg']
     if extension not in valid_extensions:
         raise forms.ValidationError(u'An image file is required. (.jpg and .png file extensions only)')
+
+
+def validate_address(value):
+    from geopy.geocoders import Nominatim
+    geolocator = Nominatim()
+    try:
+        location = geolocator.geocode(value)
+        location.latitude
+    except Exception as e:
+        raise forms.ValidationError("This location is invalid. Please enter a valid address.")

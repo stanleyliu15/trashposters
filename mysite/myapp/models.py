@@ -92,6 +92,12 @@ class Posts(models.Model):
         return str(self.post_id)
 
 
+class PostImageCollection(models.Model):
+    """
+    This table contains all of the images for a given post.
+    """
+pass
+
 class Comments(models.Model):
     """
     Comments:

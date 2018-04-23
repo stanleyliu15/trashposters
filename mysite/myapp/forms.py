@@ -3,6 +3,7 @@ from django import forms
 from .models import Posts
 from .models import Comments
 from .validators import validate_image_file
+from .validators import validate_address
 
 
 class UserForm(forms.ModelForm):
@@ -37,6 +38,7 @@ class SearchForm(forms.Form):
 
 class PostForm(forms.ModelForm):
     image = forms.FileField(label="Select an image to upload.", help_text="Maximum file size is 2 megabytes", validators=[validate_image_file])
+    location = forms.CharField(validators=[validate_address])
 
     class Meta:
         model = Posts
