@@ -60,7 +60,7 @@ class UserData(models.Model):
 
 def post_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.user_id.id, filename)
+    return 'post_{0}/{1}'.format(instance.post_id, filename)
 
 
 class Posts(models.Model):
@@ -79,11 +79,9 @@ class Posts(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=255)
     hazard_type = models.ForeignKey(HazardType, on_delete=None)
-
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=400)
     date = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to=post_directory_path, null=True)
 
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk': self.pk})
@@ -93,10 +91,16 @@ class Posts(models.Model):
 
 
 class PostImageCollection(models.Model):
-    """
-    This table contains all of the images for a given post.
-    """
-pass
+    post_image_collection_id = models.AutoField(primary_key=True)
+    post_id = models.ForeignKey(Posts, on_delete=models.CASCADE)
+    image1 = models.ImageField(upload_to=post_directory_path, null=True)
+    image2 = models.ImageField(upload_to=post_directory_path, null=True)
+    image3 = models.ImageField(upload_to=post_directory_path, null=True)
+    image4 = models.ImageField(upload_to=post_directory_path, null=True)
+
+    def __str__(self):
+        return str(self.post_image_collection_id) + "for post: " + str(self.post_id)
+
 
 class Comments(models.Model):
     """

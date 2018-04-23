@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import Posts
 from .models import Comments
+from .models import PostImageCollection
+
 from .validators import validate_image_file
 from .validators import validate_address
 
@@ -37,12 +39,22 @@ class SearchForm(forms.Form):
 
 
 class PostForm(forms.ModelForm):
-    image = forms.FileField(label="Select an image to upload.", help_text="Maximum file size is 2 megabytes", validators=[validate_image_file])
     location = forms.CharField(validators=[validate_address])
 
     class Meta:
         model = Posts
         fields = ['title', 'location', 'hazard_type', 'description']
+
+
+class ImageForm(forms.ModelForm):
+    image1 = forms.ImageField(validators=[validate_image_file])
+    image2 = forms.ImageField(validators=[validate_image_file])
+    image3 = forms.ImageField(validators=[validate_image_file])
+    image4 = forms.ImageField(validators=[validate_image_file])
+
+    class Meta:
+        model = PostImageCollection
+        fields = ['image1', 'image2', 'image3', 'image4']
 
 
 class CommentForm(forms.ModelForm):

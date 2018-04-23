@@ -12,6 +12,7 @@ from .forms import LoginForm
 from .forms import PostForm
 from .forms import CommentForm
 from .forms import SearchForm
+from .forms import ImageForm
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -20,9 +21,7 @@ from geopy.geocoders import Nominatim
 
 import os, json
 
-four_oh_four_message = "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! " \
-                       "A wittle fucko boingo! The code monkeys at our " \
-                       "headquarters are working VEWY HAWD to fix this!"
+four_oh_four_message = "This page cannot be found."
 
 
 # WELCOME TO OUR SITE YOU ENVIRONMENT LOVER
@@ -39,22 +38,31 @@ def create_post(request):
     """
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
+        image_form = ImageForm(request.POST, request.FILES)
     else:
         form = PostForm()
+        image_form = ImageForm()
     if request.user.is_authenticated:
-        if form.is_valid():
+        if form.is_valid() and image_form.is_valid():
             post = form.save(commit=False)
             this_username = request.user
             user = User.objects.get(username=this_username)
             post.user_id = user
-            post.image = form.cleaned_data['image']
             post.save()
-            context = {'post': post}
+            # Once post has been written to the database,
+            # we can use the primary key to create the foreign
+            # key in the images table and save that form.
+            images = image_form.save(commit=False)
+            images.post_id = post
+            images.save()
+            context = {'post': post,
+                       'images': images}
             return render(request, 'views/post/post_detail.html', context)
     else:
         return render(request, 'myapp/login.html')
     context = {
         "form": form,
+        "image_form": image_form
     }
     return render(request, 'views/post/create_post.html', context)
 
@@ -172,7 +180,6 @@ def search_empty(request):
                'form': form,
                'keyword': ''}
     return render(request, 'search.html', context)
-
 
 
 def search_by_title(request, title):

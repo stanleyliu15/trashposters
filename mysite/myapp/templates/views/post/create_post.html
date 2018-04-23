@@ -23,6 +23,12 @@
                 <form class="clearfix" id="create-post-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% include "myapp/form_template.html" %}
+                    {% for field in image_form %}
+                        <div>
+                            <span>{{ field.errors }}</span>
+                        </div>
+                        {{ field.label_tag }} {{ field }} <br>
+                    {% endfor %}
                     <button type="submit" class="btn btn-success float-right">Publish issue</button>
                 </form>
             </div>
