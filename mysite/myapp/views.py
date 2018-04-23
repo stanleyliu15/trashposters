@@ -37,7 +37,10 @@ def create_post(request):
     @:param     An http request.
     @:return    Renders a new page with the post detail information and the primary key as part of the url.
     """
-    form = PostForm(request.POST, request.FILES or None)
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES)
+    else:
+        form = PostForm()
     if request.user.is_authenticated:
         if form.is_valid():
             post = form.save(commit=False)
@@ -53,7 +56,7 @@ def create_post(request):
     context = {
         "form": form,
     }
-    return render(request, 'myapp/posts_form.html', context)
+    return render(request, 'views/post/create_post.html', context)
 
 
 def create_comment(request, post):
