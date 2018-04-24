@@ -38,8 +38,13 @@ def index(request):
             form = SearchForm()
         else:
             return redirect('search')
+    # Display five most recent posts.
+    # TODO: Implement never ending scroll down and load more.
+    posts = Posts.objects.all()
+    posts = posts.order_by('-date')[:5]
     context = {
-        'form': form
+        'form': form,
+        'posts': posts
     }
     return render(request, 'index.html', context)
 
