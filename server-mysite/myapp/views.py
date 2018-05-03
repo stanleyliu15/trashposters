@@ -31,21 +31,12 @@ def index(request):
     :param request:
     :return: The index.html page.
     """
-    recent_posts = Posts.objects.all()
+    posts = Posts.objects.all()
+    #sorts by date and gets the most recent 5
+    recent_posts = posts.order_by('-date')[:5]
     context = {'recent_posts': recent_posts}
     return render(request, 'new_regular/index.html', context)
 
-    # form = SearchForm()
-    # if request.method == "GET":
-    #     form = SearchForm(request.GET)
-    #     if not form.is_valid():
-    #         form = SearchForm()
-    #     else:
-    #         return redirect('search')
-    # context = {
-    #     'form': form
-    # }
-    # return render(request, 'index.html', context)
 
 
 def create_post(request):
@@ -74,6 +65,8 @@ def create_post(request):
             images = image_form.save(commit=False)
             images.post_id = post
             images.save()
+            post.preview_image = images.image1
+            post.save()
             context = {'post': post,
                        'images': images}
             return redirect('new_regular/post_detail', post_id=post.post_id)
@@ -170,40 +163,6 @@ def profile_detail(request, user_id):
     context = {'userdata': userdata}
     return render(request, 'new_regular/profile_detail.html', context)
 
-
-def search(request):
-    form = SearchForm(request.GET or None)
-    results = None
-    error_message = None
-    if request.method == 'GET':
-        if form.is_valid():
-            selection = form.cleaned_data['filter-post-selection-menu']
-            query = form.cleaned_data['value']
-            if selection == "username":
-                results = Posts.search_by_username(query)
-            elif selection == "location":
-                results = Posts.search_by_location(query)
-            elif selection == "title":
-                results = Posts.search_by_title(query)
-            elif selection == "hazard_type":
-                results = Posts.search_by_hazard_type(query)
-            elif selection == "description":
-                results = Posts.search_by_description(query)
-            else:
-                results = Posts.objects.all()
-        # Case: Nothing comes up in the search.
-        if results is None:
-            results = Posts.objects.all()
-            error_message = "Sorry, we were unable to find anything matching your query. " \
-                            "How about you check out these other posts instead?"
-    # Ordering results by date ascending date.
-    results = results.order_by('-date')
-    context = {
-        'form': form,
-        'posts': results,
-        'error_message': error_message
-    }
-    return render(request, 'new_regular/search.html', context)
 
 
 def search_empty(request):
@@ -344,18 +303,18 @@ def terms_of_service(request):
     return render(request, 'new_regular/terms_of_service.html', context={})
 
 def settings(request):
-    return render(request, 'settings.html', context={})
+    return render(request, 'new_regular/settings.html', context={})
 
 # for testing the ui
 def city_official_dashboard(request):
-    return render(request, 'views/dashboard/city_official_dashboard_overview.html', context={})
+    return render(request, 'new_regular/city_official_dashboard_overview.html', context={})
 
 def city_official_dashboard_view_posts(request):
-    return render(request, 'views/dashboard/city_official_dashboard_view_posts.html', context={})
+    return render(request, 'new_regular/city_official_dashboard_view_posts.html', context={})
 
 def city_official_dashboard_view_users(request):
-    return render(request, 'views/dashboard/city_official_dashboard_view_users.html', context={})
+    return render(request, 'new_regular/city_official_dashboard_view_users.html', context={})
 
 # for testing the ui
 def post_detail_ui(request):
-    return render(request, 'views/post/post_detail.html', context={})
+    return render(request, 'new_regular/post_detail.html', context={})
