@@ -50,7 +50,7 @@ urlpatterns = [
 
     #### Search ####
     # Empty search
-    url(r'^search/$', views.search, name='search_empty'),
+    url(r'^search/$', views.search_empty, name='search_empty'),
     # Searches by different aspects of a post
     #url(r'^search/title=(?P<title>[A-Za-z0-9]+)/$', views.search_by_title, name='search_title'),
     url(r'^search/(?P<select>[A-Za-z]+)=(?P<query>)/$', views.search_by, name='search'),

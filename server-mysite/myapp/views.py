@@ -172,10 +172,10 @@ def search_empty(request):
     @:return    Renders a page with all posts listed.
     """
     all_posts = Posts.objects.all()
-    form = SearchForm(request.GET)
-    context = {'all_posts': all_posts,
-               'form': form,
-               'keyword': ''}
+    context = {'posts': all_posts,
+               'extra_posts': all_posts,
+               'select': "",
+               'keyword': ""}
     return render(request, 'new_regular/search.html', context)
 
 def search_by(request, select, query):
