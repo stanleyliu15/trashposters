@@ -22,6 +22,9 @@
       <li class="m-2 d-block d-sm-none text-success">
         <h6>View and Report Environment Issues.</h6>
       </li>
+
+      {% include 'new_bases/search_bar.html' %}
+
       {% if user.is_authenticated  %}
         <li class="nav-item m-2">
           <a class="bold border nav-link rounded text-dark" href={% url 'create_post' %}>Report a issue <i class="fa fa-edit"></i></a>

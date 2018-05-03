@@ -1,0 +1,74 @@
+<!--
+  Note For City Officials:
+  shall be able to post official statements
+  that stand out from regular posts
+-->
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+<title>Report a Issue</title>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/post/post_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 bg-light border rounded mx-auto mt-5 px-md-5 py-5">
+      <h3 class="text-success">Report a Issue</h3>
+      <hr>
+      <form class="clearfix" id="create-post-form" method="post" enctype="multipart/form-data">
+        <!-- Title -->
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" name="title" placeholder="Enter a title" required>
+        </div>
+        <!-- Issue type -->
+        <div class="form-group">
+          <label for="hazardtype">Hazard Type</label>
+          <select class="custom-select resize-select h-100 py-0 d-none d-sm-block" id="hazardtype" name="hazard_type" autocomplete="off" required>
+            <option value="" disabled selected>Choose...</option>
+            <option value="fire">Fire</option>
+            <option value="lead">Lead</option>
+            <option value="poison">Poison</option>
+            <option value="poison">Air</option>
+            <option value="poison">Water</option>
+            <option value="poison">Smoke</option>
+          </select>
+        </div>
+        <!-- Location -->
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" class="form-control" id="location" name="location" placeholder="Enter a address" required>
+        </div>
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" name="description" maxlength="300" placeholder="Describe the issue" required></textarea>
+        </div>
+        <!-- Upload images -->
+        <div class="form-group">
+          <label>Upload Image</label>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="post-image" name="post_image" aria-describedby="file-upload-help" required>
+            <label class="custom-file-label" for="post-image">Choose file...</label>
+            <div class="invalid-feedback">Invalid file</div>
+            <small id="file-upload-help" class="form-text text-muted">*Limited to 4 images.<br>*Width and height must be between 500px to 5000px.<br>*Max 10mb.</small>
+          </div>
+        </div>
+
+        <!-- Cancel, Post Buttons -->
+        <a class="btn btn-outline-secondary" href="/">Cancel</a>
+        <button type="submit" class="btn btn-success float-right">Publish issue</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/utils/resize_select.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'layouts/dashboard.html' %}
+
+{% block title %}
+<title>Dashboard - View Posts</title>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="mt-4">
+  <table class="table border" id="dashboard-table-posts">
+    <thead>
+      <tr class="bg-light">
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+        <th scope="col">Date</th>
+        <th scope="col">Hazard</th>
+        <th scope="col">Location</th>
+        <th scope="col">Status</th>
+        <th scope="col">{# Delete #}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="dashboard-table-td">TITLE__________</td>
+        <td class="dashboard-table-td">AUTHOR</td>
+        <td class="dashboard-table-td">DATE</td>
+        <td class="dashboard-table-td">HAZARD</td>
+        <td class="dashboard-table-td">LOCATION__________</td>
+        <td class="dashboard-table-td">
+          <div class="dropdown select-dropdown">
+            <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="status">STATUS</span>
+            </button>
+            <div class="dropdown-menu">
+              <div class="dropdown-item" data-status-type="WAIT">Waiting for response</div>
+              <div class="dropdown-item" data-status-type="PROGRESS">In Progress</div>
+              <div class="dropdown-item" data-status-type="DONE">Done</div>
+            </div>
+          </div>
+        </td>
+        <td class="dashboard-table-td">
+          <button class="btn btn-danger w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

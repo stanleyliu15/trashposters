@@ -1,0 +1,83 @@
+{
+  "james":{
+    "name":"James Quintero",
+    "bio":"I'm a Computer Science undergrad at San Francisco State University, and I'm interested in Artificial Intelligence and Machine Learning. I hope to learn how to lead a team and do proper software engineering.",
+    "portrait-file":null,
+    "role":"Team-Lead",
+    "socials":null
+  },
+  "stanley":{
+    "name":"Stanley Liu",
+    "bio":"Hello, I am student studying Computer Science at SFSU. I am passionate about building clean, responsive websites.",
+    "portrait-file":null,
+    "role":"Front-End-Lead",
+    "socials":[
+      {
+        "name":"github",
+        "link":"https://github.com/deckbox"
+      },
+      {
+        "name":"facebook",
+        "link":"https://facebook.com"
+      }
+    ]
+  },
+  "danielle":{
+    "name":"Danielle Nunez",
+    "bio":"Danielle Nunez is the back end lead for CSC 648 Team 05. She is currently finishing up my undergraduate degree at San Francisco State University and has transferred from the University of Nevada Las Vegas.",
+    "portrait-file":null,
+    "role":"Back-End-Lead",
+    "socials":null
+  },
+  "tumar":{
+    "name":"Tumar Temirova",
+    "bio":"Currently, I am a senior student in CS major at San Francisco State University, graduating on 12/2018. I came from Kyrgyzstan to follow my dream to become a highly qualified software developer. I love solving problems and writing code. Right now, I am looking for an opportunity to work in real programming world to use my knowledge and learn more. I love travelling and exploring new places. My favorite places in San Francisco are Lands End and Golden Gate Park, and I love spending my free time walking in these places. I fell in love with skiing especially this year after I have learned. When I am at home, I like to read classic literature and watch movies, or I enjoy cooking.",
+    "portrait-file":null,
+    "role":"Front-End",
+    "socials":[
+      {
+        "name":"facebook",
+        "link":"http://facebook.com/tumar.temirova"
+      },
+      {
+        "name":"github",
+        "link":"http://github.com/ttumar"
+      },
+      {
+        "name":"linkedin",
+        "link":"http://linkedin.com/in/tumar"
+      }
+    ]
+  },
+  "alex":{
+    "name":"Alex Hernandez",
+    "bio":"Born and raised in Los Angeles, currently studying Computer Science at San Francisco State University. I am also a brother of Nu Alpha Kappa Fraternity, Inc. as well as Chapter President. I decided to major in computer science in the hopes to propel human kind to an ever brighter future",
+    "portrait-file":null,
+    "role":"Back-End",
+    "socials":[
+      {
+        "name":"instagram",
+        "link":"https://www.instagram.com/pl3nny/?hl=en"
+      },
+      {
+        "name":"facebook",
+        "link":"https://www.facebook.com/pl3nny"
+      },
+      {
+        "name":"github",
+        "link":"https://github.com/pl3nny"
+      },
+      {
+        "name":"linkedin",
+        "link":"https://www.linkedin.com/in/alexander-hernandez-b1b645155/"
+      }
+    ]
+  },
+  "jianhao":{
+    "name":"Jianhao Zhong",
+    "bio":"My name is Jianhao Zhong, and I am a Computer Science major student at San Francisco State University. I am interested in computer image and vision processing. By taking this course, I want to learn more about parallel computing, especially about the parallel algorithms for computer vision.",
+    "portrait-file":null,
+    "role":"Back-End",
+    "socials":null
+  }
+}

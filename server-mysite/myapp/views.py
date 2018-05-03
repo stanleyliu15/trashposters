@@ -273,6 +273,10 @@ def logout_user(request):
     logout(request)
     return redirect(index)
 
+def forgotpassword(request):
+    return render(request, 'new_regular/forgotpassword.html', context={})
+
+
 
 def about_us(request):
     """

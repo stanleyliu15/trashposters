@@ -1,0 +1,55 @@
+<!--
+  Dashboard Base Template for Admin & City Officials
+
+  Admin Specs
+  * Delete users,
+  * Delete posts,
+  * Not allowed to edit
+
+  City Official Specs
+  * List / View Users (P1),
+  * List / View Posts (P1),
+  * Set Status of Post (P1),
+  * Delete Posts (P1)
+-->
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/select_dropdown.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard/index.css' %}">
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- Dashboard Header -->
+  <div class="row">
+    <div class="col mt-5">
+      <div>
+        <h3 class="text-center text-dark">Dashboard - CITY_OFFICIAL_NAME</h3>
+      </div>
+    </div>
+  </div>
+  <!-- Dashboard Navigation -->
+  <div class="row">
+    <div class="col-md-8 mx-auto mt-5">
+      {% include 'views/partials/dashboard_nav.html' %}
+    </div>
+  </div>
+  <!-- Dashboard Content -->
+  <div class="row">
+    <div class="col">
+    {% block dashboard_content %} {% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/utils/select_dropdown.js' %}"></script>
+<script src="{% static 'js/tab_nav.js' %}"></script>
+<script src="{% static 'js/status_color.js' %}"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'js/dashboard_table_init.js' %}"></script>
+{% endblock %}

@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^register/$', views.register, name='register'),
     # /logout
     url(r'logout/$', views.logout_user, name='logout'),
+    path('forgotpassword', views.forgotpassword, name="forgotpassword"),
     path('settings', views.settings, name='settings'),
 
 

@@ -1,0 +1,28 @@
+.card-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  width: 100%;
+  height: 100%;
+}
+
+.card-content {
+  margin-left: 40px;
+}
+
+.image-wrap .card-img
+{
+  min-width: 220px;
+  max-width: 260px;
+}
+
+@media (max-width: 576px) {
+  .card-wrap {
+    display: block;
+    text-align: center;
+  }
+  .card-content {
+    margin-left: 0;
+  }
+}
