@@ -1,0 +1,65 @@
+{% extends 'new_bases/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+<title>About Us</title>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Tab Bar Navigation -->
+  <div class="row">
+    <div class="col mt-5">
+      {% include 'new_bases/tab_nav.html' %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col my-5 py-5">
+
+      <div class="content-item text-center">
+        <h1 class="text-success">Superheroes In Training</h1>
+        <h6>Software Engineering</h6>
+        <h6>Section - 01 | Team 5 | SFSU Spring 2018</h6>
+      </div>
+
+      <div class="content-item text-center my-5 px-sm-0 px-md-5">
+        <h2 class="py-5">Our Mission</h2>
+        <p class="pb-5">In this day and age, environmental issues should be prioritized as we progress as a society. It is not enough to
+          implement top down solutions such as a ban on plastic bags or a tax on unclean vehicles. We want to provide a means
+          for a bottom up solution from within the community and make it easier for people to get involved and make a difference
+          in their environment. Our platform gives citizens the responsibility for the earth in their own hands and work
+          together to keep our planet clean.</p>
+      </div>
+
+      <div class="content-item text-center my-5">
+        <h2>Meet The Team</h2>
+        <div class="my-5">
+          <div class="card-deck justify-content-center">
+            {% for key, props in team_members.items %}
+            <div class="card justify-content-center border-0 text-center my-5 py-2">
+              <div class="card-block">
+                <a class="card-link text-success" href="/about-us/{{ key }}">
+                  <h4 class="card-title">{{ props.name|capfirst }}</h4>
+                  <p class="card-subtitle">{{ props.role }} </p>
+                </a>
+              </div>
+             </div>
+            {% empty %} {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/tab_nav.js' %}"></script>
+{% endblock %}

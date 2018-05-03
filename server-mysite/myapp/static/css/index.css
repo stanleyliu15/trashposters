@@ -1,0 +1,18 @@
+#query::placeholder { text-overflow: ellipsis; }
+
+@media (min-width: 320px) {
+  #query::placeholder { font-size: 12px; }
+}
+
+
+@media (min-width: 360px) {
+  #query::placeholder { font-size: 15px; }
+}
+
+@media (min-width: 380px) {
+  #query::placeholder { font-size: 16px; }
+}
+
+@media (min-width: 380px) {
+  #query::placeholder { font-size: 16px; }
+}

@@ -1,0 +1,42 @@
+<!--
+  * List / View Users (P1),
+  * List / View Posts (P1),
+  * Set Status of Post (P1),
+  * Delete Posts (P1)
+-->
+{% extends 'new_bases/base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}
+<title>City Official Dashboard</title>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <!-- Dashboard Navigation -->
+  <div class="row">
+    <div class="col-md-8 mx-auto mt-5">
+      <ul class="nav justify-content-center border-bottom">
+        <li class="nav-item">
+          <a class="nav-link text-success" href="#">Posts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-success" href="#">Users</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- Dashboard Content -->
+  <div class="row">
+    <div class="col">
+      {% include 'new_bases/dashboard_post_table.html' %}
+      {% include 'new_bases/dashboard_user_table.html' %}
+    </div>
+  </div>
+</div>
+{% endblock %}

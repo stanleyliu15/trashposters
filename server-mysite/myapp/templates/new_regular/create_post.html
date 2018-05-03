@@ -1,0 +1,41 @@
+<!--
+  Note For City Officials:
+  shall be able to post official statements
+  that stand out from regular posts
+-->
+{% extends 'new_bases/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    <title>Report a Issue</title>
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 bg-light border rounded mx-auto mt-5 px-md-5 py-5">
+                <h3 class="text-success">Report a Issue</h3>
+                <hr>
+                <form class="clearfix" id="create-post-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% include "myapp/form_template.html" %}
+                    {% for field in image_form %}
+                        <div>
+                            <span>{{ field.errors }}</span>
+                        </div>
+                        {{ field.label_tag }} {{ field }} <br>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success float-right">Publish issue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/utils/resize_select.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'new_bases/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+  <title>Settings</title>
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto my-5">
+      <h1 class="border-bottom text-success">User Profile</h1>
+      {% include 'new_bases/settings_user_profile.html' %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+.selected {
+  background-color: rgba(211,211,211,1);
+}
+
+.select-dropdown .dropdown-menu .dropdown-item {
+  cursor: pointer;
+}
+
+.select-dropdown .dropdown-menu .dropdown-item:hover {
+  color: black;
+  background-color: rgba(211,211,211,1);
+}

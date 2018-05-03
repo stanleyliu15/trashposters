@@ -1,0 +1,11 @@
+.fullscreen {
+  min-height: 100vh;
+}
+
+
+
+@media screen and (min-width: 992px) and (max-width: 1600px){
+  .portfolio-content {
+    width: 50%;
+  }
+}

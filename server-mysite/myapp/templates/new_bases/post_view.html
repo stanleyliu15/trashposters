@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<!-- Sample Post -->
+<div class="card mt-4">
+  
+
+	<div class="card-header">
+		
+		<a class="nav-link d-inline text-success" href="/posts/{{ post.post_id }}">
+			<span style="font-size:20px">{{ post.title }}</span>
+		</a>
+		<h6 class="d-inline">__STATUS__</h6>
+	</div>
+
+    <a href="/posts/{{ post.post_id }}">
+	<img class="card-img-top" src="https://picsum.photos/720/900" height="420" alt="post-image">
+    </a>
+
+  
+  <div class="card-body">
+    <img class="rounded-circle" src="https://picsum.photos/960/480" width="40" height="40" alt="user-profile-picture">
+    <a href="/" class="nav-link d-inline text-success">{{ post.user_id }}</a>
+    <p class="card-text" style="margin-bottom:0px">Date: {{ post.date }}</p>
+    <p class="card-text" style="margin-bottom:0px">Hazard: {{ post.hazard_type }}</p>
+    <p class="card-text" style="margin-bottom:0px"><i class="fa fa-map-marker"></i> Location: {{ post.location }}</p>
+  </div>
+</div>
+<!-- Close Sample Post -->
