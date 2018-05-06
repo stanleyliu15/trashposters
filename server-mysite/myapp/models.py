@@ -3,6 +3,9 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+
 """
 Note: Always perform migrations when making a change to models.py
 in order to have the changes reflect in the database.
@@ -111,6 +114,10 @@ class Posts(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=30, choices=STATUS_CHOICE, default="In progress")
     preview_image = models.ImageField(upload_to=post_preview_directory_path, null=True)
+    image_thumbnail = ImageSpecField(source='preview_image',
+                                     processors=[ResizeToFill(50, 50)],
+                                     format='JPEG',
+                                     options={'quality': 60})
 
     def get_absolute_url(self):
         """

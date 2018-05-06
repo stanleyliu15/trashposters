@@ -36,3 +36,8 @@
   transition: background-color 0.5s ease;
   background-color: rgba(17,17,17,0.3);
 }
+
+#map {
+    height: 50%;
+    width: 50%;
+}
