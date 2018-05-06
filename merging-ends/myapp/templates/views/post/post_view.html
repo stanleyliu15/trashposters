@@ -1,4 +1,8 @@
+
 {% load static %}
+
+<link rel="stylesheet" href="{% static 'css/mapsPopUp.css' %}">
+
 <!-- Sample Post -->
 <div class="card mt-4">
     <div class="card-header">
@@ -21,6 +25,41 @@
         <p class="card-text">Status: {{ post.status }}</p>
         <p class="card-text">{{ post.description }}</p>
         <span class="card-text">{{ post.hazard_type }} <i class="fa fa-map-marker"></i> {{ post.location }}</span>
-    </div>
-</div>
-<!-- Close Sample Post -->
+        <button id="myBtn">Open Maps</button>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="map">
+            <script>
+                var map;
+                var myLatLng;
+                var marker;
+
+                function initMap() {
+                    myLatLng = {lat: {{ latitude }}, lng: {{ longitude }}};
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: myLatLng,
+                        zoom: 14
+                    });
+                    marker = new google.maps.Marker({
+                        position: myLatLng,
+                        map: map,
+                        title: '{{ post.title }}'
+                    });
+                }
+            </script>
+            </div>
+          </div>
+
+        </div>
+    </div> 
+
+
+   <script src= "https://maps.googleapis.com/maps/api/js?key=AIzaSyDlXPyvEDLgSrkOTWhva-YUCSnaLmeaUaQ&callback=initMap" async defer>
+   </script>
+
+
+   <script src="{% static 'js/mapsPopUp.js' %}"></script>

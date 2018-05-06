@@ -9,6 +9,29 @@
     <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
 {% endblock %}
 
+{% block scripts %}
+<script>
+    var map;
+    var myLatLng;
+    var marker;
+
+    function initMap()
+    {
+        myLatLng = {lat: {{ latitude }}, lng: {{ longitude }}};
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            zoom: 14
+        });
+        marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: '{{ post.title }}'
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlXPyvEDLgSrkOTWhva-YUCSnaLmeaUaQ&callback=initMap" async defer></script>
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <!-- Image Slider -->
@@ -90,6 +113,10 @@
                 </div>
             </div>
         </div>
+
+        <!-- Google Map -->
+        <div id="map"></div>
+        
 
         <!-- Comments -->
         <div class="row">
