@@ -3,17 +3,19 @@
 
 <nav class="navbar navbar-expand-md navbar-light bg-light">
   <!-- Brand -->
-  <a class="navbar-brand" href="/">
-    <h2 class="text-success">TrashPosters</h2>
-      <!-- Hidden on xs devices -->
-    <h6 class="d-none d-sm-block">View and Report Environment Issues.</h6>
-  </a>
+  <div class="collapse navbar-collapse" id="nav-content">
+    <a class="navbar-brand" href="/">
+      <h2 class="text-success">TrashPosters</h2>
+        <!-- Hidden on xs devices -->
+      <h6 class="d-none d-sm-block">View and Report Environment Issues.</h6>
+    </a>
+  </div>
 
   <!-- Button Collapse -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content"
+<!--   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-  </button>
+  </button> -->
 
   <!-- Navigation Links -->
   <div class="collapse navbar-collapse" id="nav-content">
@@ -25,10 +27,11 @@
 
       {% include 'new_bases/search_bar.html' %}
 
+      <li class="nav-item m-2">
+        <a class="bold border nav-link rounded text-dark" href={% url 'create_post' %}>Report a issue <i class="fa fa-edit"></i></a>
+      </li>
+      
       {% if user.is_authenticated  %}
-        <li class="nav-item m-2">
-          <a class="bold border nav-link rounded text-dark" href={% url 'create_post' %}>Report a issue <i class="fa fa-edit"></i></a>
-        </li>
         <li class="nav-item m-2">
           <div class="dropdown">
             <button class="btn dropdown-toggle bg-light w-100" type="button" id="dropdown-menu-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

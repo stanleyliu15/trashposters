@@ -7,26 +7,26 @@
 		      <!-- Hidden on xs devices -->
 		      <select class="custom-select resize-select bg-light d-none d-sm-block h-100 py-0" id="filter-post-select-menu" autocomplete="off">
 		        <option value="all">All</option>
-			{% if select == "title" %}
-			<option value="title" selected>Title</option>
-			{% else %}
-			<option value="title">Title</option>
-			{% endif %}
-			{% if select == "description" %}
-		        <option value="description" selected>Description</option>
-			{% else %}
-			<option value="description">Description</option>
-			{% endif %}
-			{% if select == "location" %}
-		        <option value="location" selected>Location</option>
-			{% else %}
-			<option value="location">Location</option>
-			{% endif %}
-			{% if select == "user" %}
-		        <option value="user" selected>User</option>
-			{% else %}
-			<option value="user">User</option>
-			{% endif %}
+						{% if select == "title" %}
+						<option value="title" selected>Title</option>
+						{% else %}
+						<option value="title">Title</option>
+						{% endif %}
+						{% if select == "description" %}
+					        <option value="description" selected>Description</option>
+						{% else %}
+						<option value="description">Description</option>
+						{% endif %}
+						{% if select == "location" %}
+					        <option value="location" selected>Location</option>
+						{% else %}
+						<option value="location">Location</option>
+						{% endif %}
+						{% if select == "user" %}
+					        <option value="user" selected>User</option>
+						{% else %}
+						<option value="user">User</option>
+						{% endif %}
 		      </select>
 		    </span>
 		    <!-- Search Bar -->
