@@ -24,7 +24,7 @@ $('#query').keypress(function(e){
     // remove old selected option's selected attribute
     $(this).find("option[selected=selected]").attr("selected", false)
     // add selected attribute to the current selected option
-    $("option:selected", this).attr("selected", true)
+    //$("option:selected", this).attr("selected", true)
 
     // Special case when 'All' option is selected
     // loop over the option's in the select menu
