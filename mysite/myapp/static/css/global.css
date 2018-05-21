@@ -53,6 +53,10 @@ height:500px;
   margin-top: 40px;
 }
 
+.btn-default{
+border:1px solid gray
+}
+
 .container-small,
 .container-large {
   max-width: 100%;
