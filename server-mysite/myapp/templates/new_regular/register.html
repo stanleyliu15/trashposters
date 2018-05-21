@@ -2,85 +2,71 @@
 {% load staticfiles %}
 
 {% block title %}
-<title>Register</title>
+    <title>Register</title>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-10 bg-light border rounded mx-auto mt-5 p-5">
-      <h1>Register</h1>
-      <hr>
-      <form class="clearfix" id="register-form" method="post">
-      {% csrf_token %}
-        <!-- Name -->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="firstname">First Name</label>
-            <input placeholder="First Name" type="text" class="form-control" id="firstname" name="name" required>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="lastname">Last Name</label>
-            <input placeholder="Last Name" type="text" class="form-control" id="lastname" name="lastname" required>
-          </div>
-        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 bg-light border rounded mx-auto mt-5 p-5">
+                <h1>Register</h1>
+                <hr>
+                <form class="clearfix" id="register-form" method="post" action="">
 
-        <!-- Username -->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="username">Username</label>
-            <input placeholder="Username" type="text" class="form-control" id="username" name="username" required>
-          </div>
-        </div>
+                    {% for field in user_signup_form %}
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>{{ field.label_tag }}<span
+                                        style="color:red;">* {{ field.errors }}</span></label>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
 
-        <!-- Email address -->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="email">Email</label>
-            <input placeholder="Email" type="email" class="form-control" id="email" name="email" required>
-          </div>
-        </div>
+                    {% for field in user_data_form %}
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>{{ field.label_tag }}<span
+                                        style="color:red;">* {{ field.errors }}</span></label>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
 
-        <!-- Password -->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="password">Password</label>
-            <input placeholder="Password" type="password" class="form-control" id="password" name="password" required>
-          </div>
-        </div>
+                    <!-- Age Check -->
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="age" required>
+                            <label class="custom-control-label" for="age">I am 13+ years old<span
+                                    style="color:red;">*</span></label>
+                        </div>
+                    </div>
 
-        <!-- Location -->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="city">City</label>
-            <input placeholder="City" type="text" class="form-control" id="city" name="city" required>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="state">State</label>
-            <input placeholder="State" type="text" class="form-control" id="state" name="state" required>
-          </div>
-        </div>
+                    <!-- Terms and Conditions Check -->
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="termsOfService" required>
+                            <label class="custom-control-label" for="termsOfService">I agree to the <a
+                                    class="text-success" href="/terms-of-service" target="_blank">Terms of
+                                Service</a><span style="color:red;">*</span></label>
+                        </div>
+                    </div>
 
-        <!-- Age Check -->
-        <div class="form-group">
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="age" required>
-            <label class="custom-control-label" for="age">I am 13+ years old</label>
-          </div>
+                    <div class="form-group">
+                        <span class="text-muted"><em><span
+                                style="color:red;">*</span> Indicates required field</em></span>
+                    </div>
+                    <!-- Register Buttons -->
+                    <a class="btn btn-outline-secondary" href="/">Cancel</a>
+                    <button type="submit" class="btn btn-success float-right">Register</button>
+                </form>
+            </div>
         </div>
-
-        <!-- Terms and Conditions Check -->
-        <div class="form-group">
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="termsOfService" required>
-            <label class="custom-control-label" for="termsOfService">I agree to the <a class="text-success" href="/terms-of-service" target="_blank">Terms of Service</a></label>
-          </div>
-        </div>
-
-        <!-- Register Buttons -->
-        <button type="submit" class="btn btn-success float-right">Register</button>
-      </form>
     </div>
-  </div>
-</div>
+
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/confirm.js' %}"></script>
 {% endblock %}
