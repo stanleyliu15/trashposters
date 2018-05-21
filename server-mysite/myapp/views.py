@@ -223,24 +223,24 @@ def search_by(request, select, query):
     @:return    Renders a page with all matching posts listed.
     """
 
-    context = {'posts': None,
+    context = {'posts': Posts.objects.none(),
                'extra_posts': None,
                'select': select,
                'keyword': query}
-
-    if(select=="title"):
-        context['posts'] =  Posts.objects.filter(title__icontains=query)
-    elif (select=="description"):
-        context['posts'] = Posts.objects.filter(description__icontains=query)
-    elif(select=="user"):
-        context['posts'] = Posts.objects.filter(user_id__username__exact=query)
-    elif(select=="hazard_type"):
-        context['posts'] = Posts.objects.filter(hazard_type__hazard_name__exact=query)
-    elif (select=="location"):
-        context['posts'] = Posts.objects.filter(location__icontains=query)
+ 
+    if(select=="all" or select=="title"):
+        context['posts'] = context['posts'] | Posts.objects.filter(title__icontains=query)
+    if(select=="all" or select=="description"):
+        context['posts'] = context['posts'] |  Posts.objects.filter(description__icontains=query)
+    if(select=="all" or select=="user"):
+        context['posts'] = context['posts'] |  Posts.objects.filter(user_id__username__exact=query)
+    if(select=="all" or select=="hazard_type"):
+        context['posts'] = context['posts'] |  Posts.objects.filter(hazard_type__hazard_name__exact=query)
+    if(select=="all" or select=="location"):
+        context['posts'] = context['posts'] |  Posts.objects.filter(location__icontains=query)
 
     #gets all posts if no results
-    if not context['posts']:
+    if len(context['posts']) == 0:
     	context['extra_posts'] = Posts.objects.all()
 
     return render(request, 'new_regular/search.html', context)
