@@ -91,7 +91,7 @@ def create_post(request):
             post.save()
             context = {'post': post,
                        'images': images}
-            return redirect('new_regular/post_detail', post_id=post.post_id)
+            return redirect('/posts/'+str(post.post_id))
     else:
         return render(request, 'new_regular/login.html')
     context = {
