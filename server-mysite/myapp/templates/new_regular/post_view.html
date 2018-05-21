@@ -1,3 +1,6 @@
+{% load static %}
+
+
 <!-- Sample Post -->
 <div class="card mt-4">
     <div class="card-header">
@@ -5,21 +8,80 @@
         <a href={% url 'post_detail' post.post_id %}>
             <h6 class="d-inline">{{ post.title }} </h6>
         </a>
-        <h6 class="d-inline">, posted by
-        <a href={% url 'profile_detail' post.user_id %}>
-        {{ post.user_id }}
-        </a>
-         on {{ post.date }} </h6>
+        {% if post.city_official %}
+            <h6 class="d-inline">, posted by City Official
+                {{ post.user_id }}
+                on {{ post.date }} </h6>
+        {% else %}
+            <strong>
+                <h6 class="d-inline">, posted by
+                    {{ post.user_id }}
+                    on {{ post.date }} </h6></strong>
+        {% endif %}
     </div>
-    {% if post.preview_image %}
-        <img class="card-img-top" src= '{{ post.preview_image.url }}' height="200" alt="post-image">
+    {% if post.image_thumbnail %}
+        <img class="card-img-top" src={{ post.image_thumbnail.url }} alt="post-image">
     {% else %}
-        <h2> no image to display :( </h2>
+        <img class="card-img-top" src="{% static 'images/default_image.png' %}" height="200" alt="post-image">
     {% endif %}
     <div class="card-body">
         <p class="card-text">Status: {{ post.status }}</p>
         <p class="card-text">{{ post.description }}</p>
         <span class="card-text">{{ post.hazard_type }} <i class="fa fa-map-marker"></i> {{ post.location }}</span>
+        <!-- pop map  -->
+
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Open Maps
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                        <h4 class="modal-title">{{ post.location }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="map"></div>
+                        <script>
+                            var map;
+                            var myLatLng;
+                            var marker;
+
+                            function initMap() {
+                                myLatLng = {lat: {{ post.latitude }}, lng: {{ post.longitude }}};
+
+                                // Create a map object and specify the DOM element
+                                // for display.
+                                map = new google.maps.Map(document.getElementById('map'), {
+                                    center: myLatLng,
+                                    zoom: 15
+                                });
+
+                                // Create a marker and set its position.
+                                marker = new google.maps.Marker({
+                                    map: map,
+                                    position: myLatLng,
+                                    title: '{{ post.title }}'
+                                });
+                            }
+
+                            //show map on modal
+                            $('#myModal').on('shown.bs.modal', function () {
+                                initMap();
+                            });
+                        </script>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<!-- Close Sample Post -->
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgL8gS0W5KMVXP0Iqytc_qKR0O2NA3qM&callback=initMap" async
+        defer>
+</script>
