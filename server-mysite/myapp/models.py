@@ -8,9 +8,7 @@ from imagekit.processors import ResizeToFill
 
 """
 Note: Always perform migrations when making a change to models.py
-in order to have the changes reflect in the database.
-
-Models data type                            MySQL Equivalent
+in order to have the changes reflect in the database.ata type                            MySQL Equivalent
 models.AutoField(primary_key=True)          integer AUTO_INCREMENT NOT NULL
 models.CharField(maxLength=N)               varChar(N) NOT NULL
 models.DateTimeField()                      datetime NOT NULL
@@ -63,7 +61,8 @@ class UserData(models.Model):
     """
     username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
     biography = models.CharField(max_length=400, null=True)
-    location = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, default="San Francisco")
+    state = models.CharField(max_length=255, default="CA")
     avatar = models.ImageField(upload_to=user_directory_path, null=True)
 
     def get_absolute_url(self):
@@ -178,6 +177,13 @@ class Posts(models.Model):
         """
         matching_posts = Posts.objects.filter(description__icontains=query)
         return matching_posts
+
+    def get_userdata(self):
+        """
+        Returns the UserData object for the author of the given post.
+        :return: UserData
+        """
+        return UserData.objects.get(username_id=self.user_id)
 
     def __str__(self):
         """
