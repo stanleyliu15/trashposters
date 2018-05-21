@@ -8,12 +8,7 @@ from .models import Comments
 from .models import UserData
 from .models import PostImageCollection
 
-from .forms import UserForm
-from .forms import LoginForm
-from .forms import PostForm
-from .forms import CommentForm
-from .forms import SearchForm
-from .forms import ImageForm
+from .forms import *
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -47,17 +42,32 @@ def create_post(request):
     @:return    Renders a new page with the post detail information and the primary key as part of the url.
     """
     if request.method == "POST":
-        form = PostForm(request.POST, request.FILES)
+        post_form = PostForm(request.POST, request.FILES)
         image_form = ImageForm(request.POST, request.FILES)
     else:
-        form = PostForm()
+        post_form = PostForm()
         image_form = ImageForm()
     if request.user.is_authenticated:
-        if form.is_valid() and image_form.is_valid():
-            post = form.save(commit=False)
+        if post_form.is_valid() and image_form.is_valid():
+            post = post_form.save(commit=False)
             this_username = request.user
             user = User.objects.get(username=this_username)
             post.user_id = user
+            # If the user is a city official, mark the post as so.
+            if check_city_official(user):
+                post.city_official = True
+            else:
+                post.city_official = False
+            # Assign foreign key to the post.
+            hazard_type = post_form.cleaned_data['hazard_type']
+            hazard_type_foreign_key = HazardType.objects.get(hazard_name=hazard_type)
+            post.hazard_type = hazard_type_foreign_key
+            # save latitude and longitude
+            address = post.location
+            geolocation = Nominatim()
+            location = geolocation.geocode(address)
+            post.latitude = location.latitude
+            post.longitude = location.longitude
             post.save()
             # Once post has been written to the database,
             # we can use the primary key to create the foreign
@@ -73,7 +83,7 @@ def create_post(request):
     else:
         return render(request, 'new_regular/login.html')
     context = {
-        "form": form,
+        "post_form": post_form,
         "image_form": image_form
     }
     return render(request, 'new_regular/create_post.html', context)
@@ -136,13 +146,30 @@ def post_detail(request, post_id):
     latitude = location.latitude
     longitude = location.longitude
     image_collection = PostImageCollection.objects.get(post_id=post_id)
-    post_images = [image_collection.image1, image_collection.image2, image_collection.image3, image_collection.image4]
+    post_images = list()
+    image_1 = image_collection.image1
+    image_2 = image_collection.image2
+    image_3 = image_collection.image3
+    image_4 = image_collection.image4
+    if image_1 is not None:
+        post_images.append(image_1)
+    if image_2 is not None:
+        post_images.append(image_2)
+    if image_3 is not None:
+        post_images.append(image_3)
+    if image_4 is not None:
+        post_images.append(image_4)
+
     context = {'post': post,
                'image': image,
                'comment_list': comment_list,
                'form': form,
                'latitude': latitude,
                'longitude': longitude,
+               'image_1': image_1,
+               'image_2': image_2,
+               'image_3': image_3,
+               'image_4': image_4,
                'post_images': post_images
               }
     return render(request, 'new_regular/post_detail.html', context)
@@ -217,21 +244,28 @@ def register(request):
     @:return    A login success page with the user now logged in to the website.
     """
     template_name = 'new_regular/register.html'
-    form = UserForm(request.POST or None)
-    if form.is_valid():
-        user = form.save(commit=False)
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
+    user_signup_form = UserSignUpForm(request.POST or None)
+    user_data_form = UserDataForm(request.POST or None)
+    if user_signup_form.is_valid() and user_data_form.is_valid():
+        # Creates new user through django's authentication system.
+        user = user_signup_form.save(commit=False)
+        username = user_signup_form.cleaned_data['username']
+        password = user_signup_form.cleaned_data['password']
         user.set_password(password)
         user.save()
+        # Validates user data, links it to a foreign key, and saves it.
+        user_data = user_data_form.save(commit=False)
+        user_data.username = user
+        user_data.save()
+        # Logs the user in.
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)
-                # TODO: Create registration successful page with redirect or show user is now logged in.
-                return HttpResponse('Login successful.')
+                return redirect(index)
     context = {
-        "form": form,
+        "user_signup_form": user_signup_form,
+        "user_data_form": user_data_form
     }
     return render(request, template_name, context)
 
