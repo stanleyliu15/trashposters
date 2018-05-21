@@ -8,7 +8,7 @@ from .models import Comments
 from .models import UserData
 from .models import PostImageCollection
 
-<<<<<<< HEAD
+
 from .forms import *
 
 from django.contrib.auth import authenticate, login, logout
