@@ -121,7 +121,7 @@ class Posts(models.Model):
                                      format='JPEG',
                                      options={'quality': 60})
     image_regular = ImageSpecField(source='preview_image',
-                                     processors=[ResizeToFill(1000, 1000)],
+                                     processors=[ResizeToFill(200, 200)],
                                      format='JPEG',
                                      options={'quality': 80})
     city_official = models.BooleanField(default=False)
