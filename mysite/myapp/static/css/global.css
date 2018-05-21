@@ -30,7 +30,6 @@ height:500px;
 
 .bold {
   font-weight: 700;
-  padding-bottom: 120px;
 }
 
 #global-header .navbar .navbar-collapse .navbar-nav .nav-item .nav-link {
@@ -52,6 +51,10 @@ height:500px;
 
 #global-footer .container {
   margin-top: 40px;
+}
+
+.btn-default{
+border:1px solid gray
 }
 
 .container-small,
