@@ -28,8 +28,8 @@ def index(request):
     :return: The index.html page.
     """
     posts = Posts.objects.all()
-    #sorts by date and gets the most recent 5
-    recent_posts = posts.order_by('-date')[:5]
+    # sorts by date and gets the most recent 5
+    recent_posts = posts.order_by('-date')[:10]
     context = {'recent_posts': recent_posts}
     return render(request, 'new_regular/index.html', context)
 
@@ -43,7 +43,6 @@ def check_city_official(user):
         return True
     else:
         return False
-
 
 
 def create_post(request):
@@ -123,7 +122,6 @@ def create_comment(request, post):
         "form": form,
     }
     return render(request, 'new_regular/post_detail.html', context)
-
 
 
 def post_list(request):
@@ -218,6 +216,7 @@ def search_empty(request):
                'keyword': ""}
     return render(request, 'new_regular/search.html', context)
 
+
 def search_by(request, select, query):
     """
     Searches difference aspects of a post depending on what the user selects
@@ -230,20 +229,20 @@ def search_by(request, select, query):
                'select': select,
                'keyword': query}
  
-    if(select=="all" or select=="title"):
+    if select=="all" or select=="title":
         context['posts'] = context['posts'] | Posts.objects.filter(title__icontains=query)
-    if(select=="all" or select=="description"):
+    if select=="all" or select=="description":
         context['posts'] = context['posts'] |  Posts.objects.filter(description__icontains=query)
-    if(select=="all" or select=="user"):
+    if select=="all" or select=="user":
         context['posts'] = context['posts'] |  Posts.objects.filter(user_id__username__exact=query)
-    if(select=="all" or select=="hazard_type"):
+    if select=="all" or select=="hazard_type":
         context['posts'] = context['posts'] |  Posts.objects.filter(hazard_type__hazard_name__exact=query)
-    if(select=="all" or select=="location"):
+    if select=="all" or select=="location":
         context['posts'] = context['posts'] |  Posts.objects.filter(location__icontains=query)
 
-    #gets all posts if no results
+    # gets all posts if no results
     if len(context['posts']) == 0:
-    	context['extra_posts'] = Posts.objects.all()
+        context['extra_posts'] = Posts.objects.all()
 
     return render(request, 'new_regular/search.html', context)
 
@@ -321,9 +320,9 @@ def logout_user(request):
     logout(request)
     return redirect(index)
 
+
 def forgotpassword(request):
     return render(request, 'new_regular/forgotpassword.html', context={})
-
 
 
 def about_us(request):
@@ -346,26 +345,56 @@ def about_us_single(request, team_member):
     """
     with open(os.getcwd() + '/myapp/static/data/about-us-list.json', 'r') as json_file:
         data = json.load(json_file)[team_member];
-    return render(request, 'new_regular/about-single.html', context={"team_member": data})
+    return render(request, 'new_regular/about_single.html', context={"team_member": data})
+
 
 def contact(request):
     return render(request, 'new_regular/contact.html', context={})
 
+
 def terms_of_service(request):
     return render(request, 'new_regular/terms_of_service.html', context={})
+
 
 def settings(request):
     return render(request, 'new_regular/settings.html', context={})
 
+
 # for testing the ui
 def city_official_dashboard(request):
-    return render(request, 'new_regular/city_official_dashboard_overview.html', context={})
+    """
+    City official users only.
+    :param request:
+    :return:
+    """
+    user = request.user
+    if check_city_official(user):
+        if request.POST:
+            pass
+        userdata = UserData.objects.get(username=user)
+        city = userdata.city
+        posts = Posts.objects.filter(location__icontains=city)
+        constituents = UserData.objects.filter(city__icontains=city)
+        context = {
+            "city": city,
+            "constituents": constituents
+        }
+        if posts is not None:
+            context['posts'] = posts
+        else:
+            context['error_message'] = "No posts found for your city."
+        return render(request, 'new_regular/city_official.html', context)
+    else:
+        return redirect(index)
+
 
 def city_official_dashboard_view_posts(request):
     return render(request, 'new_regular/city_official_dashboard_view_posts.html', context={})
 
+
 def city_official_dashboard_view_users(request):
     return render(request, 'new_regular/city_official_dashboard_view_users.html', context={})
+
 
 # for testing the ui
 def post_detail_ui(request):
