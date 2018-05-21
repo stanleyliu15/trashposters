@@ -1,0 +1,6 @@
+    <form type="get" action="">
+        {% csrf_token %}
+        {{ form.selection }}
+        {{ form.value }}
+    </form>
+    <button type="submit">Submit</button>

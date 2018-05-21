@@ -1,0 +1,73 @@
+<!--
+  name
+  username
+  general area they live in
+  create avatars or use one of the preset avatars
+    note: for uploaded images
+      minimum width and height of 300px, and
+      maximum width and height of 5000px
+      png, jpg, bmp
+      max 500kb file size
+  bio description, max-limit of 300 chars
+  Users shall receive a strike if their post is reported and removed
+  Users shall be banned if they receive 3 or more strikes
+-->
+<div class="my-4">
+  <form>
+    <div class="form-group">
+      <!-- Current Avatar Triggers Modal -->
+      <a href="#avatarModal" role="button" data-toggle="modal">
+        <img src="https://picsum.photos/160/160" class="img-fluid rounded" alt="avatar">
+      </a>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="firstname">First name</label>
+        <input type="text" class="form-control" id="firstname" value="FIRST_NAME">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="lastname">Last name</label>
+        <input type="text" class="form-control" id="lastname" value="LAST_NAME">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="location">General Location</label>
+      <input type="text" class="form-control" id="location" value="LOCATION">
+    </div>
+    <button type="submit" class="btn btn-success px-md-4">Save</button>
+  </form>
+
+
+  <!-- Avatar Modal -->
+  <div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="avatarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="avatarModalLabel">Change Avatar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Upload a Image</label>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="avatar" aria-describedby="file-upload-help" required>
+              <label class="custom-file-label" for="avatar">Choose file...</label>
+              <div class="invalid-feedback">Invalid file</div>
+              <small id="file-upload-help" class="form-text text-muted">*Image width and height must be between 300px and 5000px respectively.<br>*Max 500kb.</small>
+            </div>
+            <div>
+              <h6>Or Choose a Preset Avatar</h6>
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 bg-light border rounded mx-auto mt-5 p-5">
+      <h1>Sign In</h1>
+      <form class="clearfix" id="login-form" method="post">
+        <!-- Email -->
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="username">Username</label>
+            <input type="email" class="form-control" id="username" name="username" required>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+        </div>
+
+        <!-- Forgot Password Link -->
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <a class="text-success" href="/forgotpassword">Forgot Password?</a>
+          </div>
+        </div>
+
+        <!-- Login Buttons -->
+        <a class="btn btn-outline-secondary" href="/register">Register</a>
+        <button type="submit" class="btn btn-success float-right">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

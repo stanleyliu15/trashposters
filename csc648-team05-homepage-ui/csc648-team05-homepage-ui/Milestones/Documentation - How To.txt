@@ -1,0 +1,161 @@
+
+---- AWS security group Inbound and Outbound rules ----
+Add these rules to the security group associated with the EC2 instance you just created 
+Inbound: 
+Type: HTTP | Source: 0.0.0.0/0
+Type: SSH | Source: 0.0.0.0/0
+Type: MySQL | Source: 0.0.0.0/0
+
+Outbound: 
+Type: All traffic | Source: 0.0.0.0/0
+
+
+
+---- SSH into server ----
+Download the .pem key
+
+Windows: 
+Use PUTTY
+Follow: https://stackoverflow.com/questions/3190667/convert-pem-to-ppk-file-format
+or 
+use BASH and follow Unix steps
+
+
+Unix:
+$ cd <directory with key>
+$ chmod 400 <key name>.pem
+$ ssh -i [path of key] ec2-user@ec2-[IP_address].us-west-1.compute.amazonaws.com
+
+
+
+---- Commands to run when setting up webserver ----
+
+$ sudo su
+$ yum -y install httpd24
+	This installs apache, but may not be needed if installing Django
+$ yum -y update
+$ yum -y install python36u
+$ yum -y install python36u-pip
+$ /usr/bin/pip-3.4 install django=2.0.2
+or 
+$ pip install django=2.0.2
+$ django-admin --version
+	This should print out 2.0.2 if the successful
+$ apt-get update
+$ yum install mysql
+$ pip3 install mysqlclient
+
+
+
+
+---- Django ----
+https://docs.djangoproject.com/en/2.0/intro/tutorial01/
+Creating a project: 
+$ cd /var/www/html
+$ django-admin startproject mysite
+	This creates a folder in the current directory and populates it with django related .py files
+
+
+Creating App: 
+$ cd /var/www/html/mysite
+$ sudo python3 manage.py startapp {App Name}
+	This creates an app under the current project
+	
+
+Adding app to authorized in project: 
+$ go to /var/www/html/mysite/mysite
+$ sudo nano settings.py
+	
+
+Starting webserver:
+$ sudo python3 manage.py runserver 0:80
+	To access this webserver, go to {IP address}[:80]
+If Django says the port is already in use, run
+$ sudo service httpd stop
+
+
+To keep Django running indefinitely, 
+$ screen
+	it's okay don't panic, it's supposed to blank
+	Then run the server start command
+$ sudo python3 manage.py runserver 0:80
+*)  Ctrl+A
+	Nothing will happen, that's normal
+$ d
+	You will now have exited the screen, but django is still running. To go back to the running command screen, 
+$ screen -r
+
+
+
+include, in mysite.urls
+
+
+HTML pages:
+$ cd /var/www/html/mysite/mysite
+$ sudo nano settings.py
+	add the name of the new app in INSTALLED_APPS
+$ cd /var/www/html/mysite/myapp
+$ mkdir templates
+
+
+
+Any HTML files will go in the /var/www/html/mysite/APPNAME/templates folder
+For these instructions, PAGENAME is [PAGENAME].html of your new html file
+In views.py, add a new function like
+
+	def PAGENAME(request):
+		return render(request, 'PAGENAME.html', context={})
+	
+In urls.py, add a new path in urlpatterns like
+
+	path('PAGENAME', views.PAGENAME, name='PAGENAME'),
+
+So now when a user goes to /APPNAME/PAGENAME, the html page will be displayed. When hardcoding urls in href of <a> tags, don't put in file extensions like .html, because we'll handle that in urls.py
+Another example is 
+	path('about/parker', views.aboutParker, name='somename'),
+	
+So now when a user goes to [IP address]/about/parker, django will run the python function aboutParker in views.py. If the function in views.py is 
+
+	def aboutParker(request):
+		return render(request, 'about-pages/parker.html', context={})
+		
+then django will load the "about-pages/parker.html" file for the user. 
+
+
+
+
+	
+	
+---- Install Django local environment ----
+Ubuntu: 
+https://www.howtoforge.com/tutorial/how-to-install-django-on-ubuntu/
+$ sudo su
+$ update-alternatives --remove python /usr/bin/python2
+	This removes python2 as the default python
+$ update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+	This sets python3 as the default python
+$ apt-get install python3-pip
+$ pip3 install --upgrade pip
+$ pip3 install django==2.0.2
+$ django-admin --version
+	This should print out 2.0.2 if the successful
+$ apt-get update
+$ apt-get install libmysqlclient-dev
+$ pip3 install mysqlclient
+$ 
+	
+Mac: 
+
+Windows: 
+	
+	
+	
+---- Logging into MySQL ----
+Connecting to MySQL RDS instance with GUI
+1)	Download MySQL workbench: 
+	a.	https://www.mysql.com/products/workbench/
+2)	Add a new server connection
+	a.	Connection Name: “superheroesintraining”
+	b.	Connection->Parameters->Hostname: Endpoint data of RDS instance
+	c.	Connection->Parameters->Username: username of master user or user of RDS instance
+	d.	Connection->Parameters->Password: Choose “Store In Vault”

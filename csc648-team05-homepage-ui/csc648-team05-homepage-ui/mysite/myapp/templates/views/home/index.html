@@ -1,0 +1,41 @@
+{% extends 'layouts/home.html' %}
+{% load staticfiles %}
+
+{% block title %}
+<title>Trashposters</title>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/select_dropdown.css' %}">
+{% endblock %}
+
+{% block home_header %}
+<!-- Search Bar -->
+<div class="row">
+  <div class="col mt-5">
+    {% include 'search_bar.html' %}
+  </div>
+</div>
+{% endblock %}
+
+{% block home_content %}
+<!-- Latest Environmental Reports -->
+<div class="row">
+  <div class="col-md-10 my-5">
+    <div id="posts">
+      <!-- Section Title -->
+      <h3 class="">Latest Environmental Reports</h3>
+      {# for post in posts #}
+        {% include 'views/post/post_view.html' %}
+      {# endfor #}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/utils/resize_select.js' %}"></script>
+  <script src="{% static 'js/utils/select_dropdown.js' %}"></script>
+  <script src="{% static 'js/search_bar.js' %}"></script>
+  <script src="{% static 'js/tab_nav.js' %}"></script>
+{% endblock %}

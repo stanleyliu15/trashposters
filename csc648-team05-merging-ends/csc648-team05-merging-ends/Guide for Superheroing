@@ -1,0 +1,38 @@
+# To reset a superuser's password
+
+from django.contrib.auth.models import User
+u = User.objects.get(username='john')
+u.set_password('new password')
+u.save()
+
+# To log a user in
+
+from django.contrib.auth import authenticate, login
+
+def my_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        # Redirect to a success page.
+        ...
+    else:
+        # Return an 'invalid login' error message.
+        ...
+
+# To log a user out
+
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    # Redirect to a success page.
+
+# Login required decorator
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def my_view(request):
+    ...

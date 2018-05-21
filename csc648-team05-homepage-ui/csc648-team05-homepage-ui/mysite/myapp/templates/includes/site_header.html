@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <!-- Brand -->
+  <a class="navbar-brand" href="/">
+    <h2 class="text-success">Trashposters</h2>
+      <!-- Hidden on xs devices -->
+    <h6 class="d-none d-sm-block">View and Report Environment Issues.</h6>
+  </a>
+
+  <!-- Button Collapse -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#site-nav-content" aria-controls="site-nav-content"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navigation Links -->
+  <div class="collapse navbar-collapse" id="site-nav-content">
+    <ul class="navbar-nav ml-auto text-center bg-light">
+      <!-- Visible on xs devices -->
+      <li class="m-2 d-block d-sm-none text-success">
+        <h6>View and Report Environment Issues.</h6>
+      </li>
+      <!-- Search, Hidden on homepage -->
+      {% if request.get_full_path != "/" %}
+        <li class="nav-item m-2">
+          <div id="search_div">
+            <div class="form-group mb-0">
+              <div class="input-group search-bar-container">
+                <!-- Filter by Post Menu -->
+                <span class="input-group-prepend">
+                  <!-- Hidden on xs devices -->
+                  <select class="custom-select resize-select bg-light d-none d-sm-block h-100 py-0" id="filter-post-select-menu" autocomplete="off">
+                    <option value="all">Search by</option>
+                    <option value="title">Title</option>
+                    <option value="description">Description</option>
+                    <option value="location">Location</option>
+                    <option value="user">User</option>
+                  </select>
+                </span>
+                <!-- Search Bar -->
+                <input class="form-control form-control-lg" id="query" autocomplete="off" type="text" aria-label="Search" aria-describedby="search-addon">
+                <!-- Search Icon -->
+                <span class="input-group-append">
+                  <button class="btn btn-outline-success border" type="submit" onClick="search()">
+                    <i class="fa fa-search" id="search-addon"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          <div>
+        </li>
+      {% endif %}
+      {# if user.is_authenticated  #}
+        <li class="nav-item m-2">
+          <a class="bold border nav-link rounded text-dark" href={% url 'create_post' %}>Report a issue <i class="fa fa-edit"></i></a>
+        </li>
+        <li class="nav-item m-2">
+          <div class="dropdown">
+            <button class="btn dropdown-toggle bg-light w-100" type="button" id="dropdown-menu-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="rounded-circle" src="https://picsum.photos/30/30" width="30" height="30" alt="avatar">
+              <span class="align-middle">USERNAME</span>
+            </button>
+            <div class="dropdown-menu text-center" aria-labelledby="dropdown-menu-button">
+              <a class="dropdown-item nav-link text-dark" href={% url 'city_official_dashboard' %}>Dashboard</a>
+              <a class="dropdown-item nav-link text-dark" href={% url 'settings' %}>Settings</a>
+              <a class="dropdown-item nav-link text-dark" href="/logout">Logout</a>
+            </div>
+          </div>
+        </li>
+      {# else #}
+        <li class="nav-item m-2">
+          <a class="nav-link rounded text-dark px-md-4" href="/login">Login</a>
+        </li>
+        <li class="nav-item border border-secondary rounded h-100 m-2">
+          <a class="nav-link text-dark" href="/register">Register</a>
+        </li>
+      {# endif #}
+    </ul>
+  </div>
+</nav>
