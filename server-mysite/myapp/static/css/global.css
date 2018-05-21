@@ -26,6 +26,10 @@ body {
   height: 60px;
 }
 
+.map_modal{
+height:500px;
+}
+
 .bold {
   font-weight: 700;
 }

@@ -40,11 +40,11 @@
         <!-- pop map  -->
 
         <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Open Maps
+        <button type="button" onClick="initMap{{ post.post_id }}();" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal{{ post.post_id }}">Open Maps
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade" id="myModal{{ post.post_id }}" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -52,34 +52,40 @@
                         <h4 class="modal-title">{{ post.location }}</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="map"></div>
+                        <div id="map{{ post.post_id}}" class="map_modal"></div>
                         <script>
-                            var map;
-                            var myLatLng;
-                            var marker;
+                            
+				var map{{ post.post_id }};
+                           	var myLatLng{{ post.post_id }};
+                            	var marker{{ post.post_id }};
+console.log(map{{post.post_id}});
+                            function initMap{{ post.post_id }}() {
+				console.log("Got here initMap{{ post.post_id }}");
+				
 
-                            function initMap() {
-                                myLatLng = {lat: {{ post.latitude }}, lng: {{ post.longitude }}};
-
+                                myLatLng{{ post.post_id }} = {lat: {{ post.latitude }}, lng: {{ post.longitude }}};
+				console.log("Got here2 initMap{{ post.post_id }}");
                                 // Create a map object and specify the DOM element
                                 // for display.
-                                map = new google.maps.Map(document.getElementById('map'), {
-                                    center: myLatLng,
+                                map{{ post.post_id }} = new google.maps.Map(document.getElementById('map{{ post.post_id }}'), {
+                                    center: myLatLng{{ post.post_id }},
                                     zoom: 15
                                 });
+				console.log("Got here3 initMap{{ post.post_id }}");
 
                                 // Create a marker and set its position.
-                                marker = new google.maps.Marker({
-                                    map: map,
-                                    position: myLatLng,
+                                marker{{ post.post_id }} = new google.maps.Marker({
+                                    map: map{{ post.post_id }},
+                                    position: myLatLng{{ post.post_id }},
                                     title: '{{ post.title }}'
                                 });
+				console.log("Got here4 initMap{{ post.post_id }}");
                             }
 
                             //show map on modal
-                            $('#myModal').on('shown.bs.modal', function () {
-                                initMap();
-                            });
+                            //$('#myModal{{ post.post_id }}').on('shown.bs.modal', function () {
+                            //    initMap{{ post.post_id }}();
+                            //});
                         </script>
                     </div>
                     <div class="modal-footer">
@@ -131,7 +137,3 @@
     </div>
 </div>
 
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgL8gS0W5KMVXP0Iqytc_qKR0O2NA3qM&callback=initMap" async
-        defer>
-</script>
