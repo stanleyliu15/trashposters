@@ -1,12 +1,14 @@
 html {
   position: relative;
   min-height: 100%;
+  /*margin:0;
+  padding:0;*/
 }
 
 body {
   font-family: 'Sumana', serif;
   /* Stick Body Above Footer */
-  padding-bottom: 120px;
+  margin-bottom: 60px;
 }
 
 #site-header .nav-link:hover {
@@ -21,11 +23,11 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 120px;
+  height: 60px;
 }
 
-#site-footer .container {
-  margin-top: 40px;
+.map_modal{
+height:500px;
 }
 
 .bold {

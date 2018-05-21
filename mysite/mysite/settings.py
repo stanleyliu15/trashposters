@@ -25,7 +25,7 @@ SECRET_KEY = 'aul^5px7-me@n3!&jv_hoh!fk%_-u%q-g-k%i9vm+^2*=xmld6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '54.176.229.50']
+ALLOWED_HOSTS = ['127.0.0.1', '54.176.229.50', 'trashposters.com', 'www.trashposters.com']
 
 
 # Application definition

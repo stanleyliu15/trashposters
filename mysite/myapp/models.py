@@ -8,9 +8,7 @@ from imagekit.processors import ResizeToFill
 
 """
 Note: Always perform migrations when making a change to models.py
-in order to have the changes reflect in the database.
-
-Models data type                            MySQL Equivalent
+in order to have the changes reflect in the database.ata type                            MySQL Equivalent
 models.AutoField(primary_key=True)          integer AUTO_INCREMENT NOT NULL
 models.CharField(maxLength=N)               varChar(N) NOT NULL
 models.DateTimeField()                      datetime NOT NULL
@@ -63,7 +61,8 @@ class UserData(models.Model):
     """
     username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
     biography = models.CharField(max_length=400, null=True)
-    location = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, default="San Francisco")
+    state = models.CharField(max_length=255, default="CA")
     avatar = models.ImageField(upload_to=user_directory_path, null=True)
 
     def get_absolute_url(self):
@@ -108,16 +107,24 @@ class Posts(models.Model):
     post_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=255)
+    latitude = models.CharField(max_length=255)
+    longitude = models.CharField(max_length=255)
     hazard_type = models.ForeignKey(HazardType, on_delete=None)
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=400)
     date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=30, choices=STATUS_CHOICE, default="In progress")
     preview_image = models.ImageField(upload_to=post_preview_directory_path, null=True)
+    #full_image = models.ImageField(upload_to=post_directory_path, null=True)
     image_thumbnail = ImageSpecField(source='preview_image',
                                      processors=[ResizeToFill(50, 50)],
                                      format='JPEG',
                                      options={'quality': 60})
+    image_regular = ImageSpecField(source='preview_image',
+                                     processors=[ResizeToFill(200, 200)],
+                                     format='JPEG',
+                                     options={'quality': 80})
+    city_official = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         """
@@ -175,6 +182,13 @@ class Posts(models.Model):
         """
         matching_posts = Posts.objects.filter(description__icontains=query)
         return matching_posts
+
+    def get_userdata(self):
+        """
+        Returns the UserData object for the author of the given post.
+        :return: UserData
+        """
+        return UserData.objects.get(username_id=self.user_id)
 
     def __str__(self):
         """
