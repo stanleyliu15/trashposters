@@ -108,6 +108,8 @@ class Posts(models.Model):
     post_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=255)
+    latitude = models.CharField(max_length=255, default="37.7214049")
+    longitude = models.CharField(max_length=255, default="-122.4772705")
     hazard_type = models.ForeignKey(HazardType, on_delete=None)
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=400)
@@ -118,6 +120,7 @@ class Posts(models.Model):
                                      processors=[ResizeToFill(50, 50)],
                                      format='JPEG',
                                      options={'quality': 60})
+    city_official = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         """
