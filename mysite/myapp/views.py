@@ -346,13 +346,13 @@ def about_us_single(request, team_member):
     """
     with open(os.getcwd() + '/myapp/static/data/about-us-list.json', 'r') as json_file:
         data = json.load(json_file)[team_member];
-    return render(request, 'new_regular/about-single.html', context={"team_member": data})
+    return render(request, 'new_regular/about_single.html', context={"team_member": data})
 
 def contact(request):
     return render(request, 'new_regular/contact.html', context={})
 
 def terms_of_service(request):
-    return render(request, 'new_regular/terms_of_service.html', context={})
+    return render(request, 'views/terms_of_service.html', context={})
 
 def settings(request):
     return render(request, 'new_regular/settings.html', context={})
