@@ -352,7 +352,7 @@ def contact(request):
     return render(request, 'new_regular/contact.html', context={})
 
 def terms_of_service(request):
-    return render(request, 'new_regular/terms_of_service.html', context={})
+    return render(request, 'views/terms_of_service.html', context={})
 
 def settings(request):
     return render(request, 'new_regular/settings.html', context={})
