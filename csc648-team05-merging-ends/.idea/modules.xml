@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/csc648-team05.iml" filepath="$PROJECT_DIR$/.idea/csc648-team05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../csc648-team05-UI/.idea/csc648-team05-UI.iml" filepath="$PROJECT_DIR$/../csc648-team05-UI/.idea/csc648-team05-UI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../dreamteam/.idea/dreamteam.iml" filepath="$PROJECT_DIR$/../dreamteam/.idea/dreamteam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../pokemonAI/.idea/pokemonAI.iml" filepath="$PROJECT_DIR$/../pokemonAI/.idea/pokemonAI.iml" />
+    </modules>
+  </component>
+</project>

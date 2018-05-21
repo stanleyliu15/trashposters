@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+  <title>Contact</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Tab Bar Navigation -->
+  <div class="row">
+    <div class="col mt-5">
+      {% include 'views/partials/tabNav.html' %}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col my-5 py-5">
+      <div>
+        <h2>Email:</h2>
+        <a class="text-success" href="mailto:brand@gmail.com">Brand@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/tabNav.js' %}"></script>
+{% endblock %}

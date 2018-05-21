@@ -1,0 +1,52 @@
+
+{% load staticfiles %}
+
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <!-- Brand -->
+  <a class="navbar-brand" href="/">
+    <h2 class="text-success">Trashposters</h2>
+      <!-- Hidden on xs devices -->
+    <h6 class="d-none d-sm-block">View and Report Environment Issues.</h6>
+  </a>
+
+  <!-- Button Collapse -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navigation Links -->
+  <div class="collapse navbar-collapse" id="nav-content">
+    <ul class="navbar-nav ml-auto text-center bg-light">
+      <!-- Visible on xs devices -->
+      <li class="m-2 d-block d-sm-none text-success">
+        <h6>View and Report Environment Issues.</h6>
+      </li>
+      {% if user.is_authenticated  %}
+        <li class="nav-item m-2">
+          <a class="bold border nav-link rounded text-dark" href={% url 'create_post' %}>Report a issue <i class="fa fa-edit"></i></a>
+        </li>
+        <li class="nav-item m-2">
+          <div class="dropdown">
+            <button class="btn dropdown-toggle bg-light w-100" type="button" id="dropdown-menu-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="rounded-circle" src="https://picsum.photos/30/30" width="30" height="30" alt="avatar">
+              <span class="align-middle"> {{ request.user.username }} </span>
+            </button>
+            <div class="dropdown-menu text-center" aria-labelledby="dropdown-menu-button">
+              <a class="dropdown-item nav-link text-dark" href={% url 'dashboard_city_official' %}>Dashboard</a>
+              <a class="dropdown-item nav-link text-dark" href={% url 'settings' %}>Settings</a>
+              <a class="dropdown-item nav-link text-dark" href={% url 'logout' %}>Logout</a>
+            </div>
+          </div>
+        </li>
+        {% else %}
+        <li class="nav-item m-2">
+          <a class="nav-link rounded text-dark px-md-4" href={% url 'login' %}>Login</a>
+        </li>
+        <li class="nav-item border border-secondary rounded h-100 m-2">
+          <a class="nav-link text-dark" href={% url 'register' %}>Register</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
