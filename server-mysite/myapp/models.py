@@ -115,10 +115,15 @@ class Posts(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=30, choices=STATUS_CHOICE, default="In progress")
     preview_image = models.ImageField(upload_to=post_preview_directory_path, null=True)
+    #full_image = models.ImageField(upload_to=post_directory_path, null=True)
     image_thumbnail = ImageSpecField(source='preview_image',
                                      processors=[ResizeToFill(50, 50)],
                                      format='JPEG',
                                      options={'quality': 60})
+    image_regular = ImageSpecField(source='preview_image',
+                                     processors=[ResizeToFill(1000, 1000)],
+                                     format='JPEG',
+                                     options={'quality': 80})
     city_official = models.BooleanField(default=False)
 
     def get_absolute_url(self):

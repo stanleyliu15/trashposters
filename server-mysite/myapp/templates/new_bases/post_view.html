@@ -29,7 +29,7 @@
         {% endif %}
     </div>
     {% if post.image_thumbnail %}
-        <img class="card-img-top" src={{ post.image_thumbnail.url }} alt="post-image">
+        <img class="card-img-top" src={{ post.image_regular.url }} alt="post-image">
     {% else %}
         <img class="card-img-top" src="{% static 'images/default_image.png' %}" height="200" alt="post-image">
     {% endif %}
