@@ -33,6 +33,17 @@ def index(request):
     return render(request, 'new_regular/index.html', context)
 
 
+def check_city_official(user):
+    """
+    :param user from request.user
+    :return: True if they're a city official, false otherwise.
+    """
+    if user.groups.filter(name="CityOfficial").exists():
+        return True
+    else:
+        return False
+
+
 
 def create_post(request):
     """
