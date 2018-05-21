@@ -1,0 +1,61 @@
+<!--
+  Note For City Officials:
+  shall be able to post official statements
+  that stand out from regular posts
+-->
+{% extends 'new_bases/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    <title>Report a Issue</title>
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 bg-light border rounded mx-auto mt-5 px-md-5 py-5">
+                <h3 class="text-success">Report a Issue</h3>
+                <hr>
+                <form class="clearfix" id="create-post-form" method="post" action="" enctype="multipart/form-data">
+                    <!-- Title -->
+                    {% for field in post_form %}
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ field.errors }}
+                            <label>{{ field.label_tag }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    <!-- Upload images -->
+
+                    {% for field in image_form %}
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>{{ field.label_tag }}</label>
+                            <div class="custom-file">
+                                {{ field }}
+                                <label class="custom-file-label" for="post-image">Choose file...</label>
+                                <div class="invalid-feedback">Invalid file</div>
+                                <small id="file-upload-help" class="form-text text-muted">*Limited to 4 images.<br>*Width
+                                    and height must be between 500px to 5000px.<br>*Max 10mb.
+                                </small>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Cancel, Post Buttons -->
+                    <a class="btn btn-outline-secondary" href="/">Cancel</a>
+                    <button type="submit" class="btn btn-success float-right">Publish issue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/utils/resize_select.js' %}"></script>
+{% endblock %}

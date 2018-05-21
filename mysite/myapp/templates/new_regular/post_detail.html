@@ -1,0 +1,172 @@
+{% extends 'new_bases/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    <title>{{ post.title }}</title>
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <!-- Image Slider -->
+        <div class="row">
+            <div class="col my-5">
+                <div class="carousel slide" id="post-carousel">
+                    <!-- Main Slides -->
+                    <div class="carousel-inner text-center">
+                        <div class="active item carousel-item" data-slide-number="0">
+                            <img src={{ image_1.url }} class="img-fluid">
+                        </div>
+                        {% if image_2 %}
+                            <div class="carousel-item" data-slide-number="1">
+                                <img src={{ image_2.url }} class="img-fluid">
+                            </div>
+                        {% endif %}
+                        {% if image_3 %}
+                            <div class="carousel-item" data-slide-number="2">
+                                <img src={{ image_3.url }} class="img-fluid">
+                            </div>
+                        {% endif %}
+                        {% if image_4 %}
+                            <div class="carousel-item" data-slide-number="3">
+                                <img src={{ image_4.url }} class="img-fluid">
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Control Indicators -->
+                    {# if post.images.length > 1 #}
+                    <a class="carousel-control-prev" href="#post-carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#post-carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+
+                    <!-- Thumbnail Slider -->
+                    <ul class="carousel-indicators list-inline mx-auto p-2">
+                        <li class="list-inline-item active">
+                            <a class="selected" data-slide-to="0" data-target="#post-carousel">
+                                <img src={{ image_1.url }} class="mw-100 mx-1" height="50">
+                            </a>
+                        </li>
+                        {% if image_2 %}
+                            <li class="list-inline-item">
+                                <a data-slide-to="1" data-target="#post-carousel">
+                                    <img src={{ image_2.url }} class="mw-100 mx-1" height="50">
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if image_3 %}
+                            <li class="list-inline-item">
+                                <a data-slide-to="2" data-target="#post-carousel">
+                                    <img src={{ image_3.url }} class="mw-100 mx-1" height="50">
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if image_4 %}
+                            <li class="list-inline-item">
+                                <a data-slide-to="3" data-target="#post-carousel">
+                                    <img src={{ image_4.url }} class="mw-100 mx-1" height="50">
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div> <!-- /#post-carousel -->
+            </div> <!-- /.col -->
+        </div> <!-- /.row -->
+        <!-- Post Content -->
+        <div class="row">
+            <div class="col-md-10 mx-auto my-4">
+                <div>
+                    <!-- Post Title -->
+                    <h1> {{ post.title }}</h1>
+                    <!-- Post Date -->
+                    <h6> {{ post.date }}</h6>
+                    <!-- Post Location -->
+                    <h6> {{ post.location }}</h6>
+                    <!-- Post Avatar -->
+                    <img class="img-fluid rounded-circle my-2" src="https://picsum.photos/40/40">
+                    <!-- Post Author -->
+                    <a href="#"> {{ post.user_id }}</a>
+                    <!-- Post Description -->
+                    <div class="p-2 mb-5">
+                        {{ post.description }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="row">
+            <div class="col-md-8 mx-auto mt-5">
+                <!-- Create a Comment Example -->
+                {% if user.is_authenticated %}
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+            <span class="input-group-text d-none d-sm-block p-0">
+              <img src="https://picsum.photos/1800/1800" height="75">
+            </span>
+                            </div>
+                            <textarea class="form-control" maxlength="300" placeholder="Write a comment"></textarea>
+                            <div class="input-group-append">
+                                <button class="btn border px-sm-2 px-md-4" type="button">Post</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if user.is_anonymous %}
+                    <div class="border text-center py-4">
+                        <a href="">Sign up now to write a comment!</a>
+                    </div>
+                {% endif %}
+
+                <!-- Comment Example -->
+                {% for comment in comment_list %}
+                    <div>
+                        <div class="comment border rounded my-5 p-4">
+                            <div class="comment-header">
+                                <img class="rounded-circle" src="https://picsum.photos/1200/1200" height="40"
+                                     alt="avatar">
+                                <span>{{ comment.user_id }}</span>
+                            </div>
+                            <div class="comment-content mt-2">
+                                {{ comment.comment_body }}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <h2> No comments yet. :( </h2>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div id="map"></div>
+    <script>
+        var map;
+        var myLatLng;
+        var marker;
+
+        function initMap() {
+            myLatLng = {lat: {{ latitude }}, lng: {{ longitude }}};
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: myLatLng,
+                zoom: 14
+            });
+            marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: '{{ post.title }}'
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlXPyvEDLgSrkOTWhva-YUCSnaLmeaUaQ&callback=initMap"
+            async defer></script>
+{% endblock %}

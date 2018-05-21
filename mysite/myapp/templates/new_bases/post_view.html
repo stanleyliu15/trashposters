@@ -1,0 +1,139 @@
+{% load static %}
+
+
+<!-- Sample Post -->
+<div class="card mt-4">
+    <div class="card-header">
+        <img class="rounded-circle" src="https://picsum.photos/960/960" height="40" alt="user-profile-picture">
+        <a href={% url 'post_detail' post.post_id %}>
+            <h6 class="d-inline">{{ post.title }} </h6>
+        </a>
+        {% if post.city_official %}
+            <h6 class="d-inline">, posted by City Official
+                <button type="button" padding="0" border="none" background="none"
+                        class="btn btn-default btn-sm" data-toggle="modal"
+                        data-target="#profile{{ post.user_id }}">
+                    {{ post.user_id }}
+                </button>
+                on {{ post.date }} </h6>
+        {% else %}
+            <strong>
+                <h6 class="d-inline">, posted by
+                    <button type="button" padding="0" border="none" background="none"
+                            class="btn btn-default btn-sm" data-toggle="modal"
+                            data-target="#profile{{ post.user_id }}">
+                        {{ post.user_id }}
+                    </button>
+                    on {{ post.date }} </h6>
+            </strong>
+        {% endif %}
+    </div>
+    {% if post.image_thumbnail %}
+        <img class="card-img-top" style="width:200px;height:200px;" src={{ post.image_regular.url }} alt="post-image">
+    {% else %}
+        <img class="card-img-top" style="width:200px;height:200px;" src="{% static 'images/default_image.png' %}" height="200" alt="post-image">
+    {% endif %}
+    <div class="card-body">
+        <p class="card-text">Status: {{ post.status }}</p>
+        <p class="card-text">{{ post.description }}</p>
+        <span class="card-text">{{ post.hazard_type }} <i class="fa fa-map-marker"></i> {{ post.location }}</span>
+        <!-- pop map  -->
+
+        <!-- Trigger the modal with a button -->
+        <button type="button" onClick="initMap{{ post.post_id }}();" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal{{ post.post_id }}">Open Maps
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal{{ post.post_id }}" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                        <h4 class="modal-title">{{ post.location }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="map{{ post.post_id}}" class="map_modal"></div>
+                        <script>
+                            
+				var map{{ post.post_id }};
+                           	var myLatLng{{ post.post_id }};
+                            	var marker{{ post.post_id }};
+console.log(map{{post.post_id}});
+                            function initMap{{ post.post_id }}() {
+				console.log("Got here initMap{{ post.post_id }}");
+				
+
+                                myLatLng{{ post.post_id }} = {lat: {{ post.latitude }}, lng: {{ post.longitude }}};
+				console.log("Got here2 initMap{{ post.post_id }}");
+                                // Create a map object and specify the DOM element
+                                // for display.
+                                map{{ post.post_id }} = new google.maps.Map(document.getElementById('map{{ post.post_id }}'), {
+                                    center: myLatLng{{ post.post_id }},
+                                    zoom: 15
+                                });
+				console.log("Got here3 initMap{{ post.post_id }}");
+
+                                // Create a marker and set its position.
+                                marker{{ post.post_id }} = new google.maps.Marker({
+                                    map: map{{ post.post_id }},
+                                    position: myLatLng{{ post.post_id }},
+                                    title: '{{ post.title }}'
+                                });
+				console.log("Got here4 initMap{{ post.post_id }}");
+                            }
+
+                            //show map on modal
+                            //$('#myModal{{ post.post_id }}').on('shown.bs.modal', function () {
+                            //    initMap{{ post.post_id }}();
+                            //});
+                        </script>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Profile Modal -->
+<div class="modal fade" id="profile{{ post.user_id }}" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">User profile for {{ post.user_id }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="panel panel-default" style="width:60%; margin-left:20%;">
+                            <div class="panel-heading">
+                                <h4 style="color:#00b1b1;"> {{ post.user_id }}
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="box box-info">
+                                    <div class="clearfix"></div>
+                                    <hr style="margin:5px 0 5px 0;">
+                                    <div><b>Location </b> {{ post.get_userdata.city }}, {{ post.get_userdata.state }}</div>
+                                    <div class="clearfix"></div>
+                                    <div class="bot-border"></div>
+                                    <div class="clearfix"></div>
+                                    <hr style="margin:5px 0 5px 0;">
+                                    <div><b>Biography </b> {{ post.get_userdata.biography }}</div>
+                                    <div class="clearfix"></div>
+                                    <div class="bot-border"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

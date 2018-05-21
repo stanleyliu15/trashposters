@@ -1,0 +1,49 @@
+{% extends 'new_bases/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+<title>Search Trashposters</title>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/select_dropdown.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+		
+	<div id="results_div">
+		
+		{% if posts %}
+		<h2> {{ posts.count }} results </h2>
+		    <ul>
+		        {% for post in posts %}
+		        	{% include 'new_bases/post_view.html' %}
+		        {% endfor %}
+		    </ul>
+		{% else %}
+		    <h3> No posts returned, so here are most recent posts </h3>
+		    <ul>
+		        {% for post in extra_posts %}
+		        	{% include 'new_bases/post_view.html' %}
+		        {% endfor %}
+		    </ul>
+		{% endif %}
+	</div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/utils/resize_select.js' %}"></script>
+  <script src="{% static 'js/utils/select_dropdown.js' %}"></script>
+  <script src="{% static 'js/search_bar.js' %}"></script>
+  <script src="{% static 'js/tab_nav.js' %}"></script>
+	<script type="text/javascript">
+
+		
+	</script>
+{% endblock %}

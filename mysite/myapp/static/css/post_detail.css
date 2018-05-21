@@ -1,0 +1,43 @@
+.carousel {
+  background-color: #f8f9fa;
+}
+
+/* fixed height carousel items to prevent flicker from resizing */
+#post-carousel .carousel-inner {
+  max-height: 420px;
+}
+
+#post-carousel .carousel-indicators .list-inline-item {
+  cursor: pointer;
+}
+
+/* Reset '_' indicators bootstrap carousel gives us by default
+   So that the customize image thumbnails to display relative
+   to the image slides
+*/
+#post-carousel .carousel-indicators {
+  position: initial;
+  bottom: initial;
+}
+
+/*
+  Reset size of the indicators bootstrap gives us by default
+  So that the image thumbs are displayed and layed out nicely
+*/
+#post-carousel .carousel-indicators .list-inline-item {
+  width: initial;
+  height: initial;
+  text-indent: initial;
+  opacity: 0.9;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  transition: background-color 0.5s ease;
+  background-color: rgba(17,17,17,0.3);
+}
+
+#map {
+    height: 50%;
+    width: 50%;
+}

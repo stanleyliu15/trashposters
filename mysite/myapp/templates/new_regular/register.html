@@ -1,0 +1,72 @@
+{% extends 'new_bases/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    <title>Register</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 bg-light border rounded mx-auto mt-5 p-5">
+                <h1>Register</h1>
+                <hr>
+                <form class="clearfix" id="register-form" method="post" action="">
+
+                    {% for field in user_signup_form %}
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>{{ field.label_tag }}<span
+                                        style="color:red;">* {{ field.errors }}</span></label>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {% for field in user_data_form %}
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>{{ field.label_tag }}<span
+                                        style="color:red;">* {{ field.errors }}</span></label>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Age Check -->
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="age" required>
+                            <label class="custom-control-label" for="age">I am 13+ years old<span
+                                    style="color:red;">*</span></label>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions Check -->
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="termsOfService" required>
+                            <label class="custom-control-label" for="termsOfService">I agree to the <a
+                                    class="text-success" href="/terms-of-service" target="_blank">Terms of
+                                Service</a><span style="color:red;">*</span></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="text-muted"><em><span
+                                style="color:red;">*</span> Indicates required field</em></span>
+                    </div>
+                    <!-- Register Buttons -->
+                    <a class="btn btn-outline-secondary" href="/">Cancel</a>
+                    <button type="submit" class="btn btn-success float-right">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/confirm.js' %}"></script>
+{% endblock %}

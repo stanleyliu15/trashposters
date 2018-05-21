@@ -1,0 +1,59 @@
+<div id="search_div">
+		<div class="form-group mb-0">
+		  <label for="query">Search Environmental Issues</label>
+		  <div class="input-group search-bar-container">
+		    <!-- Filter by Post Menu -->
+		    <span class="input-group-prepend">
+		      <!-- Hidden on xs devices -->
+		      <select class="custom-select resize-select bg-light d-none d-sm-block h-100 py-0" id="filter-post-select-menu" autocomplete="off">
+		        <option value="all">All</option>
+						{% if select == "title" %}
+						<option value="title" selected>Title</option>
+						{% else %}
+						<option value="title">Title</option>
+						{% endif %}
+						{% if select == "description" %}
+					        <option value="description" selected>Description</option>
+						{% else %}
+						<option value="description">Description</option>
+						{% endif %}
+						{% if select == "location" %}
+					        <option value="location" selected>Location</option>
+						{% else %}
+						<option value="location">Location</option>
+						{% endif %}
+						{% if select == "user" %}
+					        <option value="user" selected>User</option>
+						{% else %}
+						<option value="user">User</option>
+						{% endif %}
+		      </select>
+		    </span>
+		    <!-- Search Bar -->
+		    <input value="{{ keyword }}" class="form-control form-control-lg" id="query" autocomplete="off" type="text" aria-label="Search" aria-describedby="search-addon" >
+		    <!-- Search Icon -->
+		    <span class="input-group-append">
+		      <button class="btn btn-outline-success border" type="submit" onClick="search()">
+		        <i class="fa fa-search" id="search-addon"></i>
+		      </button>
+		    </span>
+		  </div>
+		</div>
+		<!-- Search Optimization by Hazard Type -->
+		<!--<div class="form-group">
+		  <div class="dropdown select-dropdown mt-2">
+		    <button class="btn bg-white dropdown-toggle" type="button" id="hazard-filter-dropdown-menu-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		      All Hazard Types
+		    </button>
+		    <div class="dropdown-menu" aria-labelledby="hazard-filter-dropdown-menu-button">
+		      <div class="dropdown-item selected">All Hazard Types</div>
+		      <div class="dropdown-item">Fire</div>
+		      <div class="dropdown-item">Lead</div>
+		      <div class="dropdown-item">Poison</div>
+		      <div class="dropdown-item">Air</div>
+		      <div class="dropdown-item">Water</div>
+		      <div class="dropdown-item">Smoke</div>
+		    </div>
+		  </div>
+		</div>-->
+</div>

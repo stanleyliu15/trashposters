@@ -1,0 +1,77 @@
+<!-- Add `load staticfiles` block to each page it is required for including static css/js files -->
+{% load staticfiles %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% block title %} {% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sumana:400,700">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://picsum.photos/60/60">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+
+
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVgL8gS0W5KMVXP0Iqytc_qKR0O2NA3qM" async ></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119605419-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-119605419-1');
+    </script>
+    <!--- End Google Analytics -->
+
+
+
+    {% block styles %} {% endblock %}
+
+</head>
+
+<body>
+  <header id="site-header">
+    {% include "new_bases/site_header.html" %}
+  </header>
+
+  <main id="main">
+    {% block content %} {% endblock %}
+  </main>
+
+  <footer id="site-footer">
+    {% include "new_bases/site_footer.html" %}
+  </footer>
+
+  <!-- Scripts -->
+  <script type="text/javascript" src="{% static 'js/search_bar.js' %}" ></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  {% block scripts %} {% endblock %}
+</body>
+
+</html>

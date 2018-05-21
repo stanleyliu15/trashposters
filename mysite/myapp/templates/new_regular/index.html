@@ -1,0 +1,46 @@
+{% extends 'new_bases/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+<title>Trashposters</title>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/select_dropdown.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <!-- Tab Bar Navigation -->
+  <div class="row">
+    <div class="col mt-5">
+      {% include 'new_bases/tab_nav.html' %}
+    </div>
+  </div>
+
+  <!-- Latest Reports Feed 30-50 Results Per Page -->
+  <div class="row">
+    <div class="col-md-10 my-5">
+      <div id="posts">
+        <!-- Section Title -->
+        <h3 class="">Latest Environmental Reports</h3>
+        {% for post in recent_posts %}
+          {% include 'new_bases/post_view.html' %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/utils/resize_select.js' %}"></script>
+  <script src="{% static 'js/utils/select_dropdown.js' %}"></script>
+  <script src="{% static 'js/tab_nav.js' %}"></script>
+	<script type="text/javascript">
+
+		
+	</script>
+{% endblock %}
