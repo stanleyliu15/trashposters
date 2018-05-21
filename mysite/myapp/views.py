@@ -8,6 +8,7 @@ from .models import Comments
 from .models import UserData
 from .models import PostImageCollection
 
+<<<<<<< HEAD
 from .forms import *
 
 from django.contrib.auth import authenticate, login, logout
@@ -124,6 +125,7 @@ def create_comment(request, post):
     return render(request, 'new_regular/post_detail.html', context)
 
 
+
 def post_list(request):
     """
     Retrieves all of the Post objects from the database and lists them.
@@ -148,6 +150,7 @@ def post_detail(request, post_id):
     try:
         post = Posts.objects.get(pk=post_id)
         image = "/images/" + str(post.post_id) + "/1.jpg"
+
     except Posts.DoesNotExist:
         raise Http404(four_oh_four_message)
     comment_list = Comments.objects.filter(post_id=post_id)
@@ -200,7 +203,6 @@ def profile_detail(request, user_id):
         raise Http404(four_oh_four_message)
     context = {'userdata': userdata}
     return render(request, 'new_regular/profile_detail.html', context)
-
 
 
 def search_empty(request):
@@ -278,6 +280,7 @@ def register(request):
         "user_signup_form": user_signup_form,
         "user_data_form": user_data_form
     }
+
     return render(request, template_name, context)
 
 

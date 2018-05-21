@@ -1,0 +1,28 @@
+{% load staticfiles %}
+
+<h2> Post Detail </h2>
+    <ul>
+        <h1>{{ post.title }}</h1>
+        <h3>Posted by {{ post.user_id }}</h3>
+        
+	<img style="width:300px;" src={% static image %} />
+	<div>
+            <br>
+            {{  post.description }}
+            <br> <br>
+            <li> {{ post.location }}</li>
+            <li> {{ post.date}} </li>
+        </div>
+        <br>
+        <div>
+            {% if comment_list %}
+                {% for comment in comment_list %}
+                    <li> {{ comment.comment_body }} - {{ comment.user_id }}</li>
+                {% endfor %}
+            {% else %}
+                <h4> No comments yet :( </h4>
+            {% endif %}
+        </div>
+        <br>
+        <a href= {% url 'post_list' %}> Go back </a>
+    </ul>
