@@ -255,9 +255,9 @@ def login_user(request):
                     login(request, user)
                     return redirect(index)
                 else:
-                    return render(request, 'login.html', {'error_message': 'You have been banned.'})
+                    return render(request, 'new_regular/login.html', {'error_message': 'You have been banned.'})
             else:
-                return render(request, 'login.html', {'form': form, 'error_message': 'Invalid login'})
+                return render(request, 'new_regular/login.html', {'form': form, 'error_message': 'Invalid login'})
     context = {
          "form": form,
     }
