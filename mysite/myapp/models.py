@@ -64,6 +64,18 @@ class UserData(models.Model):
     city = models.CharField(max_length=255, default="San Francisco")
     state = models.CharField(max_length=255, default="CA")
     avatar = models.ImageField(upload_to=user_directory_path, null=True)
+    city_official = models.BooleanField(default=False)
+    location = models.CharField(max_length=255, default="San Francisco")
+
+    def get_first_name(self):
+        user = User.objects.get(username=self.username)
+        first_name = user.first_name
+        return first_name
+
+    def get_last_name(self):
+        user = User.objects.get(username=self.username)
+        last_name = user.last_name
+        return last_name
 
     def get_absolute_url(self):
         return reverse('profile_detail', kwargs={'pk': self.pk})

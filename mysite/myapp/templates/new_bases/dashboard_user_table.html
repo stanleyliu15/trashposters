@@ -11,13 +11,19 @@
       </tr>
     </thead>
     <tbody>
+    {% if constituents %}
+        {% for person in constituents %}
       <tr>
         <th scope="row">1</th>
-        <td>USERNAME</td>
-        <td>FIRST_NAME</td>
-        <td>LAST_NAME</td>
-        <td>LOCATION</td>
+        <td>{{ person.username }}</td>
+        <td>{{ person.get_first_name }}</td>
+        <td>{{ person.get_last_name }}</td>
+        <td>{{ person.city }}</td>
       </tr>
+        {% endfor %}
+    {% else %}
+        <h2> No constituents have registered for the site.  </h2>
+    {% endif %}
     </tbody>
   </table>
 </div>

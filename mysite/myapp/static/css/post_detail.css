@@ -4,7 +4,7 @@
 
 /* fixed height carousel items to prevent flicker from resizing */
 #post-carousel .carousel-inner {
-  max-height: 420px;
+  /*max-height: 420px;*/
 }
 
 #post-carousel .carousel-indicators .list-inline-item {

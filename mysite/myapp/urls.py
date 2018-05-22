@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
 
-    #### Site wide ####
+    # Site wide ---------------------------------------------------
     # Welcome page
     path('', views.index, name='index'),
     #url(r'^$', views.index, name='index'),
@@ -20,7 +20,7 @@ urlpatterns = [
     path('terms-of-service', views.terms_of_service, name='terms_of_service'),
     
 
-    #### Posts ####
+    # Posts ---------------------------------------------------
     # /create-post/
     path('create-post', views.create_post, name='create_post'),
     # /posts/
@@ -34,8 +34,7 @@ urlpatterns = [
     # /posts/<number>/<comment_id>
     url(r'posts/(?P<post_id>[0-9]+)/$', views.create_comment, name='comment-add'),
 
-
-    #### User Account ####
+    # User Accounts ---------------------------------------------------
     # /dashboard
     url(r'^dashboard/$', views.register, name='dashboard_city_official'),
     # /profile/<number>
@@ -49,7 +48,7 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
 
 
-    #### Search ####
+    # Search ---------------------------------------------------
     # Empty search
     url(r'^search/$', views.search_empty, name='search_empty'),
     url(r'^search/(?P<select>[A-Za-z]+)=(?P<query>.*)/$', views.search_by, name='search'),
