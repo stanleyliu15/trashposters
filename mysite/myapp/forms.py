@@ -255,7 +255,7 @@ class ImageForm(forms.ModelForm):
         }),
         validators=[validate_image_file],
         label='Upload Image',
-        required=False)
+        required=True)
     image2 = forms.ImageField(widget=forms.FileInput(
         attrs={
             'type': 'file',
